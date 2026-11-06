@@ -75,7 +75,7 @@ W = [
 def seed(conn, base_dir):
     cur = conn.cursor()
     if cur.execute("SELECT COUNT(*) FROM products").fetchone()[0] == 0:
-        pdir = os.path.join(base_dir, "instance", "protected")
+        pdir = os.environ.get("PROTECTED_DIR") or os.path.join(base_dir, "instance", "protected")
         os.makedirs(pdir, exist_ok=True)
         for slug, name, cat, price, short, fmt, compat, style, seedn, flags in P:
             fname = f"demo_{slug}.zip"
