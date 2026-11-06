@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: ai-manga-india
+    runtime: docker
+    plan: starter            # persistent disk needs a paid plan
+    healthCheckPath: /healthz
+    disk: {name: data, mountPath: /var/data, sizeGB: 5}
+    envVars:
+      - {key: APP_ENV, value: production}
+      - {key: SECRET_KEY, generateValue: true}
+      - {key: DATABASE_PATH, value: /var/data/site.db}
+      - {key: PROTECTED_DIR, value: /var/data/protected}
+      - {key: SITE_URL, sync: false}
+      - {key: ADMIN_EMAIL, sync: false}
+      - {key: ADMIN_PASSWORD, sync: false}
+      - {key: RAZORPAY_KEY_ID, sync: false}
+      - {key: RAZORPAY_KEY_SECRET, sync: false}
+      - {key: RAZORPAY_WEBHOOK_SECRET, sync: false}
+      - {key: SMTP_HOST, sync: false}
+      - {key: SMTP_USER, sync: false}
+      - {key: SMTP_PASSWORD, sync: false}

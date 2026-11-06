@@ -20,6 +20,8 @@ Set the variables in `.env.example`. Serve over HTTPS and put `DATABASE_PATH` an
 - **Newsletter / inquiries**: stored in the database (Admin). Email notification needs SMTP settings.
 - **Not built**: Supabase and Next.js (this environment couldn't install packages; the Flask stack covers the same features).
 
+See GO_LIVE.md for the launch checklist.
+
 ## Docker / hosting
 `docker build -t ami . && docker run -p 8000:8000 --env-file .env -v ami-data:/var/data ami`
 A `Procfile` is included for Render/Railway/Heroku-style hosts. Point your domain at the host and enable its HTTPS.

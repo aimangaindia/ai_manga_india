@@ -589,3 +589,8 @@ def sitemap():
     urls += [f"/portfolio/{w['slug']}" for w in q("SELECT slug FROM portfolio WHERE active=1")]
     body = "".join(f"<url><loc>{base}{u}</loc></url>" for u in urls)
     return Response(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>', mimetype="application/xml")
+
+
+@app.route("/healthz")
+def healthz():
+    return jsonify(ok=True)
