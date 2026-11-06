@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "macros.html" import pcard, breadcrumb_ld %}
+{% block page %}shop{% endblock %}
+{% block title %}{% if cat %}{{ CAT_NAME[cat] }} — {% endif %}Digital Shop — AI Prompts, Video Assets & Design Templates | AI MANGA INDIA{% endblock %}
+{% block desc %}Buy downloadable AI prompt collections, video assets, manga and animation resources, graphic design templates and marketing kits. Prices in INR, instant digital delivery after payment.{% endblock %}
+{% block jsonld %}{{ breadcrumb_ld([{"@type":"ListItem","position":2,"name":"Digital Shop","item":site_url ~ "/shop"}]) }}{% endblock %}
+{% block content %}
+<section class="phero"><div class="wrap"><h1>Digital shop</h1><p>Prompts, templates and asset packs. Prices are in INR. After payment is confirmed your files appear in My Account.</p></div></section>
+<section class="sec" style="padding-top:32px"><div class="wrap">
+  <div class="toolbar">
+    <div class="chips" aria-label="Categories">
+      <a class="chip {{ 'on' if not cat and not flt }}" href="{{ url_for('shop') }}">All</a>
+      {% for k, n, d in PRODUCT_CATS %}<a class="chip {{ 'on' if cat==k }}" href="{{ url_for('shop', cat=k) }}">{{ n }}{% if counts.get(k) %} ({{ counts[k] }}){% endif %}</a>{% endfor %}
+    </div>
+  </div>
+  <form class="toolbar" method="get" action="{{ url_for('shop') }}">
+    {% if cat %}<input type="hidden" name="cat" value="{{ cat }}">{% endif %}
+    <div class="chips">
+      <a class="chip {{ 'on' if flt=='featured' }}" href="{{ url_for('shop', filter='featured', cat=cat or None) }}">Featured</a>
+      <a class="chip {{ 'on' if flt=='new' }}" href="{{ url_for('shop', filter='new', cat=cat or None) }}">New arrivals</a>
+      <a class="chip {{ 'on' if flt=='bundles' }}" href="{{ url_for('shop', filter='bundles', cat=cat or None) }}">Best-value bundles</a>
+      {% if has_sale %}<a class="chip {{ 'on' if flt=='sale' }}" href="{{ url_for('shop', filter='sale', cat=cat or None) }}">On sale</a>{% endif %}
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <label class="sr" for="s-q">Search products</label><input id="s-q" name="q" type="search" value="{{ qs }}" placeholder="Search products" style="width:220px">
+      <label class="sr" for="s-sort">Sort</label>
+      <select id="s-sort" name="sort" style="width:170px" data-autosubmit><option value="new" {{ 'selected' if sort=='new' }}>Newest</option><option value="low" {{ 'selected' if sort=='low' }}>Price: low to high</option><option value="high" {{ 'selected' if sort=='high' }}>Price: high to low</option></select>
+      <button class="btn btn-ghost btn-sm" type="submit">Apply</button>
+    </div>
+  </form>
+  {% if cat %}<p>{% for k,n,d in PRODUCT_CATS if k==cat %}{{ d }}{% endfor %}</p>{% endif %}
+  {% if products %}<div class="pgrid">{% for p in products %}{{ pcard(p) }}{% endfor %}</div>
+  {% else %}<div class="empty"><svg class="icon"><use href="#i-box"/></svg><p>No products match your filters.</p><a class="btn btn-ghost" href="{{ url_for('shop') }}">Clear filters</a></div>{% endif %}
+  <div class="panel card" style="margin-top:48px"><h3>Need something custom?</h3><p>If you can't find the right pack, we can make custom prompts, designs or videos for your project.</p><a class="btn btn-ghost" href="{{ url_for('contact') }}">Contact for Custom Pricing</a></div>
+</div></section>
+{% endblock %}

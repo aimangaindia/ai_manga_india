@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, breadcrumb_ld %}
+{% block page %}about{% endblock %}
+{% block title %}About AI MANGA INDIA — Independent AI Creative Studio{% endblock %}
+{% block desc %}AI MANGA INDIA is an independent AI-powered creative brand exploring artificial intelligence, animation, visual storytelling and digital design.{% endblock %}
+{% block jsonld %}{{ breadcrumb_ld([{"@type":"ListItem","position":2,"name":"About","item":site_url ~ "/about"}]) }}{% endblock %}
+{% block content %}
+<section class="phero"><div class="wrap"><h1>Creativity has no limits.</h1><p>{{ S.about_intro }}</p></div></section>
+<section class="sec"><div class="wrap two">
+  <div class="prose">
+    <h2 style="margin-top:0">Who we are</h2>
+    <p>AI MANGA INDIA is an independent creative studio. Our goal is to transform ideas into compelling visual experiences through AI-assisted creative workflows.</p>
+    <p>From cinematic animations and promotional videos to digital artwork and creative resources, we bring imagination into the digital world.</p>
+    <h2>Creative philosophy</h2>
+    <p>AI is a tool, and the story still matters most. We start with the idea, choose the tools that serve it, and review every output before it reaches you.</p>
+    <h2>Vision and mission</h2>
+    <ul><li>Vision: make high-quality visual storytelling reachable for creators and businesses of any size.</li>
+    <li>Mission: deliver custom creative work and affordable digital resources, with clear communication throughout.</li></ul>
+  </div>
+  <div class="panel card">
+    <h3>What we do</h3>
+    <ul class="checks">{% for c in capabilities %}<li>{{ c }}</li>{% endfor %}</ul>
+    <h3 style="margin-top:22px">Tools and technologies</h3>
+    <p class="small">We use a mix of AI image and video generation tools, editing software and design software, chosen per project. The exact tools for your project are listed in your quote.</p>
+    <a class="btn btn-primary" href="{{ url_for('contact') }}">Start a Project</a>
+  </div>
+</div></section>
+<section class="sec alt"><div class="wrap">
+  <div class="head"><h2>Our workflow</h2></div>
+  <div class="steps">{% for t, d, i in process %}<div class="step"><div class="dot">{{ icon(i) }}</div><span class="n">Step {{ loop.index }}</span><h3>{{ t }}</h3><p>{{ d }}</p></div>{% endfor %}</div>
+</div></section>
+<section class="sec"><div class="wrap">
+  <div class="head"><h2>Brand identity</h2><p>The mark is a manga panel with a cut corner, holding an M whose centre point is an AI node. It works on dark and light backgrounds and at small sizes.</p></div>
+  <div class="grid g3">
+    <div class="panel card" style="background:#08090D;display:grid;place-items:center;padding:36px"><img src="{{ url_for('static', filename='img/logo-mark.svg') }}" width="96" height="96" alt="AI MANGA INDIA logo on dark background"></div>
+    <div class="panel card" style="background:#f4f5fa;display:grid;place-items:center;padding:36px"><img src="{{ url_for('static', filename='img/logo-light.svg') }}" width="96" height="96" alt="AI MANGA INDIA logo on light background"></div>
+    <div class="panel card" style="display:grid;place-items:center;padding:36px"><img src="{{ url_for('static', filename='img/logo-mark.svg') }}" width="32" height="32" alt="AI MANGA INDIA logo at small size"></div>
+  </div>
+</div></section>
+{% endblock %}

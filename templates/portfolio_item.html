@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "macros.html" import wcard, crumbs, breadcrumb_ld %}
+{% block page %}portfolio-item{% endblock %}
+{% block title %}{{ w.title }} — {{ PCAT_NAME.get(w.category,'Portfolio') }} | AI MANGA INDIA{% endblock %}
+{% block desc %}{{ (w.summary or w.title)[:155] }}{% endblock %}
+{% block ogimage %}{{ site_url }}{{ work_thumb(w) }}{% endblock %}
+{% block jsonld %}{{ breadcrumb_ld([{"@type":"ListItem","position":2,"name":"Portfolio","item":site_url ~ "/portfolio"},{"@type":"ListItem","position":3,"name":w.title,"item":site_url ~ "/portfolio/" ~ w.slug}]) }}{% endblock %}
+{% block content %}
+{% set ve = w.video_url|embed %}
+<section class="phero"><div class="wrap">
+  {{ crumbs([("Portfolio", url_for('portfolio')), (w.title, None)]) }}
+  <h1>{{ w.title }}</h1>
+  <p><span class="tag {{ 'demo' if w.kind=='demo' else 'blue' }}">{{ KINDS.get(w.kind,'') }}</span> <span class="tag">{{ PCAT_NAME.get(w.category,'') }}</span>{% if w.kind=='client' and w.client_name %} <span class="muted small">Client: {{ w.client_name }}</span>{% endif %}</p>
+</div></section>
+<section class="sec" style="padding-top:36px"><div class="wrap">
+  <div class="two">
+    <div>
+      {% if ve and ve[0] == 'file' %}<video src="{{ ve[1] }}" controls preload="metadata" poster="{{ work_thumb(w) }}" style="width:100%;border-radius:10px"></video>
+      {% elif ve %}<div style="aspect-ratio:16/9"><iframe src="{{ ve[1] }}" title="{{ w.title }} video" loading="lazy" allowfullscreen style="width:100%;height:100%;border:0;border-radius:10px"></iframe></div>
+      {% else %}<a href="{{ work_thumb(w) }}" data-lightbox="main" style="display:block"><img src="{{ work_thumb(w) }}" alt="{{ w.title }}" style="width:100%;border-radius:10px" width="1200" height="750"></a>{% endif %}
+      {% if gallery %}<div class="grid g3" style="margin-top:14px;gap:10px">{% for g in gallery %}<a href="{{ g }}" data-lightbox="main"><img src="{{ g }}" alt="{{ w.title }} — image {{ loop.index }}" loading="lazy" style="border-radius:8px;aspect-ratio:16/10;object-fit:cover;width:100%"></a>{% endfor %}</div>{% endif %}
+    </div>
+    <div class="card panel">
+      {% for p in (w.description or '')|paras %}<p>{{ p }}</p>{% endfor %}
+      {% if w.tools %}<div class="kv"><b>Tools</b><span>{{ w.tools }}</span></div>{% endif %}
+      {% if w.process %}<div class="kv"><b>Creative process</b><span>{{ w.process }}</span></div>{% endif %}
+      <div class="cta-row"><a class="btn btn-primary" href="{{ url_for('contact', service=('AI Video Production' if w.category in ('ai-videos','3d-animation') else 'AI Graphic Design')) }}">Start a similar project</a></div>
+    </div>
+  </div>
+  {% if more %}<h2 style="margin-top:64px">More in {{ PCAT_NAME.get(w.category,'this category') }}</h2><div class="work-grid">{% for m in more %}{{ wcard(m) }}{% endfor %}</div>{% endif %}
+</div></section>
+{% endblock %}

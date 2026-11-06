@@ -1,0 +1,15 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}Inquiries{% endblock %}
+{% block abody %}
+<h1>Project inquiries</h1>
+{% for i in rows %}
+<div class="panel card" style="margin-bottom:14px">
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><strong>INQ-{{ '%05d'|format(i.id) }} · {{ i.service }}</strong><span class="muted small">{{ i.created_at[:16] }}</span></div>
+  <p style="margin:6px 0"><strong>{{ i.name }}</strong>{% if i.business %} ({{ i.business }}){% endif %} · <a href="mailto:{{ i.email }}">{{ i.email }}</a></p>
+  <p style="white-space:pre-wrap;color:#dfe2ee">{{ i.description }}</p>
+  <p class="small muted">Budget: {{ i.budget or '—' }} · Deadline: {{ i.deadline or '—' }}{% if i.links %}<br>References: {{ i.links }}{% endif %}</p>
+  <form method="post" style="display:flex;gap:8px;align-items:center"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ i.id }}">
+    <select name="status" aria-label="Status" style="width:160px">{% for s in statuses %}<option {{ 'selected' if s==i.status }}>{{ s }}</option>{% endfor %}</select><button class="btn btn-ghost btn-sm">Update status</button></form>
+</div>
+{% else %}<div class="empty"><p>No inquiries yet.</p></div>{% endfor %}
+{% endblock %}

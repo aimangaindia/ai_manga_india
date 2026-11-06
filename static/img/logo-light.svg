@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AI MANGA INDIA mark (for light backgrounds)">
+  <defs>
+    <linearGradient id="g" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2F66E0"/><stop offset=".55" stop-color="#8B3FD9"/><stop offset="1" stop-color="#0FA9D1"/>
+    </linearGradient>
+  </defs>
+  <path d="M10 4h36l14 14v38a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#fff" stroke="url(#g)" stroke-width="3"/>
+  <path d="M17 46V21l15 15 15-15v25" fill="none" stroke="#11131B" stroke-width="5" stroke-linejoin="miter" stroke-linecap="square"/>
+  <path d="M38 60 60 38" stroke="url(#g)" stroke-width="3" fill="none"/>
+  <circle cx="32" cy="36" r="4" fill="#0FA9D1"/>
+</svg>

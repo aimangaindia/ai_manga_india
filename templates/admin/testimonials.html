@@ -1,0 +1,15 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}Testimonials{% endblock %}
+{% block abody %}
+<h1>Testimonials</h1>
+<p class="small muted">The homepage shows “Client feedback coming soon” until you add one. Only add feedback a real customer gave you permission to publish.</p>
+<form class="frm" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="field"><label for="tn">Customer name</label><input id="tn" name="name" required></div>
+  <div class="field"><label for="tr">Role or business <span class="muted">(optional)</span></label><input id="tr" name="role"></div>
+  <div class="field full"><label for="tq">Feedback</label><textarea id="tq" name="quote" required style="min-height:90px"></textarea></div>
+  <div class="field"><label for="tt">Rating</label><select id="tt" name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+  <div class="field" style="align-self:end"><button class="btn btn-primary" type="submit">Add testimonial</button></div>
+</form>
+<div class="scroll-x"><table class="tbl"><tbody>{% for r in rows %}<tr><td><strong>{{ r.name }}</strong> <span class="muted small">{{ r.role }}</span><br>{{ r.quote }}</td><td>{{ r.rating }}★</td>
+<td><form method="post" data-confirm="Delete this testimonial?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="delete" value="{{ r.id }}"><button class="btn btn-ghost btn-sm">Delete</button></form></td></tr>{% else %}<tr><td class="muted">None yet.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

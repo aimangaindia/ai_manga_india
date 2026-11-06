@@ -1,0 +1,37 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}{{ 'Edit product' if pid else 'New product' }}{% endblock %}
+{% macro v(k) %}{{ (p[k] if p and p[k] is not none else '') }}{% endmacro %}
+{% block abody %}
+<h1>{{ 'Edit product' if pid else 'Add product' }}</h1>
+<form class="frm" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="field full"><label for="n">Product name</label><input id="n" name="name" required value="{{ v('name') }}"></div>
+  <div class="field full"><label for="sd">Short description</label><input id="sd" name="short_desc" maxlength="200" value="{{ v('short_desc') }}"></div>
+  <div class="field full"><label for="d">Full description <span class="muted">(blank line = new paragraph)</span></label><textarea id="d" name="description">{{ v('description') }}</textarea></div>
+  <div class="field"><label for="c">Category</label><select id="c" name="category">{% for k, n, _ in PRODUCT_CATS %}<option value="{{ k }}" {{ 'selected' if p and p['category']==k }}>{{ n }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="pr">Price in ₹</label><input id="pr" name="price" required inputmode="decimal" value="{{ ((p['price']/100)|round(2)|string).rstrip('0').rstrip('.') if p and p['price'] is not none and p['price'] is number else '' }}"></div>
+  <div class="field"><label for="op">Original price in ₹ <span class="muted">(only if you really sold at this price; shows a strike-through)</span></label><input id="op" name="original_price" inputmode="decimal" value="{{ ((p['original_price']/100)|round(2)|string).rstrip('0').rstrip('.') if p and p['original_price'] else '' }}"></div>
+  <div class="field"><label for="ac">Number of assets <span class="muted">(blank if not applicable)</span></label><input id="ac" name="asset_count" inputmode="numeric" value="{{ v('asset_count') }}"></div>
+  <div class="field"><label for="fm">Format (card label)</label><input id="fm" name="format" value="{{ v('format') }}"></div>
+  <div class="field"><label for="ff">File formats</label><input id="ff" name="file_formats" value="{{ v('file_formats') }}"></div>
+  <div class="field"><label for="fs">File size</label><input id="fs" name="file_size" placeholder="e.g. 240 MB" value="{{ v('file_size') }}"></div>
+  <div class="field"><label for="cp">Software compatibility</label><input id="cp" name="compat" value="{{ v('compat') }}"></div>
+  <div class="field full"><label for="inc">What's included <span class="muted">(one item per line)</span></label><textarea id="inc" name="includes" style="min-height:110px">{{ v('includes') }}</textarea></div>
+  <div class="field full"><label for="ur">Usage rights / license summary</label><textarea id="ur" name="usage_rights" style="min-height:90px">{{ v('usage_rights') }}</textarea></div>
+  <div class="field full"><label for="fq">Customer FAQs <span class="muted">(one per line: Question | Answer)</span></label><textarea id="fq" name="faqs" style="min-height:90px">{{ faq_text if faq_text is defined else '' }}</textarea></div>
+  <div class="field"><label for="th">Thumbnail image <span class="muted">(PNG/JPG/WEBP; converted to WebP)</span></label><input id="th" type="file" name="thumb" accept="image/*">
+    {% if p and p['thumb_path'] %}<p class="small muted">Current thumbnail is uploaded.</p>{% else %}<p class="small muted">No upload: a placeholder illustration is shown.</p>{% endif %}</div>
+  <div class="field"><label for="fl">Downloadable file <span class="muted">(zip multiple files together)</span></label><input id="fl" type="file" name="file">
+    {% if p and p['file_path'] %}<p class="small muted">Current: {{ p['file_name'] }}. Uploading replaces it.</p>{% else %}<p class="small" style="color:var(--warn)">No file yet. Buyers can't download until you upload one.</p>{% endif %}</div>
+  <div class="field"><label for="ts">Placeholder style</label><select id="ts" name="thumb_style">{% for s in styles %}<option {{ 'selected' if p and p['thumb_style']==s }}>{{ s }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="tsd">Placeholder seed</label><input id="tsd" name="thumb_seed" inputmode="numeric" value="{{ p['thumb_seed'] if p and p['thumb_seed'] else 1 }}"></div>
+  <div class="ck full">
+    <label><input type="checkbox" name="active" value="1" {{ 'checked' if not p or p['active'] }}> Published</label>
+    <label><input type="checkbox" name="featured" value="1" {{ 'checked' if p and p['featured'] }}> Featured</label>
+    <label><input type="checkbox" name="is_new" value="1" {{ 'checked' if p and p['is_new'] }}> New arrival</label>
+    <label><input type="checkbox" name="is_bundle" value="1" {{ 'checked' if p and p['is_bundle'] }}> Bundle</label>
+    <label><input type="checkbox" name="is_demo" value="1" {{ 'checked' if p and p['is_demo'] }}> Demonstration listing</label>
+  </div>
+  <div class="full row-act"><button class="btn btn-primary" type="submit">Save product</button><a class="btn btn-ghost" href="{{ url_for('admin_products') }}">Back to products</a></div>
+</form>
+{% endblock %}

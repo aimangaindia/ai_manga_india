@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block page %}account{% endblock %}
+{% block title %}My Account — Orders & Downloads | AI MANGA INDIA{% endblock %}
+{% block desc %}Your orders and digital downloads.{% endblock %}
+{% block content %}
+<section class="phero"><div class="wrap" style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap">
+  <div><h1>My account</h1><p>{{ user.name }} · {{ user.email }}</p></div>
+  <form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-ghost btn-sm" type="submit">Sign out</button></form>
+</div></section>
+<section class="sec" style="padding-top:28px"><div class="wrap">
+  <h2>Orders and downloads</h2>
+  <p class="small">Download links are private to your account and expire after 10 minutes. Request a new one any time. Each file can be downloaded up to {{ max_dl }} times. Need help? <a class="btn-text" href="{{ url_for('contact') }}">Contact support</a>.</p>
+  {% if user.is_admin %}<p><a class="btn btn-ghost btn-sm" href="{{ url_for('admin_home') }}">Open admin dashboard</a></p>{% endif %}
+  {% for o in orders %}
+  <div class="panel card" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px">
+      <strong>{{ o.order_no }}</strong>
+      <span class="tag {{ 'ok' if o.status=='paid' else 'demo' }}">{{ o.status|capitalize }}</span>
+    </div>
+    <p class="small muted">{{ o.created_at[:10] }} · {{ o.total|inr }}{% if o.coupon_code %} · coupon {{ o.coupon_code }}{% endif %}</p>
+    {% for it in items[o.id] %}
+    <div class="line" style="grid-template-columns:1fr auto">
+      <div><h4>{% if it.slug %}<a href="{{ url_for('product', slug=it.slug) }}">{{ it.name }}</a>{% else %}{{ it.name }}{% endif %}</h4><span class="m">{{ it.price|inr }}</span></div>
+      {% if o.status=='paid' %}<button class="btn btn-primary btn-sm" data-download="{{ it.id }}"><svg class="icon"><use href="#i-down"/></svg> Download</button>
+      {% elif o.status=='pending' %}<span class="small muted">Waiting for payment confirmation</span>
+      {% else %}<span class="small muted">Not available</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty"><svg class="icon"><use href="#i-box"/></svg><p>No orders yet.</p><a class="btn btn-primary" href="{{ url_for('shop') }}">Browse the shop</a></div>
+  {% endfor %}
+</div></section>
+{% endblock %}

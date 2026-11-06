@@ -1,0 +1,24 @@
+{% extends "policies/_base.html" %}
+{% block title %}Privacy Policy | AI MANGA INDIA{% endblock %}
+{% block h1 %}Privacy Policy{% endblock %}
+{% block body %}
+<p>This policy explains what personal information AI MANGA INDIA collects through this website, why, and the choices you have.</p>
+<h2>Information we collect</h2>
+<ul>
+<li>Account details: your name, email address and a securely hashed password.</li>
+<li>Order details: the products you buy, order totals and payment status. Payments are handled by our payment provider (Razorpay). We do not receive or store your card, UPI PIN or net banking credentials.</li>
+<li>Inquiry details: what you enter in the Hire Me form, including your name, email, budget, deadline and links.</li>
+<li>Newsletter: your email address if you subscribe.</li>
+<li>Technical data: your IP address is used for security and spam prevention, and a session cookie keeps you signed in.</li>
+</ul>
+<h2>How we use it</h2>
+<ul><li>To deliver purchases and provide downloads.</li><li>To reply to your inquiries and support requests.</li><li>To send newsletters you asked for. You can unsubscribe at any time by emailing us.</li><li>To keep the site secure and prevent abuse.</li></ul>
+<h2>Sharing</h2>
+<p>We share information only with service providers needed to run the site, such as our payment provider and hosting provider, or when required by law. We do not sell your personal information.</p>
+<h2>Cookies and local storage</h2>
+<p>We use a session cookie for sign-in and security, and your browser's local storage to remember the items in your cart. We do not use advertising cookies.</p>
+<h2>Your choices</h2>
+<p>You can ask us to access, correct or delete your personal information by emailing <a href="mailto:{{ S.support_email }}">{{ S.support_email }}</a>. Records of paid orders may be kept as required for accounting and tax purposes.</p>
+<h2>Contact</h2>
+<p>Questions about this policy: <a href="mailto:{{ S.contact_email }}">{{ S.contact_email }}</a>.</p>
+{% endblock %}

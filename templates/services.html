@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, breadcrumb_ld %}
+{% block page %}services{% endblock %}
+{% block title %}AI Video Production, Animation & Graphic Design Services | AI MANGA INDIA{% endblock %}
+{% block desc %}Hire AI MANGA INDIA for AI video production, AI video advertisements, 3D animation and storytelling, AI graphic design, AI digital art and prompt design. Request a quote.{% endblock %}
+{% block jsonld %}{{ breadcrumb_ld([{"@type":"ListItem","position":2,"name":"Services","item":site_url ~ "/services"}]) }}{% endblock %}
+{% block content %}
+<section class="phero"><div class="wrap"><h1>Services</h1><p>Tell us what you want to make. Every project is scoped with you first, so timelines, revisions and formats are agreed before work begins.</p></div></section>
+<section class="sec" style="padding-top:20px"><div class="wrap">
+  {% for s in services %}
+  <article class="svc-row" id="{{ s.slug }}">
+    <div class="svc-art"><img src="{{ url_for('art', style=s.style, seed=s.seed) }}" alt="Sample visual for {{ s.title }}" loading="lazy" width="800" height="500"></div>
+    <div>
+      <h2>{{ s.title }}</h2>
+      <p>{{ s.desc }}</p>
+      <ul class="checks">{% for i in s.bullets %}<li>{{ i }}</li>{% endfor %}</ul>
+      <div class="kv"><b>What you receive</b><span>{{ s.deliver }}</span></div>
+      <div class="kv"><b>Customization</b><span>{{ s.custom }}</span></div>
+      <a class="btn btn-primary" href="{{ url_for('contact', service=s.title) }}">Request a Quote</a>
+    </div>
+  </article>
+  {% endfor %}
+  <p class="small muted">Sample visuals above are illustrative placeholders. Timelines and pricing are agreed per project in the quote.</p>
+</div></section>
+<section class="sec alt"><div class="wrap">
+  <div class="head"><h2>Prefer to start with a ready-made pack?</h2><p>Prompt collections, templates and asset packs are available instantly in the shop.</p></div>
+  <a class="btn btn-ghost" href="{{ url_for('shop') }}">Explore Digital Products</a>
+</div></section>
+{% endblock %}

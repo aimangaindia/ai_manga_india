@@ -1,0 +1,19 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}Coupons{% endblock %}
+{% block abody %}
+<h1>Coupons</h1>
+<form class="frm" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="field"><label for="cc">Code</label><input id="cc" name="code" required placeholder="LAUNCH20" style="text-transform:uppercase"></div>
+  <div class="field"><label for="cp">Percent off <span class="muted">(0 to use amount)</span></label><input id="cp" name="percent" inputmode="numeric" value="0"></div>
+  <div class="field"><label for="ca">Flat amount off in ₹</label><input id="ca" name="amount_off" inputmode="decimal" value="0"></div>
+  <div class="field"><label for="cm">Minimum cart in ₹</label><input id="cm" name="min_total" inputmode="decimal" value="0"></div>
+  <div class="field"><label for="cu">Max uses <span class="muted">(0 = unlimited)</span></label><input id="cu" name="max_uses" inputmode="numeric" value="0"></div>
+  <div class="field"><label for="ce">Expires on <span class="muted">(optional)</span></label><input id="ce" name="expires_at" type="date"></div>
+  <div class="field full"><label for="cn">Note</label><input id="cn" name="note"></div>
+  <div class="full"><button class="btn btn-primary">Save coupon</button></div>
+</form>
+<div class="scroll-x"><table class="tbl"><thead><tr><th>Code</th><th>Discount</th><th>Used</th><th>Expires</th><th>Active</th><th></th></tr></thead><tbody>
+{% for c in rows %}<tr><td><strong>{{ c.code }}</strong><br><span class="muted small">{{ c.note }}</span></td><td>{% if c.percent %}{{ c.percent }}%{% endif %}{% if c.amount_off %} {{ c.amount_off|inr }}{% endif %}</td><td>{{ c.used }}{% if c.max_uses %} / {{ c.max_uses }}{% endif %}</td><td>{{ c.expires_at or '—' }}</td><td>{{ 'Yes' if c.active else 'No' }}</td>
+<td class="row-act"><form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="toggle" value="{{ c.code }}"><button class="btn btn-ghost btn-sm">{{ 'Disable' if c.active else 'Enable' }}</button></form>
+<form method="post" data-confirm="Delete coupon {{ c.code }}?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="delete" value="{{ c.code }}"><button class="btn btn-ghost btn-sm">Delete</button></form></td></tr>{% else %}<tr><td colspan="6" class="muted">No coupons.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}Site settings{% endblock %}
+{% block abody %}
+<h1>Site settings</h1>
+<p class="small muted">Edit homepage text, contact details and social links. Replace the placeholder email addresses and social URLs with your real ones.</p>
+<form class="frm" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% for k, label in labels.items() %}
+  <div class="field {{ 'full' if k in ('hero_subtitle','about_intro','newsletter_blurb','hero_video_url','announcement','hero_title') }}"><label for="s-{{ k }}">{{ label }}</label>
+  {% if k in ('hero_subtitle','about_intro') %}<textarea id="s-{{ k }}" name="{{ k }}" style="min-height:100px">{{ S[k] }}</textarea>{% else %}<input id="s-{{ k }}" name="{{ k }}" value="{{ S[k] }}">{% endif %}</div>
+{% endfor %}
+  <div class="full"><button class="btn btn-primary">Save settings</button></div>
+</form>
+{% endblock %}

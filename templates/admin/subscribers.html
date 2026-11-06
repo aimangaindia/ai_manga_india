@@ -1,0 +1,7 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}Newsletter{% endblock %}
+{% block abody %}
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h1>Newsletter subscribers ({{ rows|length }})</h1><a class="btn btn-ghost" href="{{ url_for('admin_subscribers', csv=1) }}">Export CSV</a></div>
+<p class="small muted">Subscribers are stored here. To send newsletters, export the CSV into your email service (Mailchimp, Brevo, etc.). Sending isn't built into this site.</p>
+<div class="scroll-x"><table class="tbl"><thead><tr><th>Email</th><th>Subscribed</th></tr></thead><tbody>{% for r in rows %}<tr><td>{{ r.email }}</td><td>{{ r.created_at[:16] }}</td></tr>{% else %}<tr><td colspan="2" class="muted">No subscribers yet.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

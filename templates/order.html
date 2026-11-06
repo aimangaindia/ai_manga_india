@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block page %}order{% endblock %}
+{% block title %}Order {{ o.order_no }} | AI MANGA INDIA{% endblock %}
+{% block desc %}Order confirmation.{% endblock %}
+{% block content %}
+<section class="phero"><div class="wrap">
+  {% if o.status == 'paid' %}<h1>Thank you. Your order is confirmed.</h1><p>Payment was verified by the server. Your files are ready below and in <a class="btn-text" href="{{ url_for('account') }}">My Account</a>.</p>
+  {% elif o.status == 'pending' %}<h1>Order received</h1><p>We're waiting for the payment provider to confirm your payment. Refresh this page in a minute. If money was deducted and this doesn't update, contact support with your order number.</p>
+  {% else %}<h1>Order {{ o.status }}</h1><p>This order isn't active. If this looks wrong, contact support with your order number.</p>{% endif %}
+</div></section>
+<section class="sec" style="padding-top:28px"><div class="wrap" style="max-width:820px">
+  <div class="panel card">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><strong>{{ o.order_no }}</strong><span class="tag {{ 'ok' if o.status=='paid' else 'demo' }}">{{ o.status|capitalize }}</span></div>
+    {% for it in items %}
+    <div class="line" style="grid-template-columns:1fr auto"><div><h4>{{ it.name }}</h4><span class="m">{{ it.price|inr }}</span></div>
+      {% if o.status=='paid' %}<button class="btn btn-primary btn-sm" data-download="{{ it.id }}"><svg class="icon"><use href="#i-down"/></svg> Download</button>{% endif %}</div>
+    {% endfor %}
+    {% if o.discount %}<div class="sum"><span>Discount ({{ o.coupon_code }})</span><span>−{{ o.discount|inr }}</span></div>{% endif %}
+    <div class="sum total"><span>Total</span><span>{{ o.total|inr }}</span></div>
+  </div>
+  <h3 style="margin-top:28px">How downloads work</h3>
+  <ul class="checks"><li>Press Download to get a private link. It expires after 10 minutes, and you can request another.</li><li>You must be signed in to this account to download.</li><li>Problems? Email <a class="btn-text" href="mailto:{{ S.support_email }}">{{ S.support_email }}</a> with {{ o.order_no }}.</li></ul>
+</div></section>
+{% endblock %}

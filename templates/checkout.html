@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block page %}checkout{% endblock %}
+{% block title %}Checkout | AI MANGA INDIA{% endblock %}
+{% block desc %}Secure checkout for digital products.{% endblock %}
+{% block content %}
+<section class="phero"><div class="wrap"><h1>Checkout</h1></div></section>
+<section class="sec" style="padding-top:24px"><div class="wrap two" id="checkout" data-rzp="{{ 'on' if RZP_CONFIGURED else 'off' }}" data-demo="{{ 'on' if DEMO_PAYMENTS else 'off' }}">
+  <div>
+    <div class="panel card"><h3>Your details</h3>
+      <p class="small">Signed in as <strong>{{ user.email }}</strong>. Your purchases and downloads are saved to this account.</p></div>
+    <div class="panel card" style="margin-top:18px"><h3>Items</h3><div id="co-lines"><div class="skel" style="height:80px"></div></div></div>
+  </div>
+  <aside class="panel card" id="co-box">
+    <h3>Payment</h3>
+    <div class="field"><label for="coupon">Coupon code <span class="muted">(optional)</span></label>
+      <div style="display:flex;gap:8px"><input id="coupon" autocomplete="off" style="text-transform:uppercase"><button class="btn btn-ghost" id="apply-coupon" type="button">Apply</button></div><div class="err" id="coupon-err"></div></div>
+    <div class="sum"><span>Subtotal</span><span id="co-sub">—</span></div>
+    <div class="sum" id="co-disc-row" hidden><span>Discount</span><span id="co-disc"></span></div>
+    <div class="sum total"><span>Total</span><span id="co-total">—</span></div>
+    <div class="form-msg" id="co-msg" role="alert"></div>
+    {% if RZP_CONFIGURED %}
+      <button class="btn btn-primary btn-block" id="pay" style="margin-top:14px">Pay securely</button>
+      <p class="small muted" style="margin-top:12px"><svg class="icon" style="display:inline;vertical-align:-3px"><use href="#i-lock"/></svg> Payment is processed by Razorpay (UPI, cards, net banking and more). We never see or store your card details.</p>
+    {% elif DEMO_PAYMENTS %}
+      <div class="notice">Test mode. A real payment gateway isn't connected, so this button creates a test order only. This mode is switched off in production.</div>
+      <button class="btn btn-primary btn-block" id="pay">Place test order</button>
+    {% else %}
+      <div class="notice">Online payment isn't switched on yet. Contact us and we'll help you place your order.</div>
+      <a class="btn btn-primary btn-block" href="{{ url_for('contact') }}">Contact support</a>
+    {% endif %}
+  </aside>
+</div></section>
+{% endblock %}

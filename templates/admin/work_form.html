@@ -1,0 +1,26 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}{{ 'Edit project' if wid else 'New project' }}{% endblock %}
+{% macro v(k) %}{{ (w[k] if w and w[k] is not none else '') }}{% endmacro %}
+{% block abody %}
+<h1>{{ 'Edit project' if wid else 'Add project' }}</h1>
+<form class="frm" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="field full"><label for="t">Title</label><input id="t" name="title" required value="{{ v('title') }}"></div>
+  <div class="field"><label for="c">Category</label><select id="c" name="category">{% for k, n in PORTFOLIO_CATS %}<option value="{{ k }}" {{ 'selected' if w and w['category']==k }}>{{ n }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="k">Label shown to visitors</label><select id="k" name="kind">{% for k, n in KINDS.items() %}<option value="{{ k }}" {{ 'selected' if w and w['kind']==k }}>{{ n }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="cn">Client name <span class="muted">(only for client projects, with permission)</span></label><input id="cn" name="client_name" value="{{ v('client_name') }}"></div>
+  <div class="field"><label for="so">Sort order <span class="muted">(lower first)</span></label><input id="so" name="sort" inputmode="numeric" value="{{ v('sort') or 0 }}"></div>
+  <div class="field full"><label for="s">Summary</label><input id="s" name="summary" maxlength="200" value="{{ v('summary') }}"></div>
+  <div class="field full"><label for="d">Description</label><textarea id="d" name="description">{{ v('description') }}</textarea></div>
+  <div class="field"><label for="tl">Tools used</label><input id="tl" name="tools" value="{{ v('tools') }}"></div>
+  <div class="field"><label for="pc">Creative process</label><input id="pc" name="process" value="{{ v('process') }}"></div>
+  <div class="field"><label for="im">Main image</label><input id="im" type="file" name="image" accept="image/*"><p class="small muted">{{ 'Uploaded image in use.' if w and w['image_path'] else 'No upload: placeholder shown.' }}</p></div>
+  <div class="field"><label for="gl">Gallery images <span class="muted">(add several)</span></label><input id="gl" type="file" name="gallery" accept="image/*" multiple>
+    <label style="margin-top:8px"><input type="checkbox" name="clear_gallery" value="1"> Clear existing gallery</label></div>
+  <div class="field full"><label for="vu">Video URL <span class="muted">(YouTube, Vimeo or a direct .mp4 link)</span></label><input id="vu" name="video_url" type="url" value="{{ v('video_url') }}"></div>
+  <div class="field"><label for="ts">Placeholder style</label><select id="ts" name="thumb_style">{% for s in styles %}<option {{ 'selected' if w and w['thumb_style']==s }}>{{ s }}</option>{% endfor %}</select></div>
+  <div class="field"><label for="tsd">Placeholder seed</label><input id="tsd" name="thumb_seed" inputmode="numeric" value="{{ w['thumb_seed'] if w and w['thumb_seed'] else 1 }}"></div>
+  <div class="ck full"><label><input type="checkbox" name="active" value="1" {{ 'checked' if not w or w['active'] }}> Published</label><label><input type="checkbox" name="featured" value="1" {{ 'checked' if w and w['featured'] }}> Featured on homepage</label></div>
+  <div class="full row-act"><button class="btn btn-primary" type="submit">Save project</button><a class="btn btn-ghost" href="{{ url_for('admin_portfolio') }}">Back</a></div>
+</form>
+{% endblock %}

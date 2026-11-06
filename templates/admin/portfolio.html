@@ -1,0 +1,11 @@
+{% extends "admin/_base.html" %}
+{% block atitle %}Portfolio{% endblock %}
+{% block abody %}
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h1>Portfolio</h1><a class="btn btn-primary" href="{{ url_for('admin_work') }}">Add project</a></div>
+<div class="scroll-x"><table class="tbl"><thead><tr><th></th><th>Title</th><th>Category</th><th>Label</th><th>Flags</th><th></th></tr></thead><tbody>
+{% for w in rows %}<tr><td><img class="thumb-s" src="{{ work_thumb(w) }}" alt=""></td><td><strong>{{ w.title }}</strong><br><span class="muted small">/portfolio/{{ w.slug }}</span></td>
+<td>{{ PCAT_NAME.get(w.category,'') }}</td><td><span class="tag {{ 'demo' if w.kind=='demo' else 'blue' }}">{{ KINDS.get(w.kind,'') }}</span></td>
+<td>{% if not w.active %}<span class="tag demo">Hidden</span> {% endif %}{% if w.featured %}<span class="tag">Featured</span>{% endif %}</td>
+<td class="row-act"><a class="btn btn-ghost btn-sm" href="{{ url_for('admin_work', wid=w.id) }}">Edit</a>
+<form method="post" action="{{ url_for('admin_work_delete', wid=w.id) }}" class="inline" data-confirm="Delete {{ w.title }}?"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-ghost btn-sm">Delete</button></form></td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

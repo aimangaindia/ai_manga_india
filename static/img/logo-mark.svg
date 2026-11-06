@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AI MANGA INDIA mark">
+  <defs>
+    <linearGradient id="g" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#397BFF"/><stop offset=".55" stop-color="#A855F7"/><stop offset="1" stop-color="#28D9FF"/>
+    </linearGradient>
+  </defs>
+  <!-- manga panel with a cut corner -->
+  <path d="M10 4h36l14 14v38a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#0B0D16" stroke="url(#g)" stroke-width="3"/>
+  <!-- M built from two strokes meeting at an AI node -->
+  <path d="M17 46V21l15 15 15-15v25" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="miter" stroke-linecap="square"/>
+  <!-- panel slash -->
+  <path d="M38 60 60 38" stroke="url(#g)" stroke-width="3" fill="none"/>
+  <circle cx="32" cy="36" r="4" fill="#28D9FF"/>
+</svg>
