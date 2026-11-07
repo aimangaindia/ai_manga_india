@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopping Cart | AI MANGA INDIA</title>
+<meta name="description" content="Review the digital products in your AI MANGA INDIA cart.">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#080A12">
+<link rel="canonical" href="https://www.example.com/cart.html">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI MANGA INDIA">
+<meta property="og:title" content="Shopping Cart | AI MANGA INDIA">
+<meta property="og:description" content="Review the digital products in your AI MANGA INDIA cart.">
+<meta property="og:url" content="https://www.example.com/cart.html">
+<meta property="og:image" content="https://www.example.com/assets/images/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/animations.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<noscript><p style="padding:16px;background:#151A2B;color:#fff;text-align:center">JavaScript is needed for the menu, shop and cart. <a href="index.html" style="text-decoration:underline">Home</a> · <a href="portfolio.html" style="text-decoration:underline">Portfolio</a> · <a href="services.html" style="text-decoration:underline">Services</a> · <a href="shop.html" style="text-decoration:underline">Shop</a> · <a href="contact.html" style="text-decoration:underline">Contact</a></p></noscript>
+<div id="site-header"></div>
+<main id="main">
+<section class="page-hero"><div class="container">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>Cart</nav>
+  <h1>Your cart</h1><p>Review your digital products before checkout.</p></div></section>
+
+<section class="section" style="padding-top:48px"><div class="container">
+  <div id="cart-empty" hidden><div class="empty-state"><i data-icon="cart"></i><h3>Your cart is empty</h3><p>Explore premium digital assets for your next project.</p><a class="btn btn-primary" href="shop.html">Browse the Digital Shop</a></div></div>
+  <div class="cart-layout" id="cart-layout"><div><div id="cart-list"></div><div class="flex mt-2"><a class="btn btn-ghost btn-sm" href="shop.html">← Continue shopping</a><button class="btn btn-ghost btn-sm" id="clear-cart" type="button">Clear cart</button></div></div>
+    <aside class="card summary"><h2 style="font-size:1.3rem">Order summary</h2>
+      <form class="coupon" data-coupon novalidate><label class="sr-only" for="cp-code">Discount code</label><input id="cp-code" placeholder="Discount code" autocomplete="off"><button class="btn btn-ghost btn-sm" type="submit">Apply</button></form><p data-coupon-msg style="font-size:.85rem;margin:0 0 10px" aria-live="polite"></p>
+      <div id="cart-totals"></div><a class="btn btn-primary btn-block mt-2" href="checkout.html">Proceed to Checkout</a>
+      <p style="font-size:.8rem;margin:14px 0 0;color:var(--text-3)">Quantity = number of licences. Digital delivery after verified payment.</p></aside></div>
+</div></section>
+</main>
+<div id="site-footer"></div>
+<script src="js/config.js" defer></script>
+<script src="js/data.js" defer></script>
+<script src="js/icons.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/filters.js" defer></script>
+<script src="js/navigation.js" defer></script>
+<script src="js/cart.js" defer></script>
+<script src="js/shop.js" defer></script>
+<script src="js/portfolio.js" defer></script>
+<script src="js/contact.js" defer></script>
+<script src="js/services.js" defer></script>
+</body>
+</html>

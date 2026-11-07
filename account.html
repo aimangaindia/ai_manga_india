@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account — Orders &amp; Downloads | AI MANGA INDIA</title>
+<meta name="description" content="Your AI MANGA INDIA orders, downloads, purchase history and support.">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#080A12">
+<link rel="canonical" href="https://www.example.com/account.html">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI MANGA INDIA">
+<meta property="og:title" content="My Account — Orders &amp; Downloads | AI MANGA INDIA">
+<meta property="og:description" content="Your AI MANGA INDIA orders, downloads, purchase history and support.">
+<meta property="og:url" content="https://www.example.com/account.html">
+<meta property="og:image" content="https://www.example.com/assets/images/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/animations.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<noscript><p style="padding:16px;background:#151A2B;color:#fff;text-align:center">JavaScript is needed for the menu, shop and cart. <a href="index.html" style="text-decoration:underline">Home</a> · <a href="portfolio.html" style="text-decoration:underline">Portfolio</a> · <a href="services.html" style="text-decoration:underline">Services</a> · <a href="shop.html" style="text-decoration:underline">Shop</a> · <a href="contact.html" style="text-decoration:underline">Contact</a></p></noscript>
+<div id="site-header"></div>
+<main id="main">
+<section class="page-hero"><div class="container">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>Account</nav>
+  <h1>My account</h1><p>Orders, downloads, purchase history and support in one place.</p></div></section>
+
+<section class="section" style="padding-top:40px"><div class="container">
+  <div class="notice info" style="margin-bottom:28px"><p><strong>Accounts need a backend.</strong> Sign-in, orders and protected downloads are built to connect to a server (see README → Backend roadmap). Until then this page shows the structure customers will see.</p></div>
+  <div class="tabs" role="tablist" aria-label="Account sections">
+    <button class="tab" role="tab" id="tab-orders" aria-controls="panel-orders" aria-selected="true">My Orders</button><button class="tab" role="tab" id="tab-downloads" aria-controls="panel-downloads" aria-selected="false">My Downloads</button>
+    <button class="tab" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false">Purchase History</button><button class="tab" role="tab" id="tab-details" aria-controls="panel-details" aria-selected="false">Account Details</button>
+    <button class="tab" role="tab" id="tab-support" aria-controls="panel-support" aria-selected="false">Support</button></div>
+  <div class="tab-panel" id="panel-orders" role="tabpanel" aria-labelledby="tab-orders"><div class="empty-state"><i data-icon="package"></i><h3>No orders yet</h3><p>Orders appear here after a verified payment.</p><a class="btn btn-primary" href="shop.html">Browse the Digital Shop</a></div></div>
+  <div class="tab-panel" id="panel-downloads" role="tabpanel" aria-labelledby="tab-downloads" hidden>
+    <h2 style="font-size:1.4rem">Delivery experience — layout preview</h2><p>After a verified purchase customers see an order confirmation like this. <strong>It's a preview with no real order or file.</strong></p>
+    <div class="card" style="max-width:720px"><span class="tag demo">Preview — not a real order</span><h3 style="margin-top:14px">Purchase confirmed</h3>
+      <table class="spec"><tr><th>Order reference</th><td>AMI-XXXXXX (assigned by the server)</td></tr><tr><th>Product</th><td>Product name · format · size</td></tr><tr><th>Licence</th><td>Licence summary with a link to the full <a href="license.html" style="text-decoration:underline">License Policy</a></td></tr><tr><th>Support</th><td><a data-email href="mailto:hello@example.com">hello@example.com</a></td></tr></table>
+      <button class="btn btn-primary" type="button" disabled><i data-icon="download"></i> Download (available after verified payment)</button>
+      <p style="font-size:.82rem;margin:14px 0 0">Download links are personal, expire after a short time, and can be regenerated from this page. Permanent public links are never used for paid products.</p></div></div>
+  <div class="tab-panel" id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden><div class="empty-state"><i data-icon="clock"></i><h3>No purchase history</h3><p>Your receipts and past orders will be listed here.</p></div></div>
+  <div class="tab-panel" id="panel-details" role="tabpanel" aria-labelledby="tab-details" hidden><div class="empty-state"><i data-icon="user"></i><h3>Sign-in not connected</h3><p>Name, email and password management will appear here once accounts are enabled.</p></div></div>
+  <div class="tab-panel" id="panel-support" role="tabpanel" aria-labelledby="tab-support" hidden><div class="card" style="max-width:640px"><h3>Need help?</h3><p>Questions about an order, a download, or a licence? Reach us and include your order reference.</p>
+    <div class="flex"><a class="btn btn-primary" href="contact.html">Contact support</a><a class="btn btn-ghost" href="faq.html">Read the FAQ</a><a class="btn btn-ghost" data-wa href="#">WhatsApp</a></div></div></div>
+</div></section>
+</main>
+<div id="site-footer"></div>
+<script src="js/config.js" defer></script>
+<script src="js/data.js" defer></script>
+<script src="js/icons.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/filters.js" defer></script>
+<script src="js/navigation.js" defer></script>
+<script src="js/cart.js" defer></script>
+<script src="js/shop.js" defer></script>
+<script src="js/portfolio.js" defer></script>
+<script src="js/contact.js" defer></script>
+<script src="js/services.js" defer></script>
+</body>
+</html>
