@@ -16,13 +16,13 @@ window.AMI_CONFIG = {
   // put it in assets/images/ and set qrImage, e.g. qrImage: "assets/images/qr-instagram.png".
   socialProfiles: [
     { id: "youtube",   name: "YouTube",   url: "https://www.youtube.com/@aimangaindia", handle: "@aimangaindia", qrImage: "" },
-    { id: "instagram", name: "Instagram", url: "https://www.instagram.com/ai.manga.india.in", handle: "@ai.manga.india.in", qrImage: "" },
+    { id: "instagram", name: "Instagram", url: "https://www.instagram.com/ai.manga.india.in", handle: "@ai.manga.india.in", qrImage: "assets/images/qr/instagram-qr.png" },
     { id: "linkedin",  name: "LinkedIn",  url: "", handle: "", qrImage: "" },
     { id: "facebook",  name: "Facebook",  url: "", handle: "", qrImage: "" },
     { id: "xsocial",   name: "X (Twitter)", url: "", handle: "", qrImage: "" },
     { id: "telegram",  name: "Telegram",  url: "", handle: "", qrImage: "" },
     { id: "pinterest", name: "Pinterest", url: "", handle: "", qrImage: "" },
-    { id: "snapchat",   name: "Snapchat",  url: "https://www.snapchat.com/add/faijan_shekh28", handle: "faijan_shekh28", qrImage: "" },
+    { id: "snapchat",   name: "Snapchat",  url: "https://www.snapchat.com/add/faijan_shekh28", handle: "faijan_shekh28", qrImage: "assets/images/qr/snapchat-qr.jpg" },
     { id: "whatsapp",  name: "WhatsApp",  url: "", handle: "", qrImage: "" }   // e.g. https://wa.me/919876543210
   ],
 

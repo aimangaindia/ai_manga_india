@@ -120,12 +120,12 @@
       return;
     }
     root.innerHTML = `<div class="container">${head}<div class="social-grid">${list.map(p => {
-      const qr = p.qrImage ? `<img src="${AMI.esc(p.qrImage)}" alt="QR code for ${AMI.esc(p.name)}" width="160" height="160" loading="lazy">` : qrFor(p);
+      const qr = p.qrImage ? `<img src="${AMI.esc(p.qrImage)}" alt="QR code for ${AMI.esc(p.name)}" loading="lazy" decoding="async">` : qrFor(p);
       return `<article class="card social-card reveal" data-id="${AMI.esc(p.id)}">
         <div class="social-top"><span class="icon-wrap">${AMI.icon(p.icon || p.id)}</span><div><h3>${AMI.esc(p.name)}</h3><p class="handle">${AMI.esc(p.handle || p.href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</p></div></div>
         <div class="qr-box${p.qrImage ? " is-img" : ""}">${qr}</div>
         <div class="social-actions"><a class="btn btn-primary" href="${AMI.esc(p.href)}" target="_blank" rel="noopener noreferrer">Open ${AMI.esc(p.name)}</a>
-        ${p.qrImage ? "" : `<button class="btn btn-ghost" type="button" data-dl="${AMI.esc(p.id)}">Download QR</button>`}</div></article>`; }).join("")}</div></div>`;
+        ${p.qrImage ? `<a class="btn btn-ghost" href="${AMI.esc(p.qrImage)}" download="ai-manga-india-${AMI.esc(p.id)}-qr${AMI.esc((p.qrImage.match(/\.\w+$/) || [".png"])[0])}">Download QR</a>` : `<button class="btn btn-ghost" type="button" data-dl="${AMI.esc(p.id)}">Download QR</button>`}</div></article>`; }).join("")}</div></div>`;
     root.addEventListener("click", e => { const b = e.target.closest("[data-dl]"); if (!b) return; const p = list.find(x => x.id === b.dataset.dl);
       download(p, qrFor(p)); AMI.toast(`${p.name} QR code saved`, "success"); });
     AMI.observeReveal(root);
