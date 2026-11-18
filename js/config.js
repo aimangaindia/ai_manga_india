@@ -8,7 +8,7 @@ window.AMI_CONFIG = {
   currency: "INR", locale: "en-IN",
 
   // ---- contact details: PLACEHOLDERS until you provide real ones ----
-  contactEmail: "hello@example.com",
+  contactEmail: "ai.mangaindia.in@gmail.com",
   whatsappNumber: "910000000000",               // international format, digits only (no +)
   // ---- social media: paste your profile links below. A card + QR code appears for every link you fill in. ----
   // Leave url "" to hide a platform. `handle` is the text shown on the card (e.g. "@aimangaindia").
