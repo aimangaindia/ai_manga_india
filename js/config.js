@@ -22,6 +22,7 @@ window.AMI_CONFIG = {
     { id: "xsocial",   name: "X (Twitter)", url: "", handle: "", qrImage: "" },
     { id: "telegram",  name: "Telegram",  url: "", handle: "", qrImage: "" },
     { id: "pinterest", name: "Pinterest", url: "", handle: "", qrImage: "" },
+    { id: "snapchat",   name: "Snapchat",  url: "https://www.snapchat.com/add/faijan_shekh28", handle: "faijan_shekh28", qrImage: "" },
     { id: "whatsapp",  name: "WhatsApp",  url: "", handle: "", qrImage: "" }   // e.g. https://wa.me/919876543210
   ],
 

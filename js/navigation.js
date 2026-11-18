@@ -12,7 +12,7 @@
   ];
   const current = ([, , m]) => (m.includes(page) ? ' aria-current="page"' : "");
 
-  const socialLinks = () => ["youtube", "instagram", "linkedin", "facebook", "xsocial", "telegram", "pinterest", "whatsapp"].filter(k => cfg.social[k])
+  const socialLinks = () => ["youtube", "instagram", "linkedin", "facebook", "xsocial", "telegram", "snapchat", "pinterest", "whatsapp"].filter(k => cfg.social[k])
     .map(k => `<a href="${AMI.esc(cfg.social[k])}" target="_blank" rel="noopener noreferrer" aria-label="${(cfg.socialProfiles.find(p => p.id === k) || {}).name || k}">${ic(k)}</a>`).join("");
 
   const headerHTML = () => `
