@@ -15,7 +15,7 @@ window.AMI_CONFIG = {
   // QR codes are generated automatically from the link. To use your own branded QR image instead,
   // put it in assets/images/ and set qrImage, e.g. qrImage: "assets/images/qr-instagram.png".
   socialProfiles: [
-    { id: "youtube",   name: "YouTube",   url: "https://www.youtube.com/@aimangaindia", handle: "@aimangaindia", qrImage: "" },
+    { id: "youtube",   name: "YouTube",   url: "https://www.youtube.com/@aimangaindia", handle: "@aimangaindia", qrImage: "assets/images/qr/youtube-qr.jpg" },
     { id: "instagram", name: "Instagram", url: "https://www.instagram.com/ai.manga.india.in", handle: "@ai.manga.india.in", qrImage: "assets/images/qr/instagram-qr.png" },
     { id: "linkedin",  name: "LinkedIn",  url: "", handle: "", qrImage: "" },
     { id: "facebook",  name: "Facebook",  url: "", handle: "", qrImage: "" },
