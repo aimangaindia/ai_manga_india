@@ -72,13 +72,33 @@
     apply(best); drawFormat(best); return mod;
   }
 
-  /** SVG string for a QR code (dark modules on white, 4-module quiet zone so it scans on a dark page). */
-  AMI.qrSvg = (text, label) => {
+  /** Branded QR card as an SVG string: round dots in the platform colour, rounded finder squares,
+      the platform icon in the middle and the handle underneath. Stays scannable (error-correction M,
+      logo covers only ~5% of the code). o = { fg, bg, icon, caption } */
+  AMI.qrSvg = (text, label, o = {}) => {
     const m = qrMatrix(text); if (!m) return "";
-    const n = m.length, q = 4; let d = "";
-    m.forEach((row, y) => { let x = 0; while (x < n) { if (row[x]) { let w = 1; while (x + w < n && row[x + w]) w++; d += `M${x + q} ${y + q}h${w}v1h-${w}z`; x += w; } else x++; } });
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n + q * 2} ${n + q * 2}" shape-rendering="crispEdges" role="img" aria-label="${AMI.esc(label || "QR code")}"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#0b0d16"/></svg>`;
+    const n = m.length, q = 4, fg = o.fg || "#0b0d16", bg = o.bg || "#ffffff", cap = (o.caption || "").toUpperCase();
+    const W = n + q * 2, H = W + (cap ? 4.5 : 0);
+    let clear = Math.round(n * 0.17); if (clear % 2 === 0) clear++; clear = Math.max(clear, 5);
+    const c0 = Math.floor((n - clear) / 2), inFinder = (x, y) => (x < 8 && y < 8) || (x >= n - 8 && y < 8) || (x < 8 && y >= n - 8);
+    let dots = "";
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      if (!m[y][x] || inFinder(x, y)) continue;
+      if (o.icon && Math.hypot(x + .5 - n / 2, y + .5 - n / 2) < clear / 2 + .6) continue;
+      dots += `<circle cx="${x + q + .5}" cy="${y + q + .5}" r=".47"/>`;
+    }
+    const finder = (x, y) => `<rect x="${x + q + .5}" y="${y + q + .5}" width="6" height="6" rx="0.5" fill="none" stroke="${fg}" stroke-width="1"/><rect x="${x + q + 2}" y="${y + q + 2}" width="3" height="3" rx="0.3" fill="${fg}"/>`;
+    const mid = W / 2, r = (clear + 1) / 2 + .2, k = (clear - .6) / 24;
+    const logo = o.icon ? `<circle cx="${mid}" cy="${mid}" r="${r}" fill="${bg}"/><g transform="translate(${mid - 12 * k} ${mid - 12 * k}) scale(${k})" fill="none" stroke="${fg}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${AMI.iconInner(o.icon)}</g>` : "";
+    const fs = Math.min(2.7, (W - 4) / (cap.length * .66 || 1));
+    const caption = cap ? `<text x="${mid}" y="${W + 1.6}" text-anchor="middle" dominant-baseline="middle" font-family="Arial Narrow, Arial, Helvetica, sans-serif" font-weight="700" font-size="${fs.toFixed(2)}" letter-spacing=".08" fill="${fg}">${AMI.esc(cap)}</text>` : "";
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${AMI.esc(label || "QR code")}"><rect width="${W}" height="${H}" rx="3" fill="${bg}"/><g fill="${fg}">${dots}</g>${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}${logo}${caption}</svg>`;
   };
+
+  // Brand look of each platform's QR card: deep brand shades, so contrast on the light card stays high and the code scans reliably.
+  const BRAND = { youtube: { fg: "#b30b05" }, instagram: { fg: "#8f5300" }, snapchat: { fg: "#111111", bg: "#fffc00" }, linkedin: { fg: "#07458a" },
+    facebook: { fg: "#0f4bb8" }, xsocial: { fg: "#111111" }, telegram: { fg: "#0b6288" }, pinterest: { fg: "#9e0017" }, whatsapp: { fg: "#0a6638" } };
+  const qrFor = p => AMI.qrSvg(p.href, `QR code for ${p.name}`, { ...(BRAND[p.id] || {}), icon: p.icon || p.id, caption: p.handle });
 
   /* ---------- Section rendering ---------- */
   const cleanUrl = u => { try { const x = new URL(String(u).trim()); return /^https?:$/.test(x.protocol) ? x.href : ""; } catch { return ""; } };
@@ -86,7 +106,7 @@
 
   function download(p, svg) {
     const img = new Image(), blob = new Blob([svg], { type: "image/svg+xml" }), url = URL.createObjectURL(blob);
-    img.onload = () => { const c = document.createElement("canvas"); c.width = c.height = 1024; const g = c.getContext("2d"); g.imageSmoothingEnabled = false; g.drawImage(img, 0, 0, 1024, 1024); URL.revokeObjectURL(url);
+    img.onload = () => { const c = document.createElement("canvas"); const vb = svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/); c.width = 1024; c.height = Math.round(1024 * vb[2] / vb[1]); const g = c.getContext("2d"); g.imageSmoothingEnabled = false; g.drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
       const a = document.createElement("a"); a.download = `ai-manga-india-${p.id}-qr.png`; a.href = c.toDataURL("image/png"); a.click(); };
     img.src = url;
   }
@@ -100,14 +120,14 @@
       return;
     }
     root.innerHTML = `<div class="container">${head}<div class="social-grid">${list.map(p => {
-      const qr = p.qrImage ? `<img src="${AMI.esc(p.qrImage)}" alt="QR code for ${AMI.esc(p.name)}" width="160" height="160" loading="lazy">` : AMI.qrSvg(p.href, `QR code for ${p.name}`);
+      const qr = p.qrImage ? `<img src="${AMI.esc(p.qrImage)}" alt="QR code for ${AMI.esc(p.name)}" width="160" height="160" loading="lazy">` : qrFor(p);
       return `<article class="card social-card reveal" data-id="${AMI.esc(p.id)}">
         <div class="social-top"><span class="icon-wrap">${AMI.icon(p.icon || p.id)}</span><div><h3>${AMI.esc(p.name)}</h3><p class="handle">${AMI.esc(p.handle || p.href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</p></div></div>
-        <div class="qr-box">${qr}</div>
+        <div class="qr-box${p.qrImage ? " is-img" : ""}">${qr}</div>
         <div class="social-actions"><a class="btn btn-primary" href="${AMI.esc(p.href)}" target="_blank" rel="noopener noreferrer">Open ${AMI.esc(p.name)}</a>
         ${p.qrImage ? "" : `<button class="btn btn-ghost" type="button" data-dl="${AMI.esc(p.id)}">Download QR</button>`}</div></article>`; }).join("")}</div></div>`;
     root.addEventListener("click", e => { const b = e.target.closest("[data-dl]"); if (!b) return; const p = list.find(x => x.id === b.dataset.dl);
-      download(p, AMI.qrSvg(p.href, `QR code for ${p.name}`)); AMI.toast(`${p.name} QR code saved`, "success"); });
+      download(p, qrFor(p)); AMI.toast(`${p.name} QR code saved`, "success"); });
     AMI.observeReveal(root);
   }
 

@@ -45,5 +45,6 @@
   const icon = (name, cls = "") => `<svg class="icon ${cls}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${P[name] || ""}</svg>`;
   window.AMI = window.AMI || {};
   window.AMI.icon = icon;
+  window.AMI.iconInner = name => P[name] || "";
   window.AMI.hydrateIcons = (root = document) => root.querySelectorAll("i[data-icon]").forEach(el => { el.outerHTML = icon(el.dataset.icon, el.className); });
 })();
