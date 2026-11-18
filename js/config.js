@@ -18,7 +18,7 @@ window.AMI_CONFIG = {
     { id: "youtube",   name: "YouTube",   url: "https://www.youtube.com/@aimangaindia", handle: "@aimangaindia", qrImage: "assets/images/qr/youtube-qr.jpg" },
     { id: "instagram", name: "Instagram", url: "https://www.instagram.com/ai.manga.india.in", handle: "@ai.manga.india.in", qrImage: "assets/images/qr/instagram-qr.png" },
     { id: "linkedin",  name: "LinkedIn",  url: "", handle: "", qrImage: "" },
-    { id: "facebook",  name: "Facebook",  url: "https://www.facebook.com/profile.php?id=61588187667972", handle: "AI MANGA INDIA", qrImage: "" },
+    { id: "facebook",  name: "Facebook",  url: "https://www.facebook.com/profile.php?id=61588187667972", handle: "AI MANGA INDIA", qrImage: "assets/images/qr/facebook-qr.jpg" },
     { id: "xsocial",   name: "X (Twitter)", url: "", handle: "", qrImage: "" },
     { id: "telegram",  name: "Telegram",  url: "", handle: "", qrImage: "" },
     { id: "pinterest", name: "Pinterest", url: "", handle: "", qrImage: "" },
