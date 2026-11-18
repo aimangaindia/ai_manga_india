@@ -131,5 +131,12 @@
     AMI.observeReveal(root);
   }
 
-  AMI.onReady(() => { const root = AMI.$("#social-section"); if (root) render(root); });
+  /* Icon row (contact page): one round icon per profile that has a link; updates itself when links are added to config.js */
+  function renderIcons(box) {
+    const list = profiles(); const wrap = box.closest("[data-social-wrap]");
+    box.innerHTML = list.map(p => `<a href="${AMI.esc(p.href)}" target="_blank" rel="noopener noreferrer" aria-label="${AMI.esc(p.name)}" title="${AMI.esc(p.name)}">${AMI.icon(p.icon || p.id)}</a>`).join("");
+    if (wrap) wrap.hidden = !list.length;
+  }
+
+  AMI.onReady(() => { const root = AMI.$("#social-section"); if (root) render(root); AMI.$$("[data-social-icons]").forEach(renderIcons); });
 })();

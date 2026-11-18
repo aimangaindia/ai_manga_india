@@ -89,6 +89,5 @@
     inquiry(); newsletter();
     AMI.$$("[data-wa]").forEach(a => { a.href = `https://wa.me/${cfg.whatsappNumber}?text=${encodeURIComponent("Hi AI MANGA INDIA, I'd like to discuss a project.")}`; a.target = "_blank"; a.rel = "noopener"; });
     AMI.$$("[data-email]").forEach(a => { a.href = `mailto:${cfg.contactEmail}`; a.textContent = cfg.contactEmail; });
-    AMI.$$("[data-social]").forEach(a => { const u = cfg.social[a.dataset.social]; if (u) a.href = u; else (a.closest("li") || a).hidden = true; });
   });
 })();
