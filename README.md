@@ -76,6 +76,16 @@ To test on your phone (same Wi-Fi): `python3 -m http.server 8000 --bind 0.0.0.0`
 * **Logo / favicon** → `assets/logos/`, `assets/icons/favicon.svg`.
 * **Legal pages** are **draft templates** — have them reviewed by a legal professional.
 
+## Add your social media links + QR codes
+
+Open `js/config.js` and paste each profile link into `socialProfiles` (leave `url: ""` to hide a platform):
+
+```js
+{ id: "instagram", name: "Instagram", url: "https://www.instagram.com/yourname/", handle: "@yourname", qrImage: "" },
+```
+
+A card with an auto-generated, scannable QR code and a "Download QR" (PNG) button then appears in the **Follow the studio** section on the Home and Contact pages, and the icon appears in the footer. To use your own branded QR image instead, put it in `assets/images/` and set `qrImage`. With no links added the section shows an honest "coming soon" note. WhatsApp link format: `https://wa.me/919876543210`.
+
 ## Connect the forms (no backend needed)
 
 Create a form endpoint with a service such as Formspree or Web3Forms, then set `contactFormEndpoint` / `newsletterEndpoint` in `config.js`. The page reports success **only** after a 2xx response. For newsletters use your email provider's form/API endpoint.

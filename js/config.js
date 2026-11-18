@@ -10,12 +10,20 @@ window.AMI_CONFIG = {
   // ---- contact details: PLACEHOLDERS until you provide real ones ----
   contactEmail: "hello@example.com",
   whatsappNumber: "910000000000",               // international format, digits only (no +)
-  social: {
-    youtube: "https://www.youtube.com/",         // ← your channel URL
-    instagram: "https://www.instagram.com/",
-    linkedin: "https://www.linkedin.com/",
-    pinterest: ""                                // optional; leave empty to hide
-  },
+  // ---- social media: paste your profile links below. A card + QR code appears for every link you fill in. ----
+  // Leave url "" to hide a platform. `handle` is the text shown on the card (e.g. "@aimangaindia").
+  // QR codes are generated automatically from the link. To use your own branded QR image instead,
+  // put it in assets/images/ and set qrImage, e.g. qrImage: "assets/images/qr-instagram.png".
+  socialProfiles: [
+    { id: "youtube",   name: "YouTube",   url: "", handle: "", qrImage: "" },
+    { id: "instagram", name: "Instagram", url: "", handle: "", qrImage: "" },
+    { id: "linkedin",  name: "LinkedIn",  url: "", handle: "", qrImage: "" },
+    { id: "facebook",  name: "Facebook",  url: "", handle: "", qrImage: "" },
+    { id: "xsocial",   name: "X (Twitter)", url: "", handle: "", qrImage: "" },
+    { id: "telegram",  name: "Telegram",  url: "", handle: "", qrImage: "" },
+    { id: "pinterest", name: "Pinterest", url: "", handle: "", qrImage: "" },
+    { id: "whatsapp",  name: "WhatsApp",  url: "", handle: "", qrImage: "" }   // e.g. https://wa.me/919876543210
+  ],
 
   // ---- forms ----
   // Paste a form-service endpoint (e.g. Formspree "https://formspree.io/f/xxxx", Web3Forms, your own API).
@@ -42,3 +50,7 @@ window.AMI_CONFIG = {
   // Optional hero showreel: put a short muted mp4/webm in assets/videos/ and set the path. Empty = animated image hero.
   heroVideo: ""                                  // e.g. "assets/videos/showreel.mp4"
 };
+
+// Older code (footer icons, contact page links) reads a simple { id: url } map; build it from socialProfiles.
+window.AMI_CONFIG.social = {};
+window.AMI_CONFIG.socialProfiles.forEach(p => { if (p.url) window.AMI_CONFIG.social[p.id] = p.url; });

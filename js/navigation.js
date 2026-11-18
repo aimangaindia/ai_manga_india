@@ -12,8 +12,8 @@
   ];
   const current = ([, , m]) => (m.includes(page) ? ' aria-current="page"' : "");
 
-  const socialLinks = () => ["youtube", "instagram", "linkedin", "pinterest"].filter(k => cfg.social[k])
-    .map(k => `<a href="${AMI.esc(cfg.social[k])}" target="_blank" rel="noopener noreferrer" aria-label="${k[0].toUpperCase() + k.slice(1)}">${ic(k)}</a>`).join("");
+  const socialLinks = () => ["youtube", "instagram", "linkedin", "facebook", "xsocial", "telegram", "pinterest", "whatsapp"].filter(k => cfg.social[k])
+    .map(k => `<a href="${AMI.esc(cfg.social[k])}" target="_blank" rel="noopener noreferrer" aria-label="${(cfg.socialProfiles.find(p => p.id === k) || {}).name || k}">${ic(k)}</a>`).join("");
 
   const headerHTML = () => `
     <a class="skip-link" href="#main">Skip to content</a>

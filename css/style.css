@@ -325,3 +325,12 @@ details.acc .acc-body { padding: 0 24px 22px; } details.acc .acc-body p:last-chi
 .pcard-badges .tag, .prod-media .tag { background: rgba(8,10,18,.78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 
 .field, .form-grid > *, .cart-row > *, .summary { min-width: 0; } .field label { overflow-wrap: anywhere; } .pay-methods .tag { white-space: normal; }
+
+/* ---- social section ---- */
+.social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 20px; }
+.social-card { display: flex; flex-direction: column; gap: 18px; padding: 22px; min-width: 0; }
+.social-top { display: flex; align-items: center; gap: 14px; min-width: 0; } .social-top > div { min-width: 0; } .social-top h3 { font-size: 1.1rem; }
+.social-top .handle { color: var(--muted); font-size: .85rem; overflow-wrap: anywhere; margin: 2px 0 0; }
+.qr-box { background: #fff; border-radius: 14px; padding: 10px; width: min(100%, 190px); aspect-ratio: 1; margin-inline: auto; display: grid; place-items: center; }
+.qr-box svg, .qr-box img { width: 100%; height: 100%; display: block; }
+.social-actions { display: grid; gap: 10px; margin-top: auto; } .social-actions .btn { width: 100%; justify-content: center; }
