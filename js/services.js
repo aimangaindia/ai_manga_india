@@ -8,7 +8,7 @@
   const card = s => `
     <article class="card service-card reveal" id="${s.id}"><div class="service-num">SERVICE ${s.num}</div><div class="icon-wrap">${ic(s.icon)}</div>
       <h3>${AMI.esc(s.title)}</h3><p>${AMI.esc(s.desc)}</p>
-      <ul>${s.includes.map(i => `<li>${ic("check")}<span>${AMI.esc(i)}</span></li>`).join("")}</ul>
+      <ul>${s.includes.slice(0, 6).map(i => `<li>${ic("check")}<span>${AMI.esc(i)}</span></li>`).join("")}${s.includes.length > 6 ? `<li class="more"><a href="services.html#${s.id}">+ ${s.includes.length - 6} more — see full list</a></li>` : ""}</ul>
       <a class="btn btn-primary btn-sm" href="${quoteHref(s)}">${AMI.esc(s.cta)} ${ic("arrow-right")}</a></article>`;
 
   function services() {
@@ -16,9 +16,10 @@
     const grid = AMI.$("#services-grid"); if (!grid) return;
     grid.innerHTML = D.services.map(card).join("");
     AMI.$("#services-details").innerHTML = D.services.map(s => `<details class="acc" id="d-${s.id}"><summary>${AMI.esc(s.title)} — details &amp; customisation${ic("plus")}</summary>
-      <div class="acc-body"><p>${AMI.esc(s.custom)}</p><p style="font-size:.9rem">Sample visuals: see <a href="portfolio.html${s.id === "custom" ? "" : "#" + (s.id === "video" ? "video" : s.id)}" style="text-decoration:underline">related portfolio work</a>. We don't promise unlimited revisions, fixed turnaround times or specific resolutions unless they're written into your quote.</p>
+      <div class="acc-body"><p><strong>Everything included</strong></p><ul class="full-list">${s.includes.map(i => `<li>${AMI.esc(i)}</li>`).join("")}</ul><p>${AMI.esc(s.custom)}</p><p style="font-size:.9rem">Sample visuals: see <a href="portfolio.html${(s.id === "custom" || s.id === "packages") ? "" : "#" + ({ animation: "manga" }[s.id] || s.id)}" style="text-decoration:underline">related portfolio work</a>. We don't promise unlimited revisions, fixed turnaround times or specific resolutions unless they're written into your quote.</p>
       <a class="btn btn-ghost btn-sm" href="${quoteHref(s)}">Request a Quote</a></div></details>`).join("");
-    if (location.hash) { const t = AMI.$(`#d-${location.hash.slice(1)}`); t && (t.open = true); }
+    const openDetails = () => { const t = location.hash && AMI.$(`#d-${location.hash.slice(1)}`); if (t) t.open = true; };
+    openDetails(); window.addEventListener("hashchange", openDetails);
     AMI.observeReveal(grid);
   }
 
@@ -54,5 +55,12 @@
     const h = tabs.find(t => "#" + t.id.replace("tab-", "") === location.hash); select(h || tabs[0]);
   }
 
-  AMI.onReady(() => { services(); faq(); testimonials(); marquee(); accountTabs(); });
+  function homeCategories() {
+    const el = AMI.$("#home-cats"); if (!el) return;
+    el.innerHTML = Object.entries(D.productCategories).map(([id, c]) => `<a class="card cat-tile reveal" href="shop.html?cat=${id}">
+      <span class="icon-wrap">${ic(c.icon)}</span><h3>${AMI.esc(c.label)}</h3><p>${AMI.esc(c.blurb)}</p><span class="cat-go">Browse ${ic("arrow-right")}</span></a>`).join("");
+    AMI.observeReveal(el);
+  }
+
+  AMI.onReady(() => { homeCategories(); services(); faq(); testimonials(); marquee(); accountTabs(); });
 })();

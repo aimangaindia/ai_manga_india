@@ -5,11 +5,10 @@
    ========================================================================== */
 window.AMI_DATA = (() => {
   const productCategories = {
-    video:   { label: "AI Video Assets",         page: "AI Video Assets" },
-    prompts: { label: "AI Prompts & Workflows",  page: "AI Prompts & Workflows" },
-    manga:   { label: "AI Manga Assets",         page: "AI Manga Assets" },
-    graphic: { label: "Graphic Design Assets",   page: "Graphic Design Assets" },
-    art:     { label: "Digital Art Collections", page: "Digital Art Collections" }
+    video:     { label: "Video Assets",           page: "Video Assets",           icon: "video",   blurb: "Cinematic video backgrounds, overlays, motion graphics assets, video templates, B-roll collections and animated backgrounds." },
+    graphic:   { label: "Graphic Design Assets",  page: "Graphic Design Assets",  icon: "palette", blurb: "Social media, YouTube thumbnail, poster and banner templates, digital design elements and creative overlay packs." },
+    art:       { label: "Digital Art Assets",     page: "Digital Art Assets",     icon: "image",   blurb: "Wallpaper and fantasy background collections, character artwork, manga background packs, digital posters and illustration packs." },
+    resources: { label: "Creative Resources",     page: "Creative Resources",     icon: "sparkles", blurb: "Prompt collections for video, images and storytelling, character design and storyboard templates, script packs, planners and workflow guides." }
   };
 
   const portfolioCategories = {
@@ -68,18 +67,18 @@ window.AMI_DATA = (() => {
     P("loop-backgrounds", "Looping Background Videos", "video", 499, { short: "Seamless abstract loops for streams, lyric videos and overlays.", format: "MP4", compat: "Any video editor",
       files: 12, size: "≈ 600 MB (sample)", resolution: "1920×1080 (sample)", isNew: true, created: "2026-10-20",
       long: "Sample listing for looping backgrounds. Replace with real details.", includes: ["12 looping backgrounds (sample count)", "License file"], license: LIC }),
-    P("prompt-starter", "AI Prompt Starter Pack", "prompts", 149, { short: "A compact set of image-generation prompts to get started fast.", format: "PDF + TXT", compat: "Any AI image tool",
+    P("prompt-starter", "AI Prompt Starter Pack", "resources", 149, { short: "A compact set of image-generation prompts to get started fast.", format: "PDF + TXT", compat: "Any AI image tool",
       files: 2, size: "< 5 MB (sample)", created: "2026-02-02",
       long: "Sample low-price starter listing. Replace with your own prompts and an honest prompt count.", includes: ["Prompt collection (PDF)", "Copy-ready TXT file"], license: LIC }),
-    P("prompt-cinematic", "Cinematic Video Prompt Collection", "prompts", 449, { short: "Structured prompts for cinematic AI video scenes and camera moves.", format: "PDF + Notion + TXT", compat: "Any AI video tool",
+    P("prompt-cinematic", "Cinematic Video Prompt Collection", "resources", 449, { short: "Structured prompts for cinematic AI video scenes and camera moves.", format: "PDF + Notion + TXT", compat: "Any AI video tool",
       files: 3, size: "< 10 MB (sample)", featured: true, bundle: true, created: "2026-04-18", sale: true, original: 599,
       long: "Sample listing with a sale price to demonstrate the layout. Use real discounts only.", includes: ["Prompt library (PDF)", "Editable TXT", "Quick-start guide"], license: LIC }),
-    P("character-prompts", "Character Consistency Prompts", "prompts", 349, { short: "Prompt patterns for keeping characters consistent across scenes.", format: "PDF", compat: "Any AI image tool",
+    P("character-prompts", "Character Consistency Prompts", "resources", 349, { short: "Prompt patterns for keeping characters consistent across scenes.", format: "PDF", compat: "Any AI image tool",
       files: 1, size: "< 5 MB (sample)", isNew: true, created: "2026-10-28", long: "Sample listing. Replace with real content.", includes: ["Prompt guide (PDF)"], license: LIC }),
-    P("manga-backgrounds", "Manga-Style Backgrounds", "manga", 599, { short: "Black-and-white and colour backgrounds for comics and manga panels.", format: "PNG", compat: "Clip Studio, Photoshop, Procreate",
+    P("manga-backgrounds", "Manga-Style Backgrounds", "art", 599, { short: "Black-and-white and colour backgrounds for comics and manga panels.", format: "PNG", compat: "Clip Studio, Photoshop, Procreate",
       files: 30, size: "≈ 400 MB (sample)", resolution: "3000×2000 (sample)", featured: true, created: "2026-05-05",
       long: "Sample listing for manga background assets. Replace with real details.", includes: ["30 backgrounds (sample count)", "License file"], license: LIC }),
-    P("character-sheets", "Character Reference Sheets", "manga", 399, { short: "Blank and example reference-sheet templates for character design.", format: "PSD + PNG", compat: "Photoshop, Krita",
+    P("character-sheets", "Character Reference Sheets", "resources", 399, { short: "Blank and example reference-sheet templates for character design.", format: "PSD + PNG", compat: "Photoshop, Krita",
       files: 8, size: "≈ 120 MB (sample)", created: "2026-06-12", long: "Sample listing. Replace with real content.", includes: ["8 templates (sample count)", "Usage notes"], license: LIC }),
     P("thumbnail-kit", "YouTube Thumbnail Templates", "graphic", 299, { short: "Editable thumbnail layouts built for readability at small sizes.", format: "PSD + PNG", compat: "Photoshop, Photopea",
       files: 15, size: "≈ 250 MB (sample)", resolution: "1280×720", isNew: true, created: "2026-10-30", long: "Sample listing. Replace with real templates and a true count.", includes: ["15 PSD templates (sample count)", "Font list", "License file"], license: LIC }),
@@ -89,7 +88,7 @@ window.AMI_DATA = (() => {
       files: 10, size: "≈ 350 MB (sample)", resolution: "A3 @ 300 DPI (sample)", created: "2026-08-14", long: "Sample listing. Replace with real content.", includes: ["10 poster layouts (sample count)", "License file"], license: LIC }),
     P("fantasy-wallpapers", "Fantasy Wallpaper Collection", "art", 249, { short: "High-resolution fantasy scenes for desktop and mobile.", format: "JPG + PNG", compat: "Any device",
       files: 25, size: "≈ 500 MB (sample)", resolution: "3840×2160 (sample)", created: "2026-09-09", featured: true, long: "Sample listing. Replace with your real artwork collection.", includes: ["25 wallpapers (sample count)", "Mobile crops"], license: "Personal use. Commercial use requires a separate licence — contact us." }),
-    P("ad-script-pack", "AI Ad Script Pack", "prompts", 399, { short: "Short-form ad script frameworks and shot lists for product videos.", format: "PDF + DOCX", compat: "Any text editor",
+    P("ad-script-pack", "AI Ad Script Pack", "resources", 399, { short: "Short-form ad script frameworks and shot lists for product videos.", format: "PDF + DOCX", compat: "Any text editor",
       files: 2, size: "< 5 MB (sample)", created: "2026-09-30", long: "Sample listing. Replace with real content.", includes: ["Script frameworks (PDF)", "Editable DOCX"], license: LIC })
   ];
   products.forEach(p => { p.faq = [
@@ -99,37 +98,41 @@ window.AMI_DATA = (() => {
   ]; });
 
   const services = [
-    { id: "video", num: "01", icon: "video", title: "AI Video Production", cta: "Request Video Project", value: "AI Video Production",
-      desc: "AI-generated videos for brands, creators and businesses.",
-      includes: ["Cinematic AI videos", "AI-generated storytelling", "3D animated videos", "Promotional videos", "Social media content", "Product showcase videos"],
+    { id: "video", num: "01", icon: "video", title: "AI Video Production & Animation", cta: "Request Video Project", value: "AI Video Production & Animation",
+      desc: "Cinematic AI videos and animation for brands, creators and storytellers.",
+      includes: ["Cinematic Video Production", "3D Animated Videos", "Animated Short Films", "Story-Based Animation", "Fantasy & Adventure Animation", "Character Animation", "Promotional Videos", "Social Media Videos", "YouTube Videos", "Explainer Videos", "Cinematic Visual Storytelling", "Custom Animated Projects"],
       custom: "Length, aspect ratio (16:9, 9:16, 1:1), style and delivery formats are agreed per project before work begins. Revisions, turnaround and resolution are quoted in your proposal." },
-    { id: "ads", num: "02", icon: "megaphone", title: "AI Video Advertising", cta: "Create My Advertisement", value: "AI Video Advertisement",
+    { id: "ads", num: "02", icon: "megaphone", title: "AI Video Advertising & Commercials", cta: "Create My Advertisement", value: "AI Video Advertising & Commercials",
       desc: "Creative AI-powered advertisements designed to make products and brands visually memorable.",
-      includes: ["Product advertisements", "Promotional campaigns", "Social media advertisements", "Commercial-style videos", "AI product showcases", "Short-form advertisements"],
+      includes: ["Product Advertisement Videos", "Brand Promotional Videos", "Commercial Advertisement Films", "Social Media Video Ads", "Luxury Product Advertisements", "Fashion & Lifestyle Advertisements", "Food & Beverage Advertisements", "Business Promotional Videos", "Product Showcase Videos", "Short-Form Marketing Videos", "Creative Advertising Campaigns"],
       custom: "Share your product, audience and platform. We propose a concept and storyboard first; scope, revisions and timeline are confirmed in writing." },
-    { id: "graphic", num: "03", icon: "palette", title: "AI Graphic Design", cta: "Request Graphic Design", value: "AI Graphic Design",
-      desc: "Digital graphics and marketing visuals for modern brands.",
-      includes: ["Social media designs", "YouTube thumbnails", "Promotional posters", "Advertising graphics", "Digital banners", "Creative brand visuals"],
+    { id: "graphic", num: "03", icon: "palette", title: "AI Graphic Design & Visual Branding", cta: "Request Graphic Design", value: "AI Graphic Design & Visual Branding",
+      desc: "Digital graphics and visual branding for modern businesses and creators.",
+      includes: ["Professional Logo Design", "Brand Identity Design", "Social Media Post Design", "Instagram Post & Story Design", "YouTube Thumbnail Design", "YouTube Channel Art", "Advertising Banners", "Promotional Posters", "Digital Flyers", "Business Marketing Graphics", "Website Graphics", "Presentation Designs", "Packaging & Label Design", "Typography & Creative Layouts"],
       custom: "Tell us the sizes, platforms and brand colours. Packages (single design or multi-piece sets) and revision rounds are defined in the quote." },
-    { id: "art", num: "04", icon: "image", title: "AI Digital Art", cta: "Explore Digital Art", value: "AI Digital Art", href: "portfolio.html#art",
+    { id: "art", num: "04", icon: "image", title: "AI Digital Art & Illustration", cta: "Request Digital Art", value: "AI Digital Art & Illustration",
       desc: "Unique AI-generated artwork for personal and commercial creative projects.",
-      includes: ["Character artwork", "Fantasy illustrations", "Concept art", "Digital posters", "Background artwork", "Creative visual assets"],
+      includes: ["Digital Illustrations", "Fantasy Artwork", "Cinematic Concept Art", "Character Illustrations", "3D Character Artwork", "Futuristic Artwork", "Surreal Digital Art", "Landscape & Environment Artwork", "Digital Wallpapers", "Printable Posters", "Custom Digital Artwork", "Exclusive Art Collections"],
       custom: "Commissioned artwork is scoped by subject, style, resolution and intended use (personal or commercial). Usage rights are stated in the quote." },
-    { id: "manga", num: "05", icon: "film", title: "AI Manga & Animation", cta: "Start Animation Project", value: "AI Manga & Animation",
-      desc: "Cinematic animation and AI-assisted visual storytelling.",
-      includes: ["3D animated storytelling", "Character concepts", "Manga-inspired artwork", "Animated scenes", "Storyboard development", "Visual world-building"],
-      custom: "Animation is planned in stages — story, storyboard, character look, scenes. Length and complexity decide scope; we agree these up front." },
-    { id: "custom", num: "06", icon: "sparkles", title: "Custom AI Creative Solutions", cta: "Discuss Your Idea", value: "Custom Creative Project",
-      desc: "Customised creative production based on your business, content or personal requirements.",
-      includes: ["AI content workflows", "Prompt and workflow design", "Story development", "Creative production planning"],
-      custom: "Don't see your idea above? Describe it — we'll say honestly whether we can deliver it and what it would involve." }
+    { id: "manga", num: "05", icon: "film", title: "AI Manga, Anime & Character Design", cta: "Start Character Project", value: "AI Manga, Anime & Character Design",
+      desc: "Manga, anime and character work for original stories and visual worlds.",
+      includes: ["Manga-Style Illustrations", "Anime-Style Artwork", "Original Character Design", "3D Animated Character Design", "Character Reference Sheets", "Character Expression Sheets", "Manga Backgrounds", "Comic Book Artwork", "Manga Cover Design", "Storyboard Design", "Fantasy Character Concepts", "Original Visual Storytelling Projects"],
+      custom: "Character and story work is planned in stages — concept, reference sheets, then finished scenes. We agree the scope and number of characters up front." },
+    { id: "custom", num: "06", icon: "sparkles", title: "Custom Creative Services", cta: "Discuss Your Idea", value: "Custom Creative Services",
+      desc: "Made-to-order creative work built around your idea, brand or audience.",
+      includes: ["Custom AI Video Projects", "Custom Brand Advertisements", "Custom Animated Stories", "Custom Character Creation", "Custom Digital Illustrations", "Custom Graphic Design Projects", "Custom Social Media Campaigns", "Custom Promotional Content", "Personalized Digital Artwork", "Complete Visual Content Packages"],
+      custom: "Don't see your idea above? Describe it — we'll say honestly whether we can deliver it and what it would involve." },
+    { id: "packages", num: "07", icon: "package", title: "Creative Packages for Businesses & Content Creators", cta: "Ask About Packages", value: "Creative Packages for Businesses & Content Creators",
+      desc: "Bundled creative work for businesses and creators who need a steady stream of visuals.",
+      includes: ["Social Media Content Packages", "YouTube Creator Design Packages", "Business Advertising Packages", "Brand Visual Identity Packages", "Product Marketing Packages", "Video Content Packages", "Digital Creative Bundles", "Complete Promotional Campaign Packages"],
+      custom: "Package contents and pricing are agreed with you individually — tell us what you need and your budget, and we'll propose a bundle." }
   ];
 
   const faqs = [
-    { q: "What services does AI MANGA INDIA offer?", a: "AI video production, AI video advertisements, AI graphic design, AI digital art, AI manga and animation, and custom creative projects. We also sell downloadable digital assets in the Digital Shop." },
+    { q: "What services does AI MANGA INDIA offer?", a: "AI video production and animation, AI video advertising, graphic design and visual branding, digital art and illustration, manga, anime and character design, custom creative services, and creative packages for businesses and content creators. We also sell downloadable digital assets in the Digital Shop." },
     { q: "How can I order a custom AI video?", a: "Use the Contact page to send a project inquiry with your idea, budget and any reference links. We review it and reply with questions or a proposal." },
-    { q: "Can I request a custom advertisement?", a: "Yes. Choose “AI Video Advertisement” on the inquiry form and describe your product and audience." },
-    { q: "What digital products are available?", a: "The shop is organised into AI video assets, prompts and workflows, manga assets, graphic design assets and digital art collections. Products currently shown are samples until marked available." },
+    { q: "Can I request a custom advertisement?", a: "Yes. Choose “AI Video Advertisements” on the inquiry form and describe your product and audience." },
+    { q: "What digital products are available?", a: "The shop is organised into video assets, graphic design assets, digital art assets and creative resources (prompt collections, templates, script packs and guides). Products currently shown are samples until marked available." },
     { q: "How do digital downloads work?", a: "Once the store is live, downloads are unlocked after the server verifies your payment. You'll find them in your account and order confirmation. Links are personal and expire for security." },
     { q: "Which file formats are included?", a: "Each product page lists its exact formats (for example MP4, PNG, PSD, PDF) and software compatibility." },
     { q: "Can I use purchased assets commercially?", a: "Each product states its licence. Most allow use in your own projects, including commercial ones; none allow reselling or redistributing the files. See the License Policy." },

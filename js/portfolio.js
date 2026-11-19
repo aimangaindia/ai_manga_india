@@ -36,7 +36,7 @@
     AMI.$("#pm-full") && AMI.$("#pm-full").addEventListener("click", () => { AMI.$("img", fs).src = p.gallery[gi]; AMI.$("img", fs).alt = p.title; AMI.openLayer(fs); });
     new MutationObserver((_, ob) => { if (!modal.classList.contains("open")) { if (AMI.param("project")) history.replaceState(null, "", location.pathname + location.hash); ob.disconnect(); } }).observe(modal, { attributes: true, attributeFilter: ["class"] });
   }
-  const serviceFor = c => ({ video: "AI Video Production", ads: "AI Video Advertisement", art: "AI Digital Art", graphic: "AI Graphic Design", manga: "AI Manga & Animation" }[c]);
+  const serviceFor = c => ({ video: "AI Video Production & Animation", ads: "AI Video Advertising & Commercials", art: "AI Digital Art & Illustration", graphic: "AI Graphic Design & Visual Branding", manga: "AI Manga, Anime & Character Design" }[c]);
 
   document.addEventListener("click", e => { const c = e.target.closest("[data-project]"); if (c) show(c.dataset.project); });
 

@@ -336,3 +336,14 @@ details.acc .acc-body { padding: 0 24px 22px; } details.acc .acc-body p:last-chi
 .social-actions { display: grid; gap: 10px; margin-top: auto; } .social-actions .btn { width: 100%; justify-content: center; }
 
 .contact-list .socials { flex-wrap: wrap; margin-top: 8px; }
+
+/* ---- two ways + category tiles ---- */
+.two-ways { align-items: stretch; } .way-card { display: flex; flex-direction: column; gap: 14px; padding: 28px; min-width: 0; } .way-card h3 { font-size: 1.5rem; }
+.way-card .flex { margin-top: auto; padding-top: 6px; } .way-list { color: var(--text-3); font-size: .9rem; line-height: 1.7; }
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; margin: 0 0 36px; }
+.cat-tile { display: flex; flex-direction: column; gap: 10px; padding: 20px; text-decoration: none; color: inherit; min-width: 0; transition: transform .3s, border-color .3s; }
+.cat-tile:hover, .cat-tile:focus-visible { transform: translateY(-4px); border-color: var(--accent); }
+.cat-tile h3 { font-size: 1.02rem; } .cat-tile p { color: var(--text-3); font-size: .85rem; line-height: 1.55; } .cat-go { margin-top: auto; color: var(--cyan); font-weight: 600; font-size: .85rem; display: inline-flex; align-items: center; gap: 6px; }
+
+.service-card li.more a { color: var(--cyan); font-size: .88rem; text-decoration: underline; text-underline-offset: 3px; }
+.full-list { columns: 2 240px; column-gap: 28px; margin: 6px 0 14px 18px; padding: 0; color: var(--text-2); font-size: .92rem; line-height: 1.8; }
