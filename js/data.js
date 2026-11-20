@@ -138,7 +138,7 @@ window.AMI_DATA = (() => {
     { q: "Can I use purchased assets commercially?", a: "Each product states its licence. Most allow use in your own projects, including commercial ones; none allow reselling or redistributing the files. See the License Policy." },
     { q: "Are refunds available for digital products?", a: "Because digital files can't be returned, refunds are limited — see the Refund Policy. If a file is faulty or not as described, contact us and we'll fix it or refund you." },
     { q: "How long does a custom project take?", a: "It depends on length and complexity. We give a realistic estimate in your proposal rather than a fixed promise up front." },
-    { q: "How can I contact AI MANGA INDIA?", a: "Use the Contact page form, email us, or message us on WhatsApp. Contact details are on the Contact page." }
+    { q: "How can I contact AI MANGA INDIA?", a: "Use the Contact page form or email us. Contact details are on the Contact page." }
   ];
 
   const capabilities = ["AI VIDEO PRODUCTION", "AI ADVERTISING", "DIGITAL ART", "GRAPHIC DESIGN", "AI STORYTELLING"];

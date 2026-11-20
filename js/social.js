@@ -97,7 +97,7 @@
 
   // Brand look of each platform's QR card: deep brand shades, so contrast on the light card stays high and the code scans reliably.
   const BRAND = { youtube: { fg: "#b30b05" }, instagram: { fg: "#8f5300" }, snapchat: { fg: "#111111", bg: "#fffc00" }, linkedin: { fg: "#07458a" },
-    facebook: { fg: "#0f4bb8" }, xsocial: { fg: "#111111" }, telegram: { fg: "#0b6288" }, pinterest: { fg: "#9e0017" }, whatsapp: { fg: "#0a6638" } };
+    facebook: { fg: "#0f4bb8" }, xsocial: { fg: "#111111" }, telegram: { fg: "#0b6288" }, pinterest: { fg: "#9e0017" } };
   const qrFor = p => AMI.qrSvg(p.href, `QR code for ${p.name}`, { ...(BRAND[p.id] || {}), icon: p.icon || p.id, caption: p.handle });
 
   /* ---------- Section rendering ---------- */

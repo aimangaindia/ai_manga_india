@@ -9,7 +9,6 @@ window.AMI_CONFIG = {
 
   // ---- contact details: PLACEHOLDERS until you provide real ones ----
   contactEmail: "ai.mangaindia.in@gmail.com",
-  whatsappNumber: "910000000000",               // international format, digits only (no +)
   // ---- social media: paste your profile links below. A card + QR code appears for every link you fill in. ----
   // Leave url "" to hide a platform. `handle` is the text shown on the card (e.g. "@aimangaindia").
   // QR codes are generated automatically from the link. To use your own branded QR image instead,
@@ -22,8 +21,7 @@ window.AMI_CONFIG = {
     { id: "xsocial",   name: "X (Twitter)", url: "", handle: "", qrImage: "" },
     { id: "telegram",  name: "Telegram",  url: "", handle: "", qrImage: "" },
     { id: "pinterest", name: "Pinterest", url: "", handle: "", qrImage: "" },
-    { id: "snapchat",   name: "Snapchat",  url: "https://www.snapchat.com/add/faijan_shekh28", handle: "faijan_shekh28", qrImage: "assets/images/qr/snapchat-qr.jpg" },
-    { id: "whatsapp",  name: "WhatsApp",  url: "", handle: "", qrImage: "" }   // e.g. https://wa.me/919876543210
+    { id: "snapchat",   name: "Snapchat",  url: "https://www.snapchat.com/add/faijan_shekh28", handle: "faijan_shekh28", qrImage: "assets/images/qr/snapchat-qr.jpg" }
   ],
 
   // ---- forms ----

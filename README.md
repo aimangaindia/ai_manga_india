@@ -59,7 +59,7 @@ python3 -m http.server 8000      # then open http://localhost:8000
 To test on your phone (same Wi-Fi): `python3 -m http.server 8000 --bind 0.0.0.0`, then open `http://<your-computer-IP>:8000`.
 
 ### Test checklist
-1. **Visitor:** Home → Portfolio (filter, search) → open a project → "Request a Similar Project" → fill the inquiry (the form tells you plainly it isn't connected yet and offers email/WhatsApp).
+1. **Visitor:** Home → Portfolio (filter, search) → open a project → "Request a Similar Project" → fill the inquiry (the form tells you plainly it isn't connected yet and offers email).
 2. **Shop:** Shop → filter/sort/search → Quick View → Add to Cart → cart page (quantity, coupon `WELCOME10`) → Checkout (payment button stays disabled until connected).
 3. **Newsletter:** footer form — bad email is rejected; a valid one says "not subscribed yet" until an endpoint is set.
 4. **Mobile:** open the menu, browse the 2-up product grid, add to cart, open the drawer.
@@ -68,7 +68,7 @@ To test on your phone (same Wi-Fi): `python3 -m http.server 8000 --bind 0.0.0.0`
 
 ## Replace the sample content
 
-* **Contact, social links, WhatsApp, endpoints** → `js/config.js` (also update `siteUrl`).
+* **Contact email, social links, endpoints** → `js/config.js` (also update `siteUrl`).
 * **Products, prices, sale prices, descriptions, specs** → `js/data.js` → `products`. Put the real image in `assets/products/` and set `demo: false`, `available: true` only when the product truly exists and can be delivered.
 * **Portfolio** → `js/data.js` → `projects`. Add real images/videos (`video: "assets/videos/x.mp4"`), a real `workflow`, and set `type` to `"client"` **only** for genuinely commissioned work. Set `demo: false`.
 * **Testimonials** → `js/data.js` → `testimonials` (leave empty until you have real, permitted feedback — an honest "coming soon" state shows meanwhile).
@@ -84,7 +84,7 @@ Open `js/config.js` and paste each profile link into `socialProfiles` (leave `ur
 { id: "instagram", name: "Instagram", url: "https://www.instagram.com/yourname/", handle: "@yourname", qrImage: "" },
 ```
 
-A card with an auto-generated, scannable QR code and a "Download QR" (PNG) button then appears in the **Follow the studio** section on the Home and Contact pages, and the icon appears in the footer. To use your own branded QR image instead, put it in `assets/images/` and set `qrImage`. With no links added the section shows an honest "coming soon" note. WhatsApp link format: `https://wa.me/919876543210`.
+A card with an auto-generated, scannable QR code and a "Download QR" (PNG) button then appears in the **Follow the studio** section on the Home and Contact pages, and the icon appears in the footer. To use your own branded QR image instead, put it in `assets/images/` and set `qrImage`. With no links added the section shows an honest "coming soon" note.
 
 ## Connect the forms (no backend needed)
 

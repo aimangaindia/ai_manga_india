@@ -1,6 +1,6 @@
 /* contact.js — form validation, spam protection, honest submission states, newsletter signup.
    RULE: the page only says "sent/subscribed" when a configured endpoint returned a success response.
-   With no endpoint configured it says so plainly and offers an email/WhatsApp fallback instead. */
+   With no endpoint configured it says so plainly and offers an email fallback instead. */
 (() => {
   const AMI = (window.AMI = window.AMI || {});
   const cfg = AMI.cfg, ic = AMI.icon;
@@ -52,9 +52,8 @@
       const data = Object.fromEntries(new FormData(form)); delete data.company_website;
       if (!cfg.contactFormEndpoint) {
         const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nBrand: ${data.brand || "-"}\nService: ${data.service}\nBudget: ${data.budget || "-"}\nDeadline: ${data.deadline || "-"}\nLinks: ${data.links || "-"}\n\n${data.message}`);
-        show(status, "warn", `<strong>Not sent yet.</strong> The inquiry form isn't connected to a form service, so nothing has been delivered. Your details are valid — send them by email or WhatsApp instead:
-          <div class="flex" style="margin-top:12px"><a class="btn btn-primary btn-sm" href="mailto:${AMI.esc(cfg.contactEmail)}?subject=${encodeURIComponent("Project inquiry: " + data.service)}&body=${body}">${ic("mail")} Email this inquiry</a>
-          <a class="btn btn-ghost btn-sm" target="_blank" rel="noopener" href="https://wa.me/${cfg.whatsappNumber}?text=${body}">${ic("whatsapp")} WhatsApp</a></div>`);
+        show(status, "warn", `<strong>Not sent yet.</strong> The inquiry form isn't connected to a form service, so nothing has been delivered. Your details are valid — send them by email instead:
+          <div class="flex" style="margin-top:12px"><a class="btn btn-primary btn-sm" href="mailto:${AMI.esc(cfg.contactEmail)}?subject=${encodeURIComponent("Project inquiry: " + data.service)}&body=${body}">${ic("mail")} Email this inquiry</a></div>`);
         return;
       }
       if (throttled("ami_last_inquiry")) { show(status, "err", "Please wait a moment before sending another inquiry."); return; }
@@ -87,7 +86,6 @@
 
   AMI.onReady(() => {
     inquiry(); newsletter();
-    AMI.$$("[data-wa]").forEach(a => { a.href = `https://wa.me/${cfg.whatsappNumber}?text=${encodeURIComponent("Hi AI MANGA INDIA, I'd like to discuss a project.")}`; a.target = "_blank"; a.rel = "noopener"; });
     AMI.$$("[data-email]").forEach(a => { a.href = `mailto:${cfg.contactEmail}`; a.textContent = cfg.contactEmail; });
   });
 })();
