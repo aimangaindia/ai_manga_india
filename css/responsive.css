@@ -42,3 +42,4 @@
 }
 @media (min-width: 1700px) { :root { --maxw: 1440px; } body { font-size: 17px; } }
 @media print { .site-header, .site-footer, .newsletter, #totop, .toast-wrap { display: none !important; } body { background: #fff; color: #000; } }
+.btn-start { white-space: nowrap; }

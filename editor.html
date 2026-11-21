@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Online Template Editor | Design Studio — AI MANGA INDIA</title>
+<meta name="description" content="Edit Instagram posts, stories, YouTube thumbnails and posters in your browser. Change text, colours and images, then download a PNG. Free, no sign-up.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#080A12">
+<link rel="canonical" href="https://www.example.com/editor.html">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI MANGA INDIA">
+<meta property="og:title" content="Free Online Template Editor | Design Studio — AI MANGA INDIA">
+<meta property="og:description" content="Edit Instagram posts, stories, YouTube thumbnails and posters in your browser. Change text, colours and images, then download a PNG. Free, no sign-up.">
+<meta property="og:url" content="https://www.example.com/editor.html">
+<meta property="og:image" content="https://www.example.com/assets/images/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Anton&family=Bangers&family=Bebas+Neue&family=Lilita+One&family=Playfair+Display:wght@700&family=Poppins:wght@500;700&family=Permanent+Marker&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/editor.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<noscript><p style="padding:16px;background:#151A2B;color:#fff;text-align:center">JavaScript is needed for the menu, shop and cart. <a href="index.html" style="text-decoration:underline">Home</a> · <a href="portfolio.html" style="text-decoration:underline">Portfolio</a> · <a href="services.html" style="text-decoration:underline">Services</a> · <a href="shop.html" style="text-decoration:underline">Shop</a> · <a href="editor.html" style="text-decoration:underline">Contact</a></p></noscript>
+<div id="site-header"></div>
+<main id="main" class="studio-main">
+<section class="studio-intro"><div class="container">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>Template Studio</nav>
+  <div class="studio-intro-row"><div><span class="eyebrow">Template Studio</span><h1>Edit templates right here.</h1>
+  <p>Pick a template, change the text, colours and photos, then download it. Free, no sign-up. Everything stays in your browser — nothing is uploaded to our servers.</p></div></div></div></section>
+
+<section class="studio" id="studio" aria-label="Template editor">
+  <div class="studio-bar container">
+    <div class="sb-group">
+      <button class="btn btn-ghost btn-sm" type="button" id="st-templates">Templates</button>
+      <label class="sr-only" for="st-size">Canvas size</label><select class="control sm" id="st-size"></select>
+    </div>
+    <div class="sb-group">
+      <button class="icon-btn" type="button" id="st-undo" aria-label="Undo" title="Undo (Ctrl+Z)">&#8630;</button>
+      <button class="icon-btn" type="button" id="st-redo" aria-label="Redo" title="Redo (Ctrl+Y)">&#8631;</button>
+      <button class="icon-btn" type="button" id="st-zout" aria-label="Zoom out">&minus;</button>
+      <button class="btn btn-ghost btn-sm" type="button" id="st-zfit" aria-label="Fit to screen"><span id="st-zlabel">Fit</span></button>
+      <button class="icon-btn" type="button" id="st-zin" aria-label="Zoom in">+</button>
+    </div>
+    <div class="sb-group">
+      <button class="btn btn-ghost btn-sm" type="button" id="st-save">Save file</button>
+      <button class="btn btn-ghost btn-sm" type="button" id="st-open">Open file</button>
+      <input type="file" id="st-openfile" accept=".ami,.json,application/json" hidden>
+      <label class="sr-only" for="st-fmt">Download format</label>
+      <select class="control sm" id="st-fmt"><option value="png">PNG</option><option value="jpg">JPG</option></select>
+      <button class="btn btn-primary btn-sm" type="button" id="st-download">Download</button>
+    </div>
+  </div>
+
+  <div class="studio-grid container">
+    <aside class="panel panel-left" aria-label="Add elements">
+      <h2 class="panel-h">Add</h2>
+      <div class="add-grid">
+        <button type="button" class="tool" data-add="heading"><b>Aa</b>Heading</button>
+        <button type="button" class="tool" data-add="text"><b>T</b>Text</button>
+        <button type="button" class="tool" data-add="rect"><b>&#9632;</b>Box</button>
+        <button type="button" class="tool" data-add="ellipse"><b>&#9679;</b>Circle</button>
+        <button type="button" class="tool" data-add="line"><b>&#9473;</b>Line</button>
+        <button type="button" class="tool" data-add="image"><b>&#128247;</b>Image</button>
+      </div>
+      <input type="file" id="st-imgfile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      <h2 class="panel-h">Background</h2>
+      <div class="field-row"><label for="bg-c1">Colour</label><input type="color" id="bg-c1"></div>
+      <div class="field-row"><label for="bg-c2">Gradient to</label><input type="color" id="bg-c2"><button type="button" class="mini" id="bg-solid">Solid</button></div>
+      <div class="field-row"><button type="button" class="btn btn-ghost btn-sm" id="bg-img">Upload photo</button><button type="button" class="mini" id="bg-noimg">Remove photo</button></div>
+      <h2 class="panel-h">Layers</h2>
+      <ul class="layers" id="st-layers" aria-label="Layers"></ul>
+    </aside>
+
+    <div class="stage-wrap" id="stage-wrap">
+      <div class="stage" id="stage"><canvas id="cv" tabindex="0" aria-label="Design canvas. Click an element to edit it. Arrow keys move the selected element."></canvas>
+        <div class="hint" id="st-hint">Click an element to edit · double-click text to type · drag to move</div></div>
+    </div>
+
+    <aside class="panel panel-right" aria-label="Properties" id="st-props"></aside>
+  </div>
+  <p class="studio-note container">Tip: fonts and images you add are only used in your browser. Make sure you have the right to use any photo you upload. Templates here are original designs by AI MANGA INDIA — free to edit and use. See the <a href="license.html" style="text-decoration:underline">License Policy</a>.</p>
+</section>
+
+<div class="modal" id="tpl-modal" role="dialog" aria-modal="true" aria-label="Choose a template" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-dialog tpl-dialog"><div class="tpl-head"><h2>Choose a template</h2><button class="icon-btn" type="button" data-close aria-label="Close">&times;</button></div>
+    <p style="font-size:.9rem">Starting a new template replaces the current design. Your current work is saved automatically in this browser.</p>
+    <div class="tpl-grid" id="tpl-grid"></div></div>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="js/config.js" defer></script>
+<script src="js/data.js" defer></script>
+<script src="js/icons.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/navigation.js" defer></script>
+<script src="js/editor-templates.js" defer></script>
+<script src="js/editor.js" defer></script>
+</body>
+</html>

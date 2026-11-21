@@ -41,6 +41,7 @@ AI-MANGA-INDIA/
 │   ├── contact.js     validation, spam protection, inquiry + newsletter submission
 │   └── services.js    service cards, FAQ, testimonials, marquee, account tabs
 ├── assets/  images/ products/ logos/ icons/ videos/
+├── editor.html, js/editor.js, js/editor-templates.js, css/editor.css   Template Studio (in-browser editor)
 └── tools/gen_assets.py   regenerates the placeholder artwork + logos (optional)
 ```
 
@@ -121,3 +122,10 @@ Browser code cannot safely take payments or protect paid files. Add a small serv
 
 ## Credits
 Icons: Lucide-style paths (ISC licence). Fonts: Space Grotesk & Inter via Google Fonts (OFL).
+
+## Template Studio (editor.html)
+
+A Canva-style editor that runs fully in the visitor's browser (no server, no uploads): templates, drag/resize/rotate,
+text styling, shapes, photo upload, layers, undo/redo, autosave in the browser, save/open `.ami` files, and PNG/JPG download.
+Add or change starter templates in `js/editor-templates.js`. Link to a template with `editor.html?t=<id>` (e.g. `?t=neon`).
+Limits: no accounts or cloud saving, no stock library, no animation/video editing.

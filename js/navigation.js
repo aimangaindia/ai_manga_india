@@ -8,7 +8,7 @@
 
   const LINKS = [
     ["Home", "index.html", ["index.html", ""]], ["Portfolio", "portfolio.html", ["portfolio.html"]], ["Services", "services.html", ["services.html"]],
-    ["Digital Shop", "shop.html", ["shop.html", "product.html", "cart.html", "checkout.html"]], ["About", "about.html", ["about.html"]], ["Contact", "contact.html", ["contact.html"]]
+    ["Digital Shop", "shop.html", ["shop.html", "product.html", "cart.html", "checkout.html"]], ["Template Studio", "editor.html", ["editor.html"]], ["About", "about.html", ["about.html"]], ["Contact", "contact.html", ["contact.html"]]
   ];
   const current = ([, , m]) => (m.includes(page) ? ' aria-current="page"' : "");
 
@@ -55,7 +55,7 @@
       <div class="footer-grid">
         <div><a class="brand" href="index.html"><img src="assets/logos/logo-mark.svg" alt="" width="38" height="38"><span class="brand-text">AI MANGA<small>INDIA</small></span></a>
           <p style="margin-top:18px;max-width:280px">Imagine Beyond Limits. Create Beyond Reality.</p><div class="socials">${socialLinks()}</div></div>
-        <nav aria-label="Explore"><h4>Explore</h4><ul><li><a href="index.html">Home</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="services.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+        <nav aria-label="Explore"><h4>Explore</h4><ul><li><a href="index.html">Home</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="services.html">Services</a></li><li><a href="editor.html">Template Studio</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
         <nav aria-label="Digital store"><h4>Digital Store</h4><ul>
           ${Object.entries(AMI.data.productCategories).map(([k, v]) => `<li><a href="shop.html?cat=${k}">${AMI.esc(v.label)}</a></li>`).join("")}</ul></nav>
         <nav aria-label="Customer support"><h4>Customer Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQs</a></li><li><a href="license.html">License Information</a></li><li><a href="refund.html">Refund Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul></nav>
