@@ -4,7 +4,7 @@
    ========================================================================== */
 window.AMI_CONFIG = {
   siteName: "AI MANGA INDIA",
-  siteUrl: "https://www.example.com",            // ← your real domain (also update sitemap.xml / canonical tags)
+  siteUrl: "https://ai-manga-india.vercel.app",            // ← your real domain (also update sitemap.xml / canonical tags)
   currency: "INR", locale: "en-IN",
 
   // ---- contact details: PLACEHOLDERS until you provide real ones ----

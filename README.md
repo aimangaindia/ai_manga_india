@@ -96,7 +96,7 @@ Create a form endpoint with a service such as Formspree or Web3Forms, then set `
 It's a static site, so any static host works — **Vercel, Netlify, Cloudflare Pages, GitHub Pages**:
 1. Push the folder to a Git repository, import it in the host (no build command, output directory = repo root).
 2. Add your custom domain; HTTPS is automatic.
-3. Replace `https://www.example.com` in `js/config.js`, `sitemap.xml`, `robots.txt` and the `canonical`/`og:` tags in each HTML page (search & replace).
+3. Replace `https://ai-manga-india.vercel.app` in `js/config.js`, `sitemap.xml`, `robots.txt` and the `canonical`/`og:` tags in each HTML page (search & replace).
 4. Add a real `assets/images/og-image` (1200×630 PNG/JPG recommended — social networks prefer raster over SVG) and update the `og:image` path.
 5. Submit `sitemap.xml` in Google Search Console.
 
@@ -131,3 +131,11 @@ save/open `.ami` files, and download as PNG, JPG, WEBP, PDF (image-based) or SVG
 Add or change starter templates in `js/editor-templates.js`. Link to a template with `editor.html?t=<id>` (e.g. `?t=neon`).
 Limits: single page only, no accounts or cloud saving, no stock library, no AI tools, no animation/video editing, no real-time collaboration.
 Photo filters use the canvas filter API, which some Safari versions do not support.
+
+## SEO / Google
+
+* Site URL is set to `https://ai-manga-india.vercel.app` in `js/config.js`, every page's canonical/Open Graph tags, `sitemap.xml` and `robots.txt`.
+  When you buy a custom domain, search-and-replace that URL in those files (and re-submit the sitemap in Google Search Console).
+* Structured data: Organization + WebSite (home), WebApplication (Template Studio), BreadcrumbList/Product (product pages).
+* Social preview image: `assets/images/og-image.png` (1200×630). Cart, checkout, account, 404 and the demo product page are `noindex`.
+* Submit to Google: Search Console → Add property (URL prefix) → verify → Sitemaps → `sitemap.xml`.

@@ -4,4 +4,4 @@ Disallow: /cart.html
 Disallow: /checkout.html
 Disallow: /account.html
 
-Sitemap: https://www.example.com/sitemap.xml
+Sitemap: https://ai-manga-india.vercel.app/sitemap.xml
