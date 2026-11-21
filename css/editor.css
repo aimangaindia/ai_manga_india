@@ -67,3 +67,11 @@
   .panel input[type=number] { width: 96px; }
 }
 @media (prefers-reduced-motion: reduce) { .hint { animation: none; opacity: 0; } .tpl { transition: none; } }
+.shape-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.tool.sm { min-height: 44px; padding: 8px; }
+.emoji-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.emo { background: var(--card-2); border: 1px solid var(--border); border-radius: 10px; min-height: 38px; font-size: 1.2rem; line-height: 1; }
+.emo:hover { border-color: var(--cyan); }
+.chk { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--text-2); }
+.chk input { width: 18px; height: 18px; accent-color: var(--accent); }
+.panel input[type=range] { width: 110px; }

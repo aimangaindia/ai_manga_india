@@ -13,7 +13,10 @@
     { id: "portrait", label: "Portrait 1080×1350", w: 1080, h: 1350 },
     { id: "story", label: "Story 1080×1920", w: 1080, h: 1920 },
     { id: "yt", label: "Thumbnail 1280×720", w: 1280, h: 720 },
-    { id: "banner", label: "Banner 1500×500", w: 1500, h: 500 }
+    { id: "banner", label: "Banner 1500×500", w: 1500, h: 500 },
+    { id: "pin", label: "Pinterest Pin 1000×1500", w: 1000, h: 1500 },
+    { id: "fbcover", label: "Facebook Cover 1640×624", w: 1640, h: 624 },
+    { id: "a4", label: "A4 Flyer / Poster 1240×1754", w: 1240, h: 1754 }
   ];
 
   AMI.studioTemplates = [
@@ -72,6 +75,29 @@
       E({ x: 1000, y: -200, w: 800, h: 800, fill: "#28D9FF", fill2: "#7865FF", op: .35 }),
       T({ x: 90, y: 130, w: 1000, text: "YOUR CHANNEL NAME", font: "Anton", size: 130, weight: 400, color: "#FFFFFF", ls: 2 }),
       T({ x: 90, y: 300, w: 1000, text: "Your tagline goes here", font: "Poppins", size: 46, weight: 500, color: "#C9CEE6" })
+    ] }) },
+    { id: "pin", name: "Pinterest Pin", w: 1000, h: 1500, make: () => ({ bg: { c1: "#fff4e0", c2: null, img: null }, objs: [
+      R({ x: 60, y: 60, w: 880, h: 760, r: 40, fill: "#7865FF", fill2: "#28D9FF" }),
+      T({ x: 100, y: 330, w: 800, text: "Add your\nphoto here", font: "Poppins", size: 64, weight: 700, color: "#FFFFFF", align: "center", lh: 1.2 }),
+      T({ x: 60, y: 880, w: 880, text: "5 IDEAS FOR YOUR NEXT PROJECT", font: "Bebas Neue", size: 150, weight: 400, color: "#15172a", lh: .95 }),
+      T({ x: 60, y: 1250, w: 880, text: "Write a short helpful description for your pin.", font: "Inter", size: 40, weight: 500, color: "#4b4f66", lh: 1.3 }),
+      R({ x: 60, y: 1360, w: 320, h: 80, r: 40, fill: "#15172a" }), T({ x: 60, y: 1378, w: 320, text: "Read more", font: "Space Grotesk", size: 36, color: "#FFFFFF", align: "center" })
+    ] }) },
+    { id: "fbcover", name: "Facebook Cover", w: 1640, h: 624, make: () => ({ bg: { c1: "#0b0d1a", c2: "#3b1d8a", img: null }, objs: [
+      E({ x: 1100, y: -100, w: 700, h: 700, fill: "#A855F7", fill2: "#28D9FF", op: .45 }),
+      { type: "poly", kind: "star", x: 1240, y: 120, w: 260, h: 260, fill: "#FFC23A", fill2: null, stroke: null, sw: 0, r: 0, rot: 15, op: 1, shadow: { c: "#FFC23A", b: 40, x: 0, y: 0 } },
+      T({ x: 100, y: 200, w: 1000, text: "YOUR PAGE NAME", font: "Anton", size: 140, weight: 400, color: "#FFFFFF", ls: 2 }),
+      T({ x: 100, y: 390, w: 1000, text: "Short tagline about what you do", font: "Poppins", size: 48, weight: 500, color: "#C9CEE6" })
+    ] }) },
+    { id: "flyer", name: "A4 Flyer", w: 1240, h: 1754, make: () => ({ bg: { c1: "#ffffff", c2: null, img: null }, objs: [
+      R({ x: 0, y: 0, w: 1240, h: 760, fill: "#15172a", fill2: "#3b1d8a" }),
+      { type: "poly", kind: "burst", x: 820, y: 360, w: 360, h: 360, fill: "#FFC23A", fill2: null, stroke: null, sw: 0, r: 0, rot: 0, op: 1, shadow: null },
+      T({ x: 884, y: 480, w: 232, text: "NEW!", font: "Bangers", size: 90, weight: 400, color: "#15172a", align: "center" }),
+      T({ x: 80, y: 120, w: 1000, text: "EVENT\nTITLE", font: "Anton", size: 230, weight: 400, color: "#FFFFFF", lh: .95 }),
+      T({ x: 80, y: 860, w: 1080, text: "Date  •  Time  •  Place", font: "Space Grotesk", size: 64, weight: 700, color: "#15172a" }),
+      R({ x: 80, y: 960, w: 120, h: 10, r: 5, fill: "#7865FF" }),
+      T({ x: 80, y: 1020, w: 1080, text: "Write the details of your event here. Keep it short and clear so people can read it quickly.", font: "Inter", size: 48, weight: 400, color: "#4b4f66", lh: 1.35 }),
+      T({ x: 80, y: 1600, w: 1080, text: "yourwebsite.com  •  @yourhandle", font: "Poppins", size: 42, weight: 500, color: "#15172a" })
     ] }) }
   ];
 })();

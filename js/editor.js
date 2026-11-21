@@ -13,9 +13,11 @@
   let doc, assets = {}, sel = null, zoom = 0, fit = true, uid = 1, aid = 1, tplId = "";
   const imgs = {}, undo = [], redo = [];
   const cv = $("#cv"), ctx = cv.getContext("2d"), scratch = document.createElement("canvas").getContext("2d");
-  let guides = { v: false, h: false }, drag = null, uiOn = true;
+  let guides = { v: false, h: false }, drag = null, uiOn = true, clip = "";
 
   /* ---------- sanitising (templates, autosave and opened files are all untrusted data) ---------- */
+  const POLY = ["triangle", "diamond", "pentagon", "hexagon", "star", "burst", "arrow", "heart"];
+  const cleanShadow = s => (s && (s.b > 0 || s.x || s.y) ? { c: col(s.c, "#000000"), b: num(s.b, 0, 0, 120), x: num(s.x, 0, -80, 80), y: num(s.y, 0, -80, 80) } : null);
   function cleanObj(o, assetMap) {
     if (!o || typeof o !== "object") return null;
     const b = { id: "o" + uid++, type: o.type, x: num(o.x, 0, -5000, 9000), y: num(o.y, 0, -5000, 9000), w: num(o.w, 200, 10, 9000), h: num(o.h, 200, 4, 9000),
@@ -23,9 +25,9 @@
     if (o.type === "text") return Object.assign(b, { text: String(o.text ?? "").slice(0, 600), font: FONTS.includes(o.font) ? o.font : "Inter", size: num(o.size, 48, 6, 900), weight: o.weight === 400 ? 400 : 700,
       italic: !!o.italic, color: col(o.color, "#FFFFFF"), align: ["left", "center", "right"].includes(o.align) ? o.align : "left", ls: num(o.ls, 0, -10, 80), lh: num(o.lh, 1.1, .6, 3), upper: !!o.upper,
       stroke: o.stroke && o.stroke.w > 0 ? { c: col(o.stroke.c, "#000000"), w: num(o.stroke.w, 0, 0, 60) } : null,
-      shadow: o.shadow && (o.shadow.b > 0 || o.shadow.x || o.shadow.y) ? { c: col(o.shadow.c, "#000000"), b: num(o.shadow.b, 0, 0, 120), x: num(o.shadow.x, 0, -80, 80), y: num(o.shadow.y, 0, -80, 80) } : null });
-    if (o.type === "rect" || o.type === "ellipse") return Object.assign(b, { fill: col(o.fill, "#7865FF"), fill2: o.fill2 ? col(o.fill2, "#00D9FF") : null, stroke: o.stroke ? col(o.stroke, "#FFFFFF") : null, sw: num(o.sw, 0, 0, 80), r: num(o.r, 0, 0, 4000) });
-    if (o.type === "image" && typeof o.src === "string" && assetMap[o.src]) return Object.assign(b, { src: o.src, fit: o.fit === "contain" ? "contain" : "cover", r: num(o.r, 0, 0, 4000) });
+      shadow: cleanShadow(o.shadow) });
+    if (o.type === "rect" || o.type === "ellipse" || o.type === "poly") return Object.assign(b, { kind: POLY.includes(o.kind) ? o.kind : "star", fill: col(o.fill, "#7865FF"), fill2: o.fill2 ? col(o.fill2, "#00D9FF") : null, stroke: o.stroke ? col(o.stroke, "#FFFFFF") : null, sw: num(o.sw, 0, 0, 80), r: num(o.r, 0, 0, 4000), shadow: cleanShadow(o.shadow) });
+    if (o.type === "image" && typeof o.src === "string" && assetMap[o.src]) { const f = o.f || {}; return Object.assign(b, { src: o.src, fit: o.fit === "contain" ? "contain" : "cover", r: num(o.r, 0, 0, 4000), fx: !!o.fx, fy: !!o.fy, f: { br: num(f.br, 100, 0, 300), co: num(f.co, 100, 0, 300), sa: num(f.sa, 100, 0, 300), bl: num(f.bl, 0, 0, 40), gr: num(f.gr, 0, 0, 100) } }); }
     return null;
   }
   function cleanDoc(raw, assetMap = {}) {
@@ -48,6 +50,18 @@
     const im = (imgs[key] = new Image()); im.onload = () => { cb && cb(); }; im.src = assets[key]; return null;
   }
 
+  /* ---------- shapes (one path string is used for both the canvas and the SVG export) ---------- */
+  function polyCmds(k) {
+    const ring = (n, r2, rot0 = -Math.PI / 2) => { const pts = []; for (let i = 0; i < n * (r2 ? 2 : 1); i++) { const a = rot0 + i * Math.PI / (r2 ? n : n / 2), r = r2 && i % 2 ? r2 : .5; pts.push([.5 + r * Math.cos(a), .5 + r * Math.sin(a)]); } return pts; };
+    const P = { triangle: [[.5, 0], [1, 1], [0, 1]], diamond: [[.5, 0], [1, .5], [.5, 1], [0, .5]], pentagon: ring(5), hexagon: [[.25, 0], [.75, 0], [1, .5], [.75, 1], [.25, 1], [0, .5]],
+      star: ring(5, .2), burst: ring(14, .36), arrow: [[0, .35], [.58, .35], [.58, .08], [1, .5], [.58, .92], [.58, .65], [0, .65]] }[k];
+    if (P) return P.map((p, i) => [i ? "L" : "M", p]).concat([["Z"]]);
+    return [["M", [.5, .95]], ["C", [.1, .65], [0, .35], [.2, .15]], ["C", [.35, 0], [.5, .12], [.5, .25]], ["C", [.5, .12], [.65, 0], [.8, .15]], ["C", [1, .35], [.9, .65], [.5, .95]], ["Z"]];
+  }
+  const f2 = n => Math.round(n * 100) / 100;
+  const polyD = (k, w, h, ox, oy) => polyCmds(k).map(([c, ...pts]) => c + pts.map(p => f2(ox + p[0] * w) + " " + f2(oy + p[1] * h)).join(" ")).join("");
+  const POLYNAME = { triangle: "Triangle", diamond: "Diamond", pentagon: "Pentagon", hexagon: "Hexagon", star: "Star", burst: "Burst", arrow: "Arrow", heart: "Heart" };
+
   /* ---------- drawing ---------- */
   function layout(o) {
     scratch.font = fontStr(o); try { scratch.letterSpacing = o.ls + "px"; } catch (e) { /* older browsers */ }
@@ -61,6 +75,7 @@
     c.fillRect(0, 0, d.w, d.h);
     if (d.bg.img) { const im = getImg(d.bg.img, redraw); if (im) { const s = Math.max(d.w / im.width, d.h / im.height); c.drawImage(im, (d.w - im.width * s) / 2, (d.h - im.height * s) / 2, im.width * s, im.height * s); } }
   }
+  const filterCss = f => (f && (f.br !== 100 || f.co !== 100 || f.sa !== 100 || f.bl > 0 || f.gr > 0) ? `brightness(${f.br}%) contrast(${f.co}%) saturate(${f.sa}%) grayscale(${f.gr}%)${f.bl > 0 ? ` blur(${f.bl}px)` : ""}` : "");
   function paintObj(c, o, redraw) {
     if (o.hidden) return;
     if (o.type === "text") layout(o);
@@ -76,13 +91,18 @@
         if (hasSt) { c.save(); shadow(); c.lineJoin = "round"; c.miterLimit = 2; c.lineWidth = o.stroke.w * 2; c.strokeStyle = o.stroke.c; c.strokeText(ln, lx, ly); c.restore(); }
         c.save(); if (!hasSt) shadow(); c.fillStyle = o.color; c.fillText(ln, lx, ly); c.restore();
       });
-    } else if (o.type === "rect" || o.type === "ellipse") {
+    } else if (o.type === "rect" || o.type === "ellipse" || o.type === "poly") {
       if (o.fill2) { const g = c.createLinearGradient(x, y, x + o.w, y + o.h); g.addColorStop(0, o.fill); g.addColorStop(1, o.fill2); c.fillStyle = g; } else c.fillStyle = o.fill;
-      if (o.type === "rect") rr(c, x, y, o.w, o.h, o.r); else { c.beginPath(); c.ellipse(0, 0, o.w / 2, o.h / 2, 0, 0, Math.PI * 2); }
-      c.fill(); if (o.stroke && o.sw > 0) { c.lineWidth = o.sw; c.strokeStyle = o.stroke; c.stroke(); }
+      let P = null;
+      if (o.type === "rect") rr(c, x, y, o.w, o.h, o.r); else if (o.type === "ellipse") { c.beginPath(); c.ellipse(0, 0, o.w / 2, o.h / 2, 0, 0, Math.PI * 2); } else P = new Path2D(polyD(o.kind, o.w, o.h, x, y));
+      c.save(); if (o.shadow) { c.shadowColor = o.shadow.c; c.shadowBlur = o.shadow.b; c.shadowOffsetX = o.shadow.x; c.shadowOffsetY = o.shadow.y; }
+      P ? c.fill(P) : c.fill(); c.restore();
+      if (o.stroke && o.sw > 0) { c.lineWidth = o.sw; c.lineJoin = "round"; c.strokeStyle = o.stroke; P ? c.stroke(P) : c.stroke(); }
     } else if (o.type === "image") {
       const im = getImg(o.src, redraw);
-      if (im) { c.save(); rr(c, x, y, o.w, o.h, o.r); c.clip(); const s = (o.fit === "contain" ? Math.min : Math.max)(o.w / im.width, o.h / im.height); c.drawImage(im, -im.width * s / 2, -im.height * s / 2, im.width * s, im.height * s); c.restore(); }
+      if (im) { c.save(); rr(c, x, y, o.w, o.h, o.r); c.clip(); const s = (o.fit === "contain" ? Math.min : Math.max)(o.w / im.width, o.h / im.height);
+        const fl = filterCss(o.f); if (fl && "filter" in c) c.filter = fl; if (o.fx || o.fy) c.scale(o.fx ? -1 : 1, o.fy ? -1 : 1);
+        c.drawImage(im, -im.width * s / 2, -im.height * s / 2, im.width * s, im.height * s); c.restore(); }
       else { c.fillStyle = "rgba(255,255,255,.08)"; c.fillRect(x, y, o.w, o.h); }
     }
     c.restore();
@@ -107,7 +127,7 @@
     if (!doc) return; if (cv.width !== doc.w || cv.height !== doc.h) { cv.width = doc.w; cv.height = doc.h; applyZoom(); }
     ctx.clearRect(0, 0, doc.w, doc.h); paintBg(ctx, doc, render); doc.objs.forEach(o => paintObj(ctx, o, render)); if (uiOn) paintUI(ctx);
   }
-  function renderTo(canvas, d, scale) { const c = canvas.getContext("2d"); canvas.width = Math.round(d.w * scale); canvas.height = Math.round(d.h * scale); c.scale(scale, scale); paintBg(c, d, null); d.objs.forEach(o => paintObj(c, o, null)); }
+  function renderTo(canvas, d, scale, transparent) { const c = canvas.getContext("2d"); canvas.width = Math.round(d.w * scale); canvas.height = Math.round(d.h * scale); c.scale(scale, scale); if (!transparent) paintBg(c, d, null); d.objs.forEach(o => paintObj(c, o, null)); }
 
   /* ---------- geometry ---------- */
   const byId = id => (doc ? doc.objs.find(o => o.id === id) : null);
@@ -144,7 +164,7 @@
   function setZoom(z) { fit = false; zoom = Math.min(2, Math.max(.1, z)); applyZoom(); }
 
   /* ---------- panels ---------- */
-  const name = o => (o.type === "text" ? (o.text.replace(/\s+/g, " ").trim().slice(0, 22) || "Text") : { rect: "Box", ellipse: "Circle", image: "Image" }[o.type]);
+  const name = o => (o.type === "text" ? (o.text.replace(/\s+/g, " ").trim().slice(0, 22) || "Text") : o.type === "poly" ? POLYNAME[o.kind] : { rect: "Box", ellipse: "Circle", image: "Image" }[o.type]);
   function layers() {
     const ul = $("#st-layers"); ul.innerHTML = "";
     [...doc.objs].reverse().forEach(o => {
@@ -160,11 +180,12 @@
     const p = $("#st-props"), o = byId(sel);
     if (!o) {
       p.innerHTML = `<h2 class="panel-h">Design</h2><p class="muted">Click any element on the canvas to edit it. Drag to move, use the corner squares to resize and the round handle to rotate.</p>
-      <p class="muted">Shortcuts: arrows nudge · Shift+arrows nudge more · Delete removes · Ctrl+Z / Ctrl+Y undo / redo · Ctrl+D duplicates.</p>`; return;
+      <h3 class="sub">Custom size (px)</h3><div class="field-row"><input type="number" id="cs-w" min="200" max="4000" value="${doc.w}" aria-label="Width"><span>×</span><input type="number" id="cs-h" min="200" max="4000" value="${doc.h}" aria-label="Height"><button type="button" class="mini" data-act="custom">Apply</button></div>
+      <p class="muted">Shortcuts: arrows nudge · Shift+arrows nudge more · Delete removes · Ctrl+Z / Ctrl+Y undo / redo · Ctrl+D duplicates · Ctrl+C / Ctrl+V copy / paste.</p>`; return;
     }
     if (!full && p.dataset.for === o.id) { return; }
     p.dataset.for = o.id;
-    let h = `<h2 class="panel-h">${{ text: "Text", rect: "Box", ellipse: "Circle", image: "Image" }[o.type]}</h2>`;
+    let h = `<h2 class="panel-h">${{ text: "Text", rect: "Box", ellipse: "Circle", poly: "Shape", image: "Image" }[o.type]}</h2>`;
     if (o.type === "text") {
       const st = o.stroke || { c: "#000000", w: 0 }, sh = o.shadow || { c: "#000000", b: 0, x: 0, y: 0 };
       h += `<label class="sr-only" for="p-text">Text</label><textarea id="p-text" data-k="text" data-t="str" rows="3" maxlength="600"></textarea>
@@ -176,13 +197,18 @@
       <h3 class="sub">Outline</h3>${fld("Colour", inp("stroke.c", "color", st.c))}${fld("Width", inp("stroke.w", "num", st.w, 'min="0" max="60"'))}
       <h3 class="sub">Shadow / glow</h3>${fld("Colour", inp("shadow.c", "color", sh.c))}${fld("Blur", inp("shadow.b", "num", sh.b, 'min="0" max="120"'))}${fld("Offset X", inp("shadow.x", "num", sh.x, 'min="-80" max="80"'))}${fld("Offset Y", inp("shadow.y", "num", sh.y, 'min="-80" max="80"'))}`;
     } else if (o.type === "image") {
-      h += `<div class="field-row"><button type="button" class="btn btn-ghost btn-sm" data-act="replace">Replace photo</button></div><div class="seg"><button type="button" data-act="fit-cover" aria-pressed="${o.fit === "cover"}">Fill</button><button type="button" data-act="fit-contain" aria-pressed="${o.fit === "contain"}">Fit</button></div>${fld("Corner radius", inp("r", "num", o.r, 'min="0"'))}`;
+      const f = o.f, sl = (k, v, mx) => fld(k, `<input type="range" data-k="f.${{ Brightness: "br", Contrast: "co", Saturation: "sa", Blur: "bl", "Black & white": "gr" }[k]}" data-t="num" min="0" max="${mx}" value="${v}" aria-label="${k}">`);
+      h += `<div class="field-row"><button type="button" class="btn btn-ghost btn-sm" data-act="replace">Replace photo</button></div><div class="seg"><button type="button" data-act="fit-cover" aria-pressed="${o.fit === "cover"}">Fill</button><button type="button" data-act="fit-contain" aria-pressed="${o.fit === "contain"}">Fit</button><button type="button" data-act="flipx" aria-pressed="${o.fx}">Flip ↔</button><button type="button" data-act="flipy" aria-pressed="${o.fy}">Flip ↕</button></div>${fld("Corner radius", inp("r", "num", o.r, 'min="0"'))}
+      <h3 class="sub">Photo filters</h3>${sl("Brightness", f.br, 200)}${sl("Contrast", f.co, 200)}${sl("Saturation", f.sa, 200)}${sl("Black & white", f.gr, 100)}${sl("Blur", f.bl, 40)}
+      <div class="btn-row"><button type="button" class="mini" data-act="f-bw">B&amp;W</button><button type="button" class="mini" data-act="f-vivid">Vivid</button><button type="button" class="mini" data-act="f-fade">Fade</button><button type="button" class="mini" data-act="f-reset">Reset</button></div>`;
     } else {
-      h += `${fld("Fill", inp("fill", "color", o.fill))}${fld("Gradient", inp("g", "bool", !!o.fill2))}${fld("Gradient to", inp("fill2", "color", o.fill2 || "#00D9FF"))}${fld("Border", inp("stroke", "color", o.stroke || "#FFFFFF"))}${fld("Border width", inp("sw", "num", o.sw, 'min="0" max="80"'))}${o.type === "rect" ? fld("Corner radius", inp("r", "num", o.r, 'min="0"')) : ""}`;
+      const sh = o.shadow || { c: "#000000", b: 0, x: 0, y: 0 };
+      h += `${fld("Fill", inp("fill", "color", o.fill))}${fld("Gradient", inp("g", "bool", !!o.fill2))}${fld("Gradient to", inp("fill2", "color", o.fill2 || "#00D9FF"))}${fld("Border", inp("stroke", "color", o.stroke || "#FFFFFF"))}${fld("Border width", inp("sw", "num", o.sw, 'min="0" max="80"'))}${o.type === "rect" ? fld("Corner radius", inp("r", "num", o.r, 'min="0"')) : ""}
+      <h3 class="sub">Shadow / glow</h3>${fld("Colour", inp("shadow.c", "color", sh.c))}${fld("Blur", inp("shadow.b", "num", sh.b, 'min="0" max="120"'))}${fld("Offset X", inp("shadow.x", "num", sh.x, 'min="-80" max="80"'))}${fld("Offset Y", inp("shadow.y", "num", sh.y, 'min="-80" max="80"'))}`;
     }
     h += `<h3 class="sub">Arrange</h3>${fld("Opacity", `<input type="range" data-k="op" data-t="num" min="0" max="1" step="0.01" value="${o.op}" aria-label="Opacity">`)}${fld("Rotation °", inp("rot", "num", o.rot, 'min="-360" max="360"'))}
       ${o.type !== "text" ? fld("Width", inp("w", "num", o.w, 'min="10"')) + fld("Height", inp("h", "num", o.h, 'min="4"')) : fld("Box width", inp("w", "num", o.w, 'min="40"'))}
-      <div class="btn-row"><button type="button" class="mini" data-act="cx">Centre ↔</button><button type="button" class="mini" data-act="cy">Centre ↕</button><button type="button" class="mini" data-act="dup">Duplicate</button><button type="button" class="mini danger" data-act="del">Delete</button></div>`;
+      <div class="btn-row"><button type="button" class="mini" data-act="cx">Centre ↔</button><button type="button" class="mini" data-act="cy">Centre ↕</button><button type="button" class="mini" data-act="pl">⇤ Left</button><button type="button" class="mini" data-act="pr">Right ⇥</button><button type="button" class="mini" data-act="pt">⤒ Top</button><button type="button" class="mini" data-act="pb">Bottom ⤓</button><button type="button" class="mini" data-act="dup">Duplicate</button><button type="button" class="mini danger" data-act="del">Delete</button></div>`;
     p.innerHTML = h; const ta = $("#p-text", p); if (ta) ta.value = o.text;
   }
   function refreshInputs() { /* keep numeric fields in step with canvas drags without rebuilding the panel */
@@ -203,6 +229,8 @@
     const W = doc.w, H = doc.h, base = { rot: 0, op: 1, hidden: false, locked: false };
     if (k === "heading" || k === "text") { const big = k === "heading"; add(Object.assign({ type: "text", x: W * .1, y: H * .4, w: W * .8, text: big ? "Your heading" : "Your text goes here", font: big ? "Space Grotesk" : "Inter", size: big ? 120 : 52, weight: big ? 700 : 400, italic: false, color: "#FFFFFF", align: "left", ls: 0, lh: 1.15, upper: false, stroke: null, shadow: null, h: 100 }, base)); }
     else if (k === "rect" || k === "ellipse") add(Object.assign({ type: k, x: W / 2 - 160, y: H / 2 - 160, w: 320, h: 320, fill: "#7865FF", fill2: null, stroke: null, sw: 0, r: k === "rect" ? 24 : 0 }, base));
+    else if (k.startsWith("poly:") && POLY.includes(k.slice(5))) add(Object.assign({ type: "poly", kind: k.slice(5), x: W / 2 - 170, y: H / 2 - 170, w: 340, h: 340, fill: "#FFC23A", fill2: null, stroke: null, sw: 0, r: 0, shadow: null }, base));
+    else if (k.startsWith("emoji:")) add(Object.assign({ type: "text", x: W / 2 - 150, y: H / 2 - 120, w: 300, text: k.slice(6), font: "Inter", size: 200, weight: 400, italic: false, color: "#FFFFFF", align: "center", ls: 0, lh: 1.1, upper: false, stroke: null, shadow: null, h: 220 }, base));
     else if (k === "line") add(Object.assign({ type: "rect", x: W * .2, y: H / 2, w: W * .6, h: 8, fill: "#FFFFFF", fill2: null, stroke: null, sw: 0, r: 4 }, base));
   }
   function readImage(file, cb) {
@@ -220,7 +248,7 @@
     readImage(file, (key, iw, ih) => {
       if (imgMode === "bg") { doc.bg.img = key; render(); commit(); AMI.toast("Background photo added."); return; }
       if (imgMode === "replace" && byId(sel) && byId(sel).type === "image") { byId(sel).src = key; render(); commit(); return; }
-      const s = Math.min(doc.w * .7 / iw, doc.h * .6 / ih), w = iw * s, h = ih * s; add({ type: "image", x: (doc.w - w) / 2, y: (doc.h - h) / 2, w, h, rot: 0, op: 1, hidden: false, locked: false, src: key, fit: "cover", r: 0 });
+      const s = Math.min(doc.w * .7 / iw, doc.h * .6 / ih), w = iw * s, h = ih * s; add({ type: "image", x: (doc.w - w) / 2, y: (doc.h - h) / 2, w, h, rot: 0, op: 1, hidden: false, locked: false, src: key, fit: "cover", r: 0, fx: false, fy: false, f: { br: 100, co: 100, sa: 100, bl: 0, gr: 0 } });
     });
   }
   function reorder(id, dir) { const i = doc.objs.findIndex(o => o.id === id), j = i + dir; if (i < 0 || j < 0 || j >= doc.objs.length) return; [doc.objs[i], doc.objs[j]] = [doc.objs[j], doc.objs[i]]; render(); commit(); }
@@ -236,9 +264,52 @@
   }
   const loadTpl = t => { const d = t.make(); d.w = t.w; d.h = t.h; return load(d, {}, t.id); };
 
-  function download() {
-    const c = document.createElement("canvas"), jpg = $("#st-fmt").value === "jpg"; renderTo(c, doc, 1);
-    c.toBlob(b => { if (!b) { AMI.toast("Could not create the image. Try a smaller canvas.", "error"); return; } const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = `ai-manga-india-${tplId || "design"}.${jpg ? "jpg" : "png"}`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); AMI.toast("Downloaded " + a.download); }, jpg ? "image/jpeg" : "image/png", .95);
+  /* ---------- export: PNG, JPG, WEBP, PDF, SVG, .ami ---------- */
+  function deliver(blob, fname) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = fname; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); AMI.toast("Downloaded " + fname); }
+  const xe = t => String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function toSVG(d, transparent) {
+    let defs = "", body = "", n = 0;
+    const grad = (a, b, x, y, w, h) => { const id = "g" + n++; defs += `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${f2(x)}" y1="${f2(y)}" x2="${f2(x + w)}" y2="${f2(y + h)}"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`; return `url(#${id})`; };
+    const shadowF = s => { if (!(s && (s.b > 0 || s.x || s.y))) return ""; const id = "s" + n++; defs += `<filter id="${id}" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="${s.x}" dy="${s.y}" stdDeviation="${s.b / 2}" flood-color="${s.c}"/></filter>`; return ` filter="url(#${id})"`; };
+    if (!transparent) { body += `<rect width="${d.w}" height="${d.h}" fill="${d.bg.c2 ? grad(d.bg.c1, d.bg.c2, 0, 0, d.w, d.h) : d.bg.c1}"/>`; if (d.bg.img) body += `<image xlink:href="${assets[d.bg.img]}" width="${d.w}" height="${d.h}" preserveAspectRatio="xMidYMid slice"/>`; }
+    d.objs.filter(o => !o.hidden).forEach(o => {
+      const x = -o.w / 2, y = -o.h / 2; let inner = "", filt = "";
+      if (o.type === "text") {
+        filt = shadowF(o.shadow); const lines = layout(o), anchor = { left: "start", center: "middle", right: "end" }[o.align], lx = o.align === "left" ? x : o.align === "center" ? 0 : x + o.w;
+        lines.forEach((ln, i) => { inner += `<text x="${f2(lx)}" y="${f2(y + i * o.size * o.lh + o.size * o.lh / 2)}" text-anchor="${anchor}" dominant-baseline="central" font-family="'${o.font}', sans-serif" font-size="${o.size}" font-weight="${o.weight}" font-style="${o.italic ? "italic" : "normal"}" letter-spacing="${o.ls}" fill="${o.color}" xml:space="preserve"${o.stroke && o.stroke.w > 0 ? ` stroke="${o.stroke.c}" stroke-width="${o.stroke.w * 2}" stroke-linejoin="round" paint-order="stroke"` : ""}>${xe(o.upper ? ln.toUpperCase() : ln)}</text>`; });
+      } else if (o.type === "image") {
+        const id = "c" + n++, fl = filterCss(o.f); defs += `<clipPath id="${id}"><rect x="${f2(x)}" y="${f2(y)}" width="${f2(o.w)}" height="${f2(o.h)}" rx="${Math.min(o.r, o.w / 2, o.h / 2)}"/></clipPath>`;
+        const im = getImg(o.src), iw = im ? im.width : 1, ih = im ? im.height : 1, k = (o.fit === "contain" ? Math.min : Math.max)(o.w / iw, o.h / ih);
+        inner = `<g clip-path="url(#${id})"><image xlink:href="${assets[o.src]}" x="${f2(-iw * k / 2)}" y="${f2(-ih * k / 2)}" width="${f2(iw * k)}" height="${f2(ih * k)}" transform="scale(${o.fx ? -1 : 1} ${o.fy ? -1 : 1})"${fl ? ` style="filter:${fl}"` : ""}/></g>`;
+      } else {
+        filt = shadowF(o.shadow); const fill = o.fill2 ? grad(o.fill, o.fill2, x, y, o.w, o.h) : o.fill, st = o.stroke && o.sw > 0 ? ` stroke="${o.stroke}" stroke-width="${o.sw}" stroke-linejoin="round"` : "";
+        inner = o.type === "rect" ? `<rect x="${f2(x)}" y="${f2(y)}" width="${f2(o.w)}" height="${f2(o.h)}" rx="${Math.min(o.r, o.w / 2, o.h / 2)}" fill="${fill}"${st}/>`
+          : o.type === "ellipse" ? `<ellipse rx="${f2(o.w / 2)}" ry="${f2(o.h / 2)}" fill="${fill}"${st}/>` : `<path d="${polyD(o.kind, o.w, o.h, x, y)}" fill="${fill}"${st}/>`;
+      }
+      body += `<g transform="translate(${f2(o.x + o.w / 2)} ${f2(o.y + o.h / 2)}) rotate(${o.rot})" opacity="${o.op}"${filt}>${inner}</g>`;
+    });
+    return `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${d.w}" height="${d.h}" viewBox="0 0 ${d.w} ${d.h}"><defs>${defs}</defs>${body}</svg>`;
+  }
+  async function toPDF(canvas) {
+    const jb = await new Promise(r => canvas.toBlob(r, "image/jpeg", .95)), jpg = new Uint8Array(await jb.arrayBuffer()), W = canvas.width, H = canvas.height, pw = (W * .75).toFixed(2), ph = (H * .75).toFixed(2);
+    const enc = new TextEncoder(), parts = [], offs = []; let off = 0; const push = u => { parts.push(u); off += u.length; }, str = t => push(enc.encode(t)), obj = (i, bd) => { offs[i] = off; str(`${i} 0 obj\n${bd}\nendobj\n`); };
+    str("%PDF-1.4\n"); obj(1, "<< /Type /Catalog /Pages 2 0 R >>"); obj(2, "<< /Type /Pages /Kids [3 0 R] /Count 1 >>");
+    obj(3, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
+    offs[4] = off; str(`4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${W} /Height ${H} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`); push(jpg); str("\nendstream\nendobj\n");
+    const cs = `q ${pw} 0 0 ${ph} 0 0 cm /Im0 Do Q`; obj(5, `<< /Length ${cs.length} >>\nstream\n${cs}\nendstream`);
+    const xr = off; str("xref\n0 6\n0000000000 65535 f \n" + [1, 2, 3, 4, 5].map(i => String(offs[i]).padStart(10, "0") + " 00000 n \n").join("")); str(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xr}\n%%EOF`);
+    return new Blob(parts, { type: "application/pdf" });
+  }
+  async function download() {
+    const fmt = $("#st-fmt").value, base = `ai-manga-india-${tplId || "design"}`, tr = $("#st-transp").checked && ["png", "webp", "svg"].includes(fmt);
+    if (fmt === "ami") return saveFile();
+    await ensureFonts(doc);
+    if (fmt === "svg") { deliver(new Blob([toSVG(doc, tr)], { type: "image/svg+xml" }), base + ".svg"); return; }
+    let sc = parseFloat($("#st-scale").value) || 1; const cap = 8000 / Math.max(doc.w, doc.h); if (sc > cap) { sc = cap; AMI.toast("Size reduced to stay within browser limits."); }
+    const c = document.createElement("canvas"); renderTo(c, doc, sc, tr);
+    if (fmt === "pdf") { deliver(await toPDF(c), base + ".pdf"); return; }
+    const mime = { png: "image/png", jpg: "image/jpeg", webp: "image/webp" }[fmt] || "image/png";
+    c.toBlob(b => { if (!b) { AMI.toast("Could not create the image. Try a smaller size.", "error"); return; } deliver(b, `${base}.${fmt}`); }, mime, .95);
   }
   function saveFile() {
     const b = new Blob([JSON.stringify({ app: "ami-studio", v: 1, doc, assets })], { type: "application/json" }), a = document.createElement("a");
@@ -297,6 +368,8 @@
     if (!doc || $(".modal.open")) return;
     if (mod && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); return; }
     if (mod && e.key.toLowerCase() === "y") { e.preventDefault(); doRedo(); return; }
+    if (mod && e.key.toLowerCase() === "c" && sel) { clip = JSON.stringify(byId(sel)); return; }
+    if (mod && e.key.toLowerCase() === "v" && clip) { e.preventDefault(); const c = JSON.parse(clip); c.id = uidNew(); c.x += 30; c.y += 30; clip = JSON.stringify(c); doc.objs.push(c); select(c.id); commit(); return; }
     if (mod && e.key.toLowerCase() === "d" && sel) { e.preventDefault(); dup(); return; }
     const o = byId(sel); if (!o) return;
     if (e.key === "Delete" || e.key === "Backspace") { e.preventDefault(); del(); return; }
@@ -318,14 +391,20 @@
       if (i.dataset.k === "font") ensureFonts(doc).then(render);
       render(); touch(); if (i.dataset.k === "text") layers(); };
     P.addEventListener("input", e => apply(e.target)); P.addEventListener("change", e => { apply(e.target); commit(); if (e.target.dataset.k === "font") props(true); });
-    P.addEventListener("click", e => { const b = e.target.closest("[data-act]"); const o = byId(sel); if (!b || !o) return; const a = b.dataset.act;
+    P.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (b && b.dataset.act === "custom") { const w = parseInt($("#cs-w").value, 10), h = parseInt($("#cs-h").value, 10); if (!(w >= 200 && w <= 4000 && h >= 200 && h <= 4000)) { AMI.toast("Width and height must be between 200 and 4000 px.", "error"); return; } doc.w = w; doc.h = h; $("#st-size").value = ""; fit = true; applyZoom(); commit(); return; }
+      const o = byId(sel); if (!b || !o) return; const a = b.dataset.act;
       if (a === "bold") o.weight = o.weight === 700 ? 400 : 700; else if (a === "italic") o.italic = !o.italic; else if (a === "upper") o.upper = !o.upper;
       else if (a.startsWith("al-")) o.align = a.slice(3); else if (a.startsWith("fit-")) o.fit = a.slice(4);
+      else if (a === "flipx") o.fx = !o.fx; else if (a === "flipy") o.fy = !o.fy;
+      else if (a.startsWith("f-")) o.f = { bw: { br: 100, co: 100, sa: 100, bl: 0, gr: 100 }, vivid: { br: 105, co: 115, sa: 140, bl: 0, gr: 0 }, fade: { br: 112, co: 85, sa: 80, bl: 0, gr: 0 }, reset: { br: 100, co: 100, sa: 100, bl: 0, gr: 0 } }[a.slice(2)];
+      else if (a === "pl") o.x = 0; else if (a === "pr") o.x = doc.w - o.w; else if (a === "pt") o.y = 0; else if (a === "pb") o.y = doc.h - o.h;
       else if (a === "cx") { o.x = (doc.w - o.w) / 2; } else if (a === "cy") { o.y = (doc.h - o.h) / 2; } else if (a === "dup") return dup(); else if (a === "del") return del(); else if (a === "replace") return pickImage("replace");
       ensureFonts(doc).then(render); render(); commit(); props(true); });
     $("#st-layers").addEventListener("click", e => { const b = e.target.closest("button"), li = e.target.closest("li"); if (!b || !li || !li.dataset.id) return; const id = li.dataset.id, o = byId(id), a = b.dataset.a;
       if (a === "pick") select(id); else if (a === "vis") { o.hidden = !o.hidden; render(); commit(); } else if (a === "lock") { o.locked = !o.locked; commit(); } else if (a === "up") reorder(id, 1); else if (a === "down") reorder(id, -1); });
     $$("[data-add]").forEach(b => b.addEventListener("click", () => (b.dataset.add === "image" ? pickImage("add") : addKind(b.dataset.add))));
+    const eg = $("#emoji-grid"); if (eg) eg.innerHTML = ["😀", "😍", "🔥", "✨", "⭐", "💥", "🎉", "❤️", "👍", "🚀", "🎬", "🎨", "📣", "🏆", "💡", "🌈", "⚡", "🐉", "🌸", "🎮", "📸", "💰", "✅", "➡️"].map(m => `<button type="button" class="emo" data-add="emoji:${m}" aria-label="Add ${m}">${m}</button>`).join("");
+    $$("#emoji-grid [data-add]").forEach(b => b.addEventListener("click", () => addKind(b.dataset.add)));
     $("#st-imgfile").addEventListener("change", e => onImage(e.target.files[0]));
     $("#bg-img").addEventListener("click", () => pickImage("bg")); $("#bg-noimg").addEventListener("click", () => { doc.bg.img = null; render(); commit(); });
     const bg1 = $("#bg-c1"), bg2 = $("#bg-c2");

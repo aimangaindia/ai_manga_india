@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Online Template Editor | Design Studio — AI MANGA INDIA</title>
-<meta name="description" content="Edit Instagram posts, stories, YouTube thumbnails and posters in your browser. Change text, colours and images, then download a PNG. Free, no sign-up.">
+<meta name="description" content="Edit Instagram posts, stories, YouTube thumbnails, flyers and posters in your browser, then download as PNG, JPG, WEBP, PDF or SVG. Free, no sign-up.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#080A12">
 <link rel="canonical" href="https://www.example.com/editor.html">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI MANGA INDIA">
 <meta property="og:title" content="Free Online Template Editor | Design Studio — AI MANGA INDIA">
-<meta property="og:description" content="Edit Instagram posts, stories, YouTube thumbnails and posters in your browser. Change text, colours and images, then download a PNG. Free, no sign-up.">
+<meta property="og:description" content="Edit Instagram posts, stories, YouTube thumbnails, flyers and posters in your browser, then download as PNG, JPG, WEBP, PDF or SVG. Free, no sign-up.">
 <meta property="og:url" content="https://www.example.com/editor.html">
 <meta property="og:image" content="https://www.example.com/assets/images/og-image.svg">
 <meta name="twitter:card" content="summary_large_image">
@@ -32,7 +32,7 @@
 <section class="studio-intro"><div class="container">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>Template Studio</nav>
   <div class="studio-intro-row"><div><span class="eyebrow">Template Studio</span><h1>Edit templates right here.</h1>
-  <p>Pick a template, change the text, colours and photos, then download it. Free, no sign-up. Everything stays in your browser — nothing is uploaded to our servers.</p></div></div></div></section>
+  <p>Pick a template, change the text, colours and photos, then download it as PNG, JPG, WEBP, PDF or SVG. Free, no sign-up. Everything stays in your browser — nothing is uploaded to our servers.</p></div></div></div></section>
 
 <section class="studio" id="studio" aria-label="Template editor">
   <div class="studio-bar container">
@@ -52,7 +52,10 @@
       <button class="btn btn-ghost btn-sm" type="button" id="st-open">Open file</button>
       <input type="file" id="st-openfile" accept=".ami,.json,application/json" hidden>
       <label class="sr-only" for="st-fmt">Download format</label>
-      <select class="control sm" id="st-fmt"><option value="png">PNG</option><option value="jpg">JPG</option></select>
+      <select class="control sm" id="st-fmt"><option value="png">PNG image</option><option value="jpg">JPG image</option><option value="webp">WEBP image</option><option value="pdf">PDF document</option><option value="svg">SVG (vector)</option><option value="ami">AMI (editable file)</option></select>
+      <label class="sr-only" for="st-scale">Download size</label>
+      <select class="control sm" id="st-scale"><option value="1">1× size</option><option value="2">2× size</option><option value="3">3× size</option><option value="0.5">½ size</option></select>
+      <label class="chk"><input type="checkbox" id="st-transp"> Transparent background</label>
       <button class="btn btn-primary btn-sm" type="button" id="st-download">Download</button>
     </div>
   </div>
@@ -68,6 +71,9 @@
         <button type="button" class="tool" data-add="line"><b>&#9473;</b>Line</button>
         <button type="button" class="tool" data-add="image"><b>&#128247;</b>Image</button>
       </div>
+      <h2 class="panel-h">Shapes</h2>
+      <div class="shape-grid" id="shape-grid"><button type="button" class="tool sm" data-add="poly:triangle" aria-label="Triangle" title="Triangle"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.0 2L22 22L2 22Z"/></svg></button><button type="button" class="tool sm" data-add="poly:diamond" aria-label="Diamond" title="Diamond"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.0 2L22 12.0L12.0 22L2 12.0Z"/></svg></button><button type="button" class="tool sm" data-add="poly:pentagon" aria-label="Pentagon" title="Pentagon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.0 2.0L21.51 8.91L17.88 20.09L6.12 20.09L2.49 8.91Z"/></svg></button><button type="button" class="tool sm" data-add="poly:hexagon" aria-label="Hexagon" title="Hexagon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7.0 2L17.0 2L22 12.0L17.0 22L7.0 22L2 12.0Z"/></svg></button><button type="button" class="tool sm" data-add="poly:star" aria-label="Star" title="Star"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.0 2.0L14.35 8.76L21.51 8.91L15.8 13.24L17.88 20.09L12.0 16.0L6.12 20.09L8.2 13.24L2.49 8.91L9.65 8.76Z"/></svg></button><button type="button" class="tool sm" data-add="poly:burst" aria-label="Burst" title="Burst"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.0 2.0L13.6 4.98L16.34 2.99L16.49 6.37L19.82 5.77L18.49 8.88L21.75 9.77L19.2 12.0L21.75 14.23L18.49 15.12L19.82 18.23L16.49 17.63L16.34 21.01L13.6 19.02L12.0 22.0L10.4 19.02L7.66 21.01L7.51 17.63L4.18 18.23L5.51 15.12L2.25 14.23L4.8 12.0L2.25 9.77L5.51 8.88L4.18 5.77L7.51 6.37L7.66 2.99L10.4 4.98Z"/></svg></button><button type="button" class="tool sm" data-add="poly:arrow" aria-label="Arrow" title="Arrow"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M2 9.0L13.6 9.0L13.6 3.6L22 12.0L13.6 20.4L13.6 15.0L2 15.0Z"/></svg></button><button type="button" class="tool sm" data-add="poly:heart" aria-label="Heart" title="Heart"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 21.0C4 15 2 9 6 5C9 2 12 4.8 12 7.0C12 4.8 15 2 18 5C22 9 20 15 12 21Z"/></svg></button></div>
+      <h2 class="panel-h">Emoji</h2><div class="emoji-grid" id="emoji-grid"></div>
       <input type="file" id="st-imgfile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
       <h2 class="panel-h">Background</h2>
       <div class="field-row"><label for="bg-c1">Colour</label><input type="color" id="bg-c1"></div>

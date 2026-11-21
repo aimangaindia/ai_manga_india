@@ -126,6 +126,8 @@ Icons: Lucide-style paths (ISC licence). Fonts: Space Grotesk & Inter via Google
 ## Template Studio (editor.html)
 
 A Canva-style editor that runs fully in the visitor's browser (no server, no uploads): templates, drag/resize/rotate,
-text styling, shapes, photo upload, layers, undo/redo, autosave in the browser, save/open `.ami` files, and PNG/JPG download.
+text styling, 11 shape types, emoji, photo upload with filters/flip, layers, align tools, copy/paste, custom sizes, undo/redo, autosave in the browser,
+save/open `.ami` files, and download as PNG, JPG, WEBP, PDF (image-based) or SVG (vector; fonts are referenced by name), at 0.5×–3× size, with optional transparent background.
 Add or change starter templates in `js/editor-templates.js`. Link to a template with `editor.html?t=<id>` (e.g. `?t=neon`).
-Limits: no accounts or cloud saving, no stock library, no animation/video editing.
+Limits: single page only, no accounts or cloud saving, no stock library, no AI tools, no animation/video editing, no real-time collaboration.
+Photo filters use the canvas filter API, which some Safari versions do not support.
