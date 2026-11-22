@@ -12,6 +12,7 @@ Each page gets its own <title>, description, canonical URL, Open Graph tags, bre
 fallback (what search engines and no-JS visitors see). js/catalog.js then renders the full interactive page from the same JSON.
 Run it again after editing data/catalog.json. Safe to re-run; it only overwrites the files listed above."""
 import json, html, os, re, shutil, datetime
+from urllib.parse import quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = re.search(r'siteUrl:\s*"([^"]+)"', open(os.path.join(ROOT, "js/config.js")).read()).group(1).rstrip("/")
 CAT = json.load(open(os.path.join(ROOT, "data/catalog.json")))
@@ -112,7 +113,7 @@ for s in S:
     body = f'''<section class="page-hero"><div class="container">{crumbs_html(cr)}
 <h1>{E(s["title"])}</h1><p>{E(s["lead"])}</p><p>{E(s["intro"]["offers"])}</p>
 <h2 class="static-h">What we offer</h2><ul class="static-list">{"".join(f'<li><a href="/product/{o["slug"]}">{E(o["title"])}</a> — {E(o["short"])}</li>' for o in s["offerings"])}</ul>
-<p><a class="btn btn-primary" href="contact.html?service={E(s["value"])}">Request a Custom Project</a></p></div></section>'''
+<p><a class="btn btn-primary" href="contact.html?service={quote(s["value"])}">Request a Custom Project</a></p></div></section>'''
     ld = [crumbs_ld(cr), {"@context": "https://schema.org", "@type": "Service", "name": s["title"], "description": s["lead"], "url": SITE + p, "provider": ORG, "areaServed": "Worldwide",
           "hasOfferCatalog": {"@type": "OfferCatalog", "name": s["title"], "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": o["title"], "url": f"{SITE}/product/{o['slug']}"}} for o in s["offerings"]]}}]
     write(p, page(p, f"{s['title']} Services | AI MANGA INDIA", desc[:300], "service", s["slug"], body, ld, ""))
@@ -123,7 +124,7 @@ for s in S:
         body = f'''<section class="page-hero"><div class="container">{crumbs_html(cr2)}
 <h1>{E(o["title"])}</h1><p>{E(o["short"])}</p><p>Part of <a href="{p}">{E(s["title"])}</a>. Pricing: quote on request.</p>
 <h2 class="static-h">What you can request</h2><ul class="static-list">{"".join(f"<li>{E(i)}</li>" for i in o["includes"])}</ul>
-<p><a class="btn btn-primary" href="contact.html?service={E(s["value"])}&amp;topic={E(o["title"])}">Request This Service</a></p></div></section>'''
+<p><a class="btn btn-primary" href="contact.html?service={quote(s["value"])}&amp;topic={quote(o["title"])}">Request This Service</a></p></div></section>'''
         ld = [crumbs_ld(cr2), {"@context": "https://schema.org", "@type": "Service", "name": o["title"], "description": o["short"], "url": SITE + q, "provider": ORG,
               "serviceType": s["title"], "areaServed": "Worldwide"}]
         write(q, page(q, f"{o['title']} | {s['title']} — AI MANGA INDIA", f"{o['short']} Part of {s['title']}. Request a quote from AI MANGA INDIA.", "product", o["slug"], body, ld, ""))
