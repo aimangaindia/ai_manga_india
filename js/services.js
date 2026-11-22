@@ -3,12 +3,13 @@
 (() => {
   const AMI = (window.AMI = window.AMI || {});
   const ic = AMI.icon, D = AMI.data;
+  const SLUG = { video: "ai-video-production", ads: "ai-video-advertising", graphic: "graphic-design", art: "digital-art", manga: "manga-character-design", custom: "custom-creative-services", packages: "custom-creative-services" };
   const quoteHref = s => s.href || `contact.html?service=${encodeURIComponent(s.value)}`;
 
   const card = s => `
     <article class="card service-card reveal" id="${s.id}"><div class="service-num">SERVICE ${s.num}</div><div class="icon-wrap">${ic(s.icon)}</div>
       <h3>${AMI.esc(s.title)}</h3><p>${AMI.esc(s.desc)}</p>
-      <ul>${s.includes.slice(0, 6).map(i => `<li>${ic("check")}<span>${AMI.esc(i)}</span></li>`).join("")}${s.includes.length > 6 ? `<li class="more"><a href="services.html#${s.id}">+ ${s.includes.length - 6} more — see full list</a></li>` : ""}</ul>
+      <ul>${s.includes.slice(0, 6).map(i => `<li>${ic("check")}<span>${AMI.esc(i)}</span></li>`).join("")}${s.includes.length > 6 ? `<li class="more"><a href="/services/${SLUG[s.id]}">+ ${s.includes.length - 6} more — see full list</a></li>` : ""}</ul>
       <a class="btn btn-primary btn-sm" href="${quoteHref(s)}">${AMI.esc(s.cta)} ${ic("arrow-right")}</a></article>`;
 
   function services() {

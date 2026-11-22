@@ -23,7 +23,10 @@ Pure **HTML5 + CSS3 + vanilla JavaScript (ES6+)** — no frameworks, no build st
 
 ```
 AI-MANGA-INDIA/
-├── index.html  portfolio.html  services.html  shop.html  product.html
+├── index.html  portfolio.html  shop.html  product.html   (product.html = Digital Shop item)
+├── services/…  product/…   Services system (generated): /services, /services/<service>, /product/<offering>
+├── data/catalog.json       ← services, offerings and packages (edit this, then run tools/build_pages.py)
+├── vercel.json             clean URLs, /services.html → /services redirect
 ├── about.html  contact.html  cart.html  checkout.html  account.html  faq.html
 ├── privacy.html  terms.html  refund.html  license.html  404.html
 ├── sitemap.xml  robots.txt
@@ -39,7 +42,8 @@ AI-MANGA-INDIA/
 │   ├── shop.js        product cards, shop page, quick view, product detail page
 │   ├── portfolio.js   portfolio grid, filter, project modal
 │   ├── contact.js     validation, spam protection, inquiry + newsletter submission
-│   └── services.js    service cards, FAQ, testimonials, marquee, account tabs
+│   ├── services.js    home service cards, FAQ, testimonials, marquee, account tabs
+│   └── catalog.js     renders /services, /services/<slug> and /product/<slug> from data/catalog.json
 ├── assets/  images/ products/ logos/ icons/ videos/
 ├── editor.html, js/editor.js, js/editor-templates.js, css/editor.css   Template Studio (in-browser editor)
 └── tools/gen_assets.py   regenerates the placeholder artwork + logos (optional)
@@ -139,3 +143,15 @@ Photo filters use the canvas filter API, which some Safari versions do not suppo
 * Structured data: Organization + WebSite (home), WebApplication (Template Studio), BreadcrumbList/Product (product pages).
 * Social preview image: `assets/images/og-image.png` (1200×630). Cart, checkout, account, 404 and the demo product page are `noindex`.
 * Submit to Google: Search Console → Add property (URL prefix) → verify → Sitemaps → `sitemap.xml`.
+
+## Services system (multi-page)
+
+Journey: **Home → /services → /services/<service> → /product/<offering> → request a quote** (contact form is pre-filled).
+
+* Content lives in `data/catalog.json`: 6 services, 54 offerings (from your offer list) and a `packages` list per service.
+* **Prices:** none are invented. Offerings show "Quote on request". Add `"price": 999` (INR) to an offering or package only when it is real.
+* **Packages:** every service has `"packages": []`, so each page shows an honest "No fixed packages published yet" state.
+  Add `{ "slug", "title", "tier", "price", "delivery", "features": [] }` objects to publish a real package.
+* **No cart for services:** these are made-to-order, so buttons lead to the inquiry form. Ready-made downloads stay in the Digital Shop.
+* After editing `catalog.json`, run `python3 tools/build_pages.py` — it rewrites the static pages, their SEO tags and `sitemap.xml`.
+* Cover and gallery images are the site's illustrative placeholder art (labelled "Illustrative artwork"). Replace them with real work in `catalog.json` (`image`).

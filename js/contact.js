@@ -41,9 +41,10 @@
   function inquiry() {
     const form = AMI.$("#inquiry-form"); if (!form) return;
     liveClear(form);
-    const svc = AMI.param("service"), sel = AMI.$("#f-service"), ref = AMI.param("ref"), prod = AMI.param("product");
+    const svc = AMI.param("service"), sel = AMI.$("#f-service"), ref = AMI.param("ref"), prod = AMI.param("product"), topic = AMI.param("topic");
     if (svc) [...sel.options].forEach(o => { if (o.value === svc) sel.value = svc; });
-    if (ref || prod) AMI.$("#f-message").value = ref ? `I'd like something similar to the portfolio project "${ref}".\n\n` : `I have a question about the product "${prod}".\n\n`;
+    if (topic) AMI.$("#f-message").value = `I'd like to request: ${topic.slice(0, 120)}.\n\nMy idea: `;
+    else if (ref || prod) AMI.$("#f-message").value = ref ? `I'd like something similar to the portfolio project "${ref}".\n\n` : `I have a question about the product "${prod}".\n\n`;
     const status = AMI.$("#form-status"), btn = AMI.$("button[type=submit]", form);
     form.addEventListener("submit", async e => {
       e.preventDefault(); status.className = "form-status";

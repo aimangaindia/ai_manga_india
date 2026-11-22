@@ -1,0 +1,939 @@
+{
+ "version": 1,
+ "note": "Edit this file to change services, offerings and packages. Run: python3 tools/build_pages.py. Prices: add \"price\": <number in INR> to an offering or package ONLY when it is a real, confirmed price.",
+ "groups": [
+  {
+   "id": "all",
+   "label": "All services"
+  },
+  {
+   "id": "video",
+   "label": "Video"
+  },
+  {
+   "id": "design",
+   "label": "Design"
+  },
+  {
+   "id": "art",
+   "label": "Art & Characters"
+  },
+  {
+   "id": "custom",
+   "label": "Custom"
+  }
+ ],
+ "services": [
+  {
+   "slug": "ai-video-production",
+   "oldId": "video",
+   "num": "01",
+   "icon": "video",
+   "group": "video",
+   "title": "AI Video Production & Animation",
+   "value": "AI Video Production & Animation",
+   "image": "assets/images/p-neon-city.svg",
+   "imageAlt": "Illustrative neon city scene for AI video production",
+   "short": "Cinematic AI-generated videos, 3D animation, animated storytelling and professional video production.",
+   "highlights": [
+    "Cinematic AI video",
+    "3D animated storytelling",
+    "Character animation",
+    "Videos for YouTube & social media"
+   ],
+   "lead": "Cinematic AI-assisted videos and animation, made to order for brands, creators and storytellers.",
+   "intro": {
+    "offers": "Made-to-order video work: from a short social clip to an animated story. We plan the idea with you, create the visuals with AI-assisted tools, then edit and refine them.",
+    "who": "Creators, small businesses, storytellers and brands that need video but don't have a production team.",
+    "types": "Cinematic scenes, 3D animated videos, short films, character animation, explainers, YouTube and social videos.",
+    "expect": "A conversation about your idea first. Length, format, style, revisions and timeline are agreed in writing before work starts."
+   },
+   "requirements": [
+    "A short description of your idea or story",
+    "Where the video will be used (YouTube, Instagram, website…)",
+    "Preferred length and aspect ratio, if you know them",
+    "Reference videos or images you like (optional)",
+    "Any text, logos or voice-over that must appear"
+   ],
+   "formats": "Typically MP4 — final formats are confirmed in your quote",
+   "faqs": [
+    [
+     "How long does a video take?",
+     "It depends on length and complexity. We give a realistic estimate in your proposal rather than a fixed promise up front."
+    ],
+    [
+     "Can I ask for changes?",
+     "Yes. The number of revision rounds is agreed in your quote, so you know what to expect."
+    ],
+    [
+     "Do I own the finished video?",
+     "Usage rights are stated in writing in your quote. See the License Policy for the general terms."
+    ]
+   ],
+   "portfolio": [
+    "video",
+    "manga"
+   ],
+   "offerings": [
+    {
+     "slug": "cinematic-ai-video-production",
+     "title": "Cinematic AI Video Production",
+     "short": "Cinematic AI-generated video scenes with atmosphere, lighting and story.",
+     "includes": [
+      "Cinematic scene creation",
+      "Atmospheric visuals and mood",
+      "Editing and finishing"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "3d-animated-videos",
+     "title": "3D Animated Videos",
+     "short": "Stylised 3D-look animated videos for stories, brands and channels.",
+     "includes": [
+      "3D-style animated scenes",
+      "Environment and character visuals",
+      "Animated sequences edited together"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "animated-short-films",
+     "title": "Animated Short Films",
+     "short": "Short animated films built around your story.",
+     "includes": [
+      "Story development support",
+      "Scene-by-scene visual creation",
+      "Edited short film"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "story-based-animation",
+     "title": "Story-Based Animation",
+     "short": "Narrative animation for mystery, adventure, comedy and emotional stories.",
+     "includes": [
+      "Story and scene planning",
+      "Character-driven scenes",
+      "Animated storytelling sequences"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "fantasy-adventure-animation",
+     "title": "Fantasy & Adventure Animation",
+     "short": "Fantasy worlds, creatures and adventure scenes brought to life.",
+     "includes": [
+      "Fantasy environments",
+      "Adventure and action sequences",
+      "Cinematic framing and effects"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "character-animation",
+     "title": "Character Animation",
+     "short": "Animated characters for stories, channels and brands.",
+     "includes": [
+      "Character-focused animated scenes",
+      "Expressions and movement",
+      "Consistent character look across scenes"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "explainer-videos",
+     "title": "Explainer Videos",
+     "short": "Clear, visual videos that explain an idea, product or process.",
+     "includes": [
+      "Script and storyboard support",
+      "Visual explanation scenes",
+      "Text and branding where needed"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "youtube-video-production",
+     "title": "YouTube Video Production",
+     "short": "Videos made for YouTube channels, from intros to full episodes.",
+     "includes": [
+      "Video production for your channel",
+      "Editing and pacing for YouTube",
+      "Thumbnail design can be requested separately"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "social-media-videos",
+     "title": "Social Media Videos",
+     "short": "Short vertical and square videos for Instagram, YouTube Shorts and more.",
+     "includes": [
+      "Short-form videos",
+      "Vertical, square or wide formats",
+      "Captions and branding on request"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "custom-animation-packages",
+     "title": "Custom Animation Packages",
+     "short": "A bundle of animation work planned together around your project.",
+     "includes": [
+      "Multiple videos or scenes planned as one project",
+      "Shared style across all pieces",
+      "Scope and price agreed in a custom quote"
+     ],
+     "kind": "custom-package"
+    }
+   ],
+   "packages": []
+  },
+  {
+   "slug": "ai-video-advertising",
+   "oldId": "ads",
+   "num": "02",
+   "icon": "megaphone",
+   "group": "video",
+   "title": "AI Video Advertising & Commercials",
+   "value": "AI Video Advertising & Commercials",
+   "image": "assets/images/p-orbit-ad.svg",
+   "imageAlt": "Illustrative product advertisement concept",
+   "short": "Creative product advertisements, promotional videos, commercial visuals and marketing campaigns.",
+   "highlights": [
+    "Product and brand ads",
+    "Social media video ads",
+    "Cinematic commercial visuals",
+    "Campaign concepts"
+   ],
+   "lead": "Creative AI-powered advertisements that make your products and brand visually memorable.",
+   "intro": {
+    "offers": "Advertising videos and commercial visuals built around your product, audience and platform.",
+    "who": "Businesses, sellers, startups and creators who want eye-catching ads without a full production crew.",
+    "types": "Product ads, brand promos, social video ads, cinematic commercials, showcase videos and short-form ads.",
+    "expect": "We propose a concept and storyboard first. Scope, revisions and timeline are confirmed in writing. We do not promise sales or viral results."
+   },
+   "requirements": [
+    "Your product or brand and what makes it special",
+    "Your audience and the platform for the ad",
+    "Preferred length (for example 15 or 30 seconds)",
+    "Logos, product photos and brand colours",
+    "Any message, offer or call-to-action to include"
+   ],
+   "formats": "Typically MP4 in the aspect ratio you need — confirmed in your quote",
+   "faqs": [
+    [
+     "Can you make an ad for my product?",
+     "Yes. Send us your product details through the inquiry form and we will propose a concept."
+    ],
+    [
+     "Do you guarantee sales or views?",
+     "No. We create the advertisement; results depend on your product, audience and how the ad is run."
+    ],
+    [
+     "Can I get ads in several sizes?",
+     "Often, yes. Sizes for different platforms can be included in your quote."
+    ]
+   ],
+   "portfolio": [
+    "ads"
+   ],
+   "offerings": [
+    {
+     "slug": "ai-product-advertisements",
+     "title": "AI Product Advertisements",
+     "short": "Eye-catching advertisements that show off a product.",
+     "includes": [
+      "Product-focused advertising visuals",
+      "Concept and storyboard",
+      "Edited advertisement video"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "brand-promotional-videos",
+     "title": "Brand Promotional Videos",
+     "short": "Videos that introduce and promote a brand.",
+     "includes": [
+      "Brand story and visuals",
+      "Promotional video edit",
+      "Your logo and colours throughout"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "social-media-video-ads",
+     "title": "Social Media Video Ads",
+     "short": "Ads designed for Instagram, Facebook, YouTube and other feeds.",
+     "includes": [
+      "Platform-friendly formats",
+      "Attention-grabbing opening",
+      "Text overlays and call-to-action"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "cinematic-commercials",
+     "title": "Cinematic Commercials",
+     "short": "Premium, film-style commercial visuals.",
+     "includes": [
+      "Cinematic lighting and framing",
+      "Story-led commercial concept",
+      "Polished edit"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "product-showcase-videos",
+     "title": "Product Showcase Videos",
+     "short": "Clean videos that present a product from its best angles.",
+     "includes": [
+      "Showcase scenes for your product",
+      "Feature highlights",
+      "Branded finish"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "business-promotional-videos",
+     "title": "Business Promotional Videos",
+     "short": "Promotional videos for local and online businesses.",
+     "includes": [
+      "Business introduction visuals",
+      "Offer or service highlights",
+      "Contact details on screen"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "short-form-advertising-videos",
+     "title": "Short-Form Advertising Videos",
+     "short": "Quick, punchy ads for Reels, Shorts and Stories.",
+     "includes": [
+      "Short vertical videos",
+      "Fast, clear messaging",
+      "Variations can be quoted"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "custom-advertising-packages",
+     "title": "Custom Advertising Packages",
+     "short": "A set of ads planned together for a campaign.",
+     "includes": [
+      "Several ads planned as one campaign",
+      "Consistent look across all ads",
+      "Scope and price agreed in a custom quote"
+     ],
+     "kind": "custom-package"
+    }
+   ],
+   "packages": []
+  },
+  {
+   "slug": "graphic-design",
+   "oldId": "graphic",
+   "num": "03",
+   "icon": "palette",
+   "group": "design",
+   "title": "Graphic Design & Visual Branding",
+   "value": "AI Graphic Design & Visual Branding",
+   "image": "assets/images/p-brand-launch.svg",
+   "imageAlt": "Illustrative brand launch graphics",
+   "short": "Professional graphic design, social media graphics, YouTube thumbnails, promotional designs and brand identity.",
+   "highlights": [
+    "YouTube thumbnails",
+    "Social media posts and stories",
+    "Logos and brand identity",
+    "Posters and banners"
+   ],
+   "lead": "AI-assisted graphic design and visual branding for modern businesses and creators.",
+   "intro": {
+    "offers": "Designs for social media, YouTube, print and brand identity — made to match your style.",
+    "who": "Creators, small businesses, event organisers and brands that need consistent, professional visuals.",
+    "types": "Thumbnails, Instagram posts and stories, template bundles, posters, banners, logos, brand kits and marketing graphics.",
+    "expect": "Tell us your sizes, platforms and brand colours. Revision rounds and package contents are defined in your quote."
+   },
+   "requirements": [
+    "The type of design and its size or platform",
+    "Your brand name, colours and logo (if you have them)",
+    "The text that must appear on the design",
+    "Examples of styles you like (optional)",
+    "Where and when you need it"
+   ],
+   "formats": "Typically PNG or JPG; print-ready files or editable source files only if agreed in your quote",
+   "faqs": [
+    [
+     "Can you match my existing brand?",
+     "Yes. Share your logo, colours and fonts and we will design to match."
+    ],
+    [
+     "Do I get editable files?",
+     "Editable source files are only included if agreed in your quote. Otherwise you receive finished image files."
+    ],
+    [
+     "Can I order a set of designs?",
+     "Yes. Ask for a custom package and we will quote a set of pieces together."
+    ]
+   ],
+   "portfolio": [
+    "graphic"
+   ],
+   "offerings": [
+    {
+     "slug": "youtube-thumbnail-design",
+     "title": "YouTube Thumbnail Design",
+     "short": "Bold thumbnails designed to stand out on YouTube.",
+     "includes": [
+      "Custom thumbnail artwork",
+      "Text and layout for your video title",
+      "Sized for YouTube"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "instagram-post-design",
+     "title": "Instagram Post Design",
+     "short": "Square and portrait post designs for Instagram.",
+     "includes": [
+      "Custom post designs",
+      "Your brand colours and text",
+      "Sized for Instagram feeds"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "instagram-story-design",
+     "title": "Instagram Story Design",
+     "short": "Vertical story designs for Instagram and Reels covers.",
+     "includes": [
+      "Vertical 9:16 designs",
+      "Announcements and promotions",
+      "Branded look"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "social-media-template-bundles",
+     "title": "Social Media Template Bundles",
+     "short": "A matching set of templates you can reuse.",
+     "includes": [
+      "Matching post and story designs",
+      "Consistent brand look",
+      "Contents agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "business-posters",
+     "title": "Business Posters",
+     "short": "Posters for businesses, events and promotions.",
+     "includes": [
+      "Poster layout and artwork",
+      "Your text, logo and contact details",
+      "Sized for print or screen"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "promotional-banners",
+     "title": "Promotional Banners",
+     "short": "Banners for websites, ads and social pages.",
+     "includes": [
+      "Banner designs in your sizes",
+      "Offer and call-to-action text",
+      "Brand colours"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "logo-design",
+     "title": "Logo Design",
+     "short": "A logo concept for your brand or channel.",
+     "includes": [
+      "Logo concept(s) based on your brief",
+      "Colour and style direction",
+      "Final logo files — formats agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "brand-identity-kits",
+     "title": "Brand Identity Kits",
+     "short": "A set of visual elements that make your brand consistent.",
+     "includes": [
+      "Logo and colour direction",
+      "Typography suggestions",
+      "Items included are agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "marketing-graphics",
+     "title": "Marketing Graphics",
+     "short": "Graphics for campaigns, launches and promotions.",
+     "includes": [
+      "Campaign graphics",
+      "Ad creatives",
+      "Digital advertisements"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "graphic-design-packages",
+     "title": "Graphic Design Packages",
+     "short": "Several designs planned and quoted together.",
+     "includes": [
+      "A set of designs for one project or brand",
+      "Shared look across all pieces",
+      "Scope and price agreed in a custom quote"
+     ],
+     "kind": "custom-package"
+    }
+   ],
+   "packages": []
+  },
+  {
+   "slug": "digital-art",
+   "oldId": "art",
+   "num": "04",
+   "icon": "image",
+   "group": "art",
+   "title": "Digital Art & Illustration",
+   "value": "AI Digital Art & Illustration",
+   "image": "assets/images/p-fantasy-realm.svg",
+   "imageAlt": "Illustrative fantasy landscape artwork",
+   "short": "Original digital artwork, fantasy illustrations, wallpapers, concept art and creative visual collections.",
+   "highlights": [
+    "Fantasy and futuristic artwork",
+    "Character illustrations",
+    "Wallpapers and posters",
+    "Concept art"
+   ],
+   "lead": "Unique AI-assisted digital artwork for personal and commercial creative projects.",
+   "intro": {
+    "offers": "Commissioned digital artwork: illustrations, concept art, wallpapers and printable posters.",
+    "who": "Authors, game makers, creators, businesses and anyone who wants original artwork for a project.",
+    "types": "Fantasy and futuristic artwork, character illustrations, landscapes, wallpapers, posters, concept art and illustration collections.",
+    "expect": "Artwork is scoped by subject, style, resolution and intended use. Usage rights are stated in your quote."
+   },
+   "requirements": [
+    "The subject and mood of the artwork",
+    "Where it will be used (wall art, book cover, game, website…)",
+    "Preferred size or resolution",
+    "Style references you like (optional)",
+    "Whether you need personal or commercial use rights"
+   ],
+   "formats": "Typically high-resolution PNG or JPG — confirmed in your quote",
+   "faqs": [
+    [
+     "Can I use the artwork commercially?",
+     "Usage rights, including commercial use, are stated in your quote. Please tell us your intended use when you ask."
+    ],
+    [
+     "Can you create something from my idea?",
+     "Yes. Describe the idea and add references if you have them."
+    ],
+    [
+     "Can I print the artwork?",
+     "Yes, if you tell us the print size in advance so we can create it at a suitable resolution."
+    ]
+   ],
+   "portfolio": [
+    "art"
+   ],
+   "offerings": [
+    {
+     "slug": "fantasy-digital-artwork",
+     "title": "Fantasy Digital Artwork",
+     "short": "Fantasy worlds, creatures and magical scenes.",
+     "includes": [
+      "Original fantasy illustration",
+      "Mood and colour direction",
+      "High-resolution image"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "character-illustrations",
+     "title": "Character Illustrations",
+     "short": "Illustrated characters for stories, games and brands.",
+     "includes": [
+      "Character artwork from your brief",
+      "Poses and outfits you describe",
+      "Finished illustration"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "futuristic-artwork",
+     "title": "Futuristic Artwork",
+     "short": "Sci-fi cities, technology and future worlds.",
+     "includes": [
+      "Futuristic scene or concept",
+      "Lighting and atmosphere",
+      "High-resolution image"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "landscape-artwork",
+     "title": "Landscape Artwork",
+     "short": "Imaginative and realistic landscape scenes.",
+     "includes": [
+      "Landscape or environment artwork",
+      "Time of day and mood of your choice",
+      "High-resolution image"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "digital-wallpapers",
+     "title": "Digital Wallpapers",
+     "short": "Wallpapers for phones and desktops.",
+     "includes": [
+      "Wallpaper in your screen size",
+      "Custom subject and style",
+      "Phone and desktop versions can be quoted"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "printable-posters",
+     "title": "Printable Posters",
+     "short": "Poster artwork made for printing.",
+     "includes": [
+      "Poster artwork at print-suitable resolution",
+      "Your chosen size and orientation",
+      "Text can be added if you want it"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "concept-art",
+     "title": "Concept Art",
+     "short": "Concept art for games, films, books and ideas.",
+     "includes": [
+      "Concept visuals for your project",
+      "Environments, props or scenes",
+      "Development of a look and feel"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "digital-illustration-collections",
+     "title": "Digital Illustration Collections",
+     "short": "A set of illustrations in one consistent style.",
+     "includes": [
+      "Several illustrations in a shared style",
+      "Theme chosen with you",
+      "Number of pieces agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "custom-artwork-packages",
+     "title": "Custom Artwork Packages",
+     "short": "Multiple artworks planned and quoted together.",
+     "includes": [
+      "A set of artworks for one project",
+      "Shared style and theme",
+      "Scope and price agreed in a custom quote"
+     ],
+     "kind": "custom-package"
+    }
+   ],
+   "packages": []
+  },
+  {
+   "slug": "manga-character-design",
+   "oldId": "manga",
+   "num": "05",
+   "icon": "film",
+   "group": "art",
+   "title": "AI Manga & Character Design",
+   "value": "AI Manga, Anime & Character Design",
+   "image": "assets/images/p-manga-burst.svg",
+   "imageAlt": "Illustrative manga-style panel",
+   "short": "Manga-inspired artwork, original character creation, character references, animated character concepts and storytelling visuals.",
+   "highlights": [
+    "Manga-inspired illustrations",
+    "Original character design",
+    "Reference and expression sheets",
+    "Storyboards and backgrounds"
+   ],
+   "lead": "Manga, anime and character work for original stories and visual worlds.",
+   "intro": {
+    "offers": "Manga-inspired artwork and original characters, planned in stages from concept to finished scenes.",
+    "who": "Story creators, comic makers, game makers, YouTubers and brands that want an original character or manga-style visuals.",
+    "types": "Manga-inspired illustrations, original characters, 3D character concepts, reference and expression sheets, backgrounds, storyboards and comic illustrations.",
+    "expect": "We agree the scope and number of characters up front. Work is done in stages — concept, reference sheets, then finished scenes."
+   },
+   "requirements": [
+    "A description of the character or story",
+    "Personality, outfit and key features",
+    "Style references you like (optional)",
+    "What the artwork will be used for",
+    "Number of characters or pages you need"
+   ],
+   "formats": "Typically PNG or JPG — confirmed in your quote",
+   "faqs": [
+    [
+     "Can you create an original character from my idea?",
+     "Yes. Describe the character and we will develop it with you in stages."
+    ],
+    [
+     "Will my character look the same in every picture?",
+     "We aim for a consistent look and create reference sheets to help. Consistency is checked at each stage."
+    ],
+    [
+     "Can I use the character for my own comic or channel?",
+     "Usage rights are stated in your quote, so please tell us how you plan to use it."
+    ]
+   ],
+   "portfolio": [
+    "manga"
+   ],
+   "offerings": [
+    {
+     "slug": "manga-inspired-illustrations",
+     "title": "Manga-Inspired Illustrations",
+     "short": "Illustrations in a manga-inspired style.",
+     "includes": [
+      "Manga-style artwork from your idea",
+      "Panel or single-image compositions",
+      "Finished illustration"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "original-character-design",
+     "title": "Original Character Design",
+     "short": "A new character created from your description.",
+     "includes": [
+      "Character concept from your brief",
+      "Look, outfit and personality cues",
+      "Finished character artwork"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "3d-character-concepts",
+     "title": "3D Character Concepts",
+     "short": "3D-look character concepts for games, videos and brands.",
+     "includes": [
+      "3D-style character visuals",
+      "Different views of the character",
+      "Concept presentation"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "character-reference-sheets",
+     "title": "Character Reference Sheets",
+     "short": "Reference sheets showing a character from several views.",
+     "includes": [
+      "Front, side and back views",
+      "Colour and outfit details",
+      "Useful for consistent future artwork"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "character-expression-sheets",
+     "title": "Character Expression Sheets",
+     "short": "A sheet of a character's different expressions.",
+     "includes": [
+      "Set of expressions you choose",
+      "Consistent character look",
+      "Useful for stories and videos"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "manga-backgrounds",
+     "title": "Manga Backgrounds",
+     "short": "Backgrounds for manga and comic scenes.",
+     "includes": [
+      "Scene backgrounds",
+      "City, fantasy, school and more on request",
+      "Matched to your art style"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "storyboard-artwork",
+     "title": "Storyboard Artwork",
+     "short": "Visual storyboards that plan a video or story.",
+     "includes": [
+      "Scene-by-scene visuals",
+      "Camera and framing ideas",
+      "Useful before video or animation"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "comic-illustrations",
+     "title": "Comic Illustrations",
+     "short": "Illustrations for comics and visual stories.",
+     "includes": [
+      "Comic-style panels or pages",
+      "Characters and scenes you describe",
+      "Number of pages agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "character-design-packages",
+     "title": "Character Design Packages",
+     "short": "Characters and supporting artwork quoted together.",
+     "includes": [
+      "Characters plus sheets and scenes",
+      "Shared style across all pieces",
+      "Scope and price agreed in a custom quote"
+     ],
+     "kind": "custom-package"
+    }
+   ],
+   "packages": []
+  },
+  {
+   "slug": "custom-creative-services",
+   "oldId": "custom",
+   "num": "06",
+   "icon": "sparkles",
+   "group": "custom",
+   "title": "Custom Creative Services",
+   "value": "Custom Creative Services",
+   "image": "assets/images/p-spirit-gate.svg",
+   "imageAlt": "Illustrative surreal gateway artwork",
+   "short": "Customised creative solutions, personalised projects and complete visual content packages.",
+   "highlights": [
+    "Made around your idea",
+    "Mix of video, design and art",
+    "Complete content packages",
+    "Honest feedback on what is possible"
+   ],
+   "lead": "Made-to-order creative work built around your idea, brand or audience.",
+   "intro": {
+    "offers": "Projects that don't fit a single category: a mix of video, design, characters and content planned together.",
+    "who": "Anyone with a creative idea who isn't sure which service fits, and brands that need a complete set of visuals.",
+    "types": "Custom AI videos, animated stories, personalised characters, brand advertisements, social media content, digital artwork and content packages.",
+    "expect": "Describe your idea. We will say honestly whether we can deliver it and what it would involve, then quote the scope and price in writing."
+   },
+   "requirements": [
+    "A clear description of your idea or goal",
+    "Your audience and where the work will be used",
+    "Your budget range, if you have one",
+    "Any deadline that matters",
+    "Reference links, images or videos (optional)"
+   ],
+   "formats": "Agreed per project — confirmed in your quote",
+   "faqs": [
+    [
+     "What if my idea isn't listed?",
+     "Send it anyway. Describe the idea and we will tell you honestly whether we can do it."
+    ],
+    [
+     "How is the price decided?",
+     "Custom work is priced per project after we understand the scope. You will get the quote in writing before any work starts."
+    ],
+    [
+     "Can you plan a full set of content for my brand?",
+     "Yes. Content packages are planned and quoted together."
+    ]
+   ],
+   "portfolio": [],
+   "offerings": [
+    {
+     "slug": "custom-ai-video-projects",
+     "title": "Custom AI Video Projects",
+     "short": "A video made around your own idea.",
+     "includes": [
+      "Concept, creation and edit",
+      "Length and format of your choice",
+      "Scope agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "custom-animated-stories",
+     "title": "Custom Animated Stories",
+     "short": "An animated story built from your script or idea.",
+     "includes": [
+      "Story planning",
+      "Animated scenes",
+      "Edited story video"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "personalized-character-creation",
+     "title": "Personalized Character Creation",
+     "short": "A character made just for you or your brand.",
+     "includes": [
+      "Original character concept",
+      "Reference artwork",
+      "Use in videos, art or stories"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "custom-brand-advertisements",
+     "title": "Custom Brand Advertisements",
+     "short": "Advertisements designed around your brand.",
+     "includes": [
+      "Ad concept for your brand",
+      "Video or graphic ads",
+      "Your colours, logo and message"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "complete-social-media-content",
+     "title": "Complete Social Media Content",
+     "short": "A planned set of posts, stories and videos.",
+     "includes": [
+      "Mix of designs and short videos",
+      "Consistent brand look",
+      "Contents agreed in your quote"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "custom-digital-artwork",
+     "title": "Custom Digital Artwork",
+     "short": "Artwork created from your idea.",
+     "includes": [
+      "Original artwork from your brief",
+      "Style and size of your choice",
+      "High-resolution image"
+     ],
+     "kind": "service"
+    },
+    {
+     "slug": "creative-content-packages",
+     "title": "Creative Content Packages",
+     "short": "Bundled creative work planned and quoted together.",
+     "includes": [
+      "Several creative pieces in one plan",
+      "Shared style across all pieces",
+      "Scope and price agreed in a custom quote"
+     ],
+     "kind": "custom-package"
+    },
+    {
+     "slug": "custom-project-requests",
+     "title": "Custom Project Requests",
+     "short": "Not sure what you need? Send us your request.",
+     "includes": [
+      "Tell us your idea",
+      "We reply with questions or a proposal",
+      "Quote provided before any work starts"
+     ],
+     "kind": "quote"
+    }
+   ],
+   "packages": []
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/services.html", "destination": "/services", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/services", "destination": "/services/index.html" },
+    { "source": "/services/:slug", "destination": "/services/:slug/index.html" },
+    { "source": "/product/:slug", "destination": "/product/:slug/index.html" }
+  ]
+}
