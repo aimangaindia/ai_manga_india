@@ -43,9 +43,9 @@
 .svc-go { display: inline-flex; align-items: center; gap: 8px; font: 600 .92rem var(--font-head); color: #fff; margin-top: auto; }
 .svc-go .icon { transition: transform .25s; width: 1.1em; height: 1.1em; } .svc-tile:hover .svc-go .icon { transform: translateX(5px); }
 .svc-tile .meta { font-size: .8rem; color: var(--text-3); }
-.cta-band { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; padding: clamp(28px, 4vw, 44px); border-radius: 22px; border: 1px solid var(--border-2);
+.svc-cta { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; padding: clamp(28px, 4vw, 44px); border-radius: 22px; border: 1px solid var(--border-2);
   background: radial-gradient(70% 140% at 100% 0%, rgba(120,101,255,.25), transparent 70%), var(--card); }
-.cta-band h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 8px; } .cta-band p { margin: 0; max-width: 56ch; }
+.svc-cta h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 8px; } .svc-cta p { margin: 0; max-width: 56ch; }
 
 /* ---------- service page ---------- */
 .info-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
@@ -89,8 +89,8 @@
 .pd-price { padding: 18px 20px; border-radius: 14px; background: rgba(120,101,255,.1); border: 1px solid rgba(120,101,255,.3); margin: 18px 0; }
 .pd-price strong { display: block; font: 700 1.4rem var(--font-head); } .pd-price span { font-size: .88rem; color: var(--text-2); }
 .pd-actions { display: flex; flex-wrap: wrap; gap: 10px; } .pd-actions .btn { flex: 1 1 200px; }
-.spec { width: 100%; border-collapse: collapse; } .spec th, .spec td { text-align: left; padding: 13px 4px; border-bottom: 1px solid var(--border); font-size: .94rem; vertical-align: top; }
-.spec th { width: 36%; color: var(--text-3); font-weight: 500; } .spec td { color: #fff; }
+.svc-spec { width: 100%; border-collapse: collapse; } .svc-spec th, .svc-spec td { text-align: left; padding: 13px 4px; border-bottom: 1px solid var(--border); font-size: .94rem; vertical-align: top; }
+.svc-spec th { width: 36%; color: var(--text-3); font-weight: 500; } .svc-spec td { color: #fff; }
 .check-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; } .check-list li { display: flex; gap: 12px; color: var(--text-2); } .check-list .icon { color: var(--cyan); flex: none; margin-top: 4px; width: 1.1em; height: 1.1em; }
 .license-box { padding: 22px 24px; border-radius: var(--radius); border: 1px solid var(--border-2); background: var(--card); } .license-box h3 { font-size: 1.1rem; }
 .steps-mini { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 14px; } .steps-mini li { counter-increment: s; display: flex; gap: 14px; color: var(--text-2); }
@@ -103,11 +103,12 @@
 .sk-hero { height: 360px; margin-top: var(--header-h); border-radius: 0; } .sk-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin: 32px auto; width: min(100% - 48px, var(--maxw)); } .sk-card { height: 280px; }
 
 @media (max-width: 1100px) { .info-grid { grid-template-columns: repeat(2, 1fr); } .svc-grid, .offer-grid, .mini-grid, .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 960px) { .svc-hero-grid, .pd, .two-col, .cta-band { grid-template-columns: minmax(0, 1fr); } .svc-hero-media { order: -1; aspect-ratio: 16/10; } .svc-hero { padding-top: calc(var(--header-h) + 28px); } }
+@media (max-width: 960px) { .svc-hero-grid, .pd, .two-col, .svc-cta { grid-template-columns: minmax(0, 1fr); } .svc-hero-media { order: -1; aspect-ratio: 16/10; } .svc-hero { padding-top: calc(var(--header-h) + 28px); } }
 @media (max-width: 640px) {
   .svc-grid, .offer-grid, .mini-grid, .related-grid, .info-grid, .sk-row { grid-template-columns: minmax(0, 1fr); }
   .svc-filter .chips { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; width: calc(100% + 32px); } .svc-filter .chips::-webkit-scrollbar { display: none; }
-  .svc-hero .flex .btn, .cta-band .btn, .pd-actions .btn { flex: 1 1 100%; } .spec th { width: 42%; }
+  .svc-hero .flex .btn, .svc-cta .btn, .pd-actions .btn { flex: 1 1 100%; } .svc-spec th { width: 42%; }
   .benefit-list li { font-size: .82rem; }
 }
 @media (prefers-reduced-motion: reduce) { .svc-hero::before, .svc-hero::after, .skeleton { animation: none; } .svc-tile, .offer-card, .mini-p, .related-tile { transition: none; } }
+.svc-grid:empty { min-height: 360px; } .way-list a:hover { color: var(--cyan); text-decoration: underline; }

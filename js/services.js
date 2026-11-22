@@ -13,7 +13,6 @@
       <a class="btn btn-primary btn-sm" href="${quoteHref(s)}">${AMI.esc(s.cta)} ${ic("arrow-right")}</a></article>`;
 
   function services() {
-    const home = AMI.$("#home-services"); if (home) { home.innerHTML = D.services.map(card).join(""); AMI.observeReveal(home); }
     const grid = AMI.$("#services-grid"); if (!grid) return;
     grid.innerHTML = D.services.map(card).join("");
     AMI.$("#services-details").innerHTML = D.services.map(s => `<details class="acc" id="d-${s.id}"><summary>${AMI.esc(s.title)} — details &amp; customisation${ic("plus")}</summary>

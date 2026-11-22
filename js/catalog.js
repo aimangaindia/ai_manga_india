@@ -8,6 +8,19 @@
   const AMI = (window.AMI = window.AMI || {});
   const { $, $$, esc, icon: ic } = AMI;
   const D = AMI.data;
+  /* shared service card (All Services page + homepage) */
+  AMI.svcTile = s => `<a class="svc-tile reveal" href="/services/${s.slug}" data-g="${s.group}" aria-label="${esc(s.title)} — explore service">
+      <span class="svc-tile-img"><img src="${s.image}" alt="${esc(s.imageAlt)}" width="640" height="400" loading="lazy"><span class="icon-wrap">${ic(s.icon)}</span></span>
+      <span class="svc-tile-body"><span class="svc-num">SERVICE ${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.short)}</p>
+      <ul>${s.highlights.slice(0, 4).map(i => `<li>${ic("check")}<span>${esc(i)}</span></li>`).join("")}</ul>
+      <span class="meta">${s.offerings.length} offerings</span><span class="svc-go">Explore Service ${ic("arrow-right")}</span></span></a>`;
+
+  /* homepage: the "Services" section is filled from the same catalog, so it always matches the /services page */
+  AMI.onReady(() => {
+    const home = $("#home-services"); if (!home) return;
+    AMI.loadCatalog().then(cat => { home.innerHTML = cat.services.map(AMI.svcTile).join(""); AMI.hydrateIcons(home); AMI.lazy(home); AMI.observeReveal(home); })
+      .catch(() => { home.innerHTML = `<p class="state-box" style="grid-column:1/-1">Our services list couldn't load. <a href="/services" style="text-decoration:underline">Open the Services page</a> or <a href="contact.html" style="text-decoration:underline">contact us</a>.</p>`; });
+  });
   const main = $("#main"), root = $("#view");
   if (!main || !root) return;
   const view = main.dataset.view, slug = main.dataset.slug;
@@ -36,7 +49,7 @@
 
   /* ---------- shared blocks ---------- */
   const faqBlock = (faqs, title = "Frequently asked questions") => `<div class="block-title"><h2>${title}</h2></div>${faqs.map(([q, a]) => `<details class="acc"><summary>${esc(q)}${ic("plus")}</summary><div class="acc-body"><p>${esc(a)}</p></div></details>`).join("")}`;
-  const ctaBand = (s, heading, text) => `<div class="cta-band reveal"><div><h2>${esc(heading)}</h2><p>${esc(text)}</p></div>
+  const ctaBand = (s, heading, text) => `<div class="svc-cta reveal"><div><h2>${esc(heading)}</h2><p>${esc(text)}</p></div>
     <div class="flex"><a class="btn btn-primary" href="${s ? contactHref(s) : "contact.html"}">Start a project ${ic("arrow-right")}</a><a class="btn btn-ghost" href="shop.html">Digital Shop</a></div></div>`;
   const relatedServices = (cat, s) => {
     const others = cat.services.filter(x => x.slug !== s.slug).sort((a, b) => (b.group === s.group) - (a.group === s.group)).slice(0, 3);
@@ -46,18 +59,13 @@
   /* ---------- /services ---------- */
   function allServices(cat) {
     const h = location.hash.slice(1); if (OLD[h]) { location.replace("/services/" + OLD[h]); return; } // old #video-style links
-    const tile = s => `<a class="svc-tile reveal" href="/services/${s.slug}" data-g="${s.group}" aria-label="${esc(s.title)} — explore service">
-      <span class="svc-tile-img"><img src="${s.image}" alt="${esc(s.imageAlt)}" width="640" height="400" loading="lazy"><span class="icon-wrap">${ic(s.icon)}</span></span>
-      <span class="svc-tile-body"><span class="svc-num">SERVICE ${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.short)}</p>
-      <ul>${s.highlights.slice(0, 4).map(i => `<li>${ic("check")}<span>${esc(i)}</span></li>`).join("")}</ul>
-      <span class="meta">${s.offerings.length} offerings</span><span class="svc-go">Explore Service ${ic("arrow-right")}</span></span></a>`;
-    show(`<section class="svc-hero"><div class="container">${crumbs([["Home", "index.html"], ["Services", "/services"]])}
+show(`<section class="svc-hero"><div class="container">${crumbs([["Home", "index.html"], ["Services", "/services"]])}
       <span class="eyebrow">Explore our services</span><h1>Explore Our Creative Services</h1>
       <p class="lead">Discover creative solutions designed to bring your ideas to life. From cinematic AI videos to professional graphic design, explore our services and find the perfect solution for your vision.</p>
       <div class="flex" style="margin-top:26px"><a class="btn btn-primary" href="#all-services">Browse services ${ic("arrow-right")}</a><a class="btn btn-ghost" href="contact.html">Start a Project</a></div></div></section>
       <section class="section" id="all-services" style="padding-top:56px"><div class="container">
         <div class="svc-filter"><div class="chips" role="group" aria-label="Filter services">${cat.groups.map((g, i) => `<button class="chip" type="button" data-g="${g.id}" aria-pressed="${i === 0}">${esc(g.label)}</button>`).join("")}</div><span class="svc-count" id="svc-count" aria-live="polite"></span></div>
-        <div class="svc-grid" id="svc-grid">${cat.services.map(tile).join("")}</div>
+        <div class="svc-grid" id="svc-grid">${cat.services.map(AMI.svcTile).join("")}</div>
         <p class="state-box" id="svc-empty" hidden>No services match this filter.</p>
       </div></section>
       <section class="section alt" style="padding:56px 0"><div class="container">${ctaBand(null, "Don't see exactly what you need?", "Describe your idea and we'll tell you honestly whether we can deliver it, what it involves, and quote it in writing before any work starts.")}</div></section>`);
@@ -120,7 +128,7 @@
       <section class="section" style="padding:56px 0"><div class="container two-col">
         <div><div class="block-title"><h2>About this service</h2></div><p>${esc(o.short)} ${esc(s.intro.expect)}</p>
           <div class="block-title" style="margin-top:36px"><h2>What you can request</h2></div><ul class="check-list">${o.includes.map(i => `<li>${ic("check")}<span>${esc(i)}</span></li>`).join("")}<li>${ic("check")}<span>Exact deliverables, formats and revision rounds are listed in your written quote.</span></li></ul></div>
-        <div><div class="block-title"><h2>Specifications</h2></div><table class="spec"><tbody>${specs.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join("")}</tbody></table>
+        <div><div class="block-title"><h2>Specifications</h2></div><table class="svc-spec"><tbody>${specs.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join("")}</tbody></table>
           <div class="license-box" style="margin-top:28px"><h3>${ic("info")} Licence &amp; usage</h3><p style="margin:0">Usage rights (personal or commercial) for custom work are stated in writing in your quote. Please tell us how you plan to use the result. See the general <a href="license.html" style="text-decoration:underline">License Policy</a>.</p></div></div></div></section>
       <section class="section alt" style="padding:56px 0"><div class="container two-col"><div><div class="block-title"><h2>How it works</h2></div><ol class="steps-mini">
         <li><span><strong>Discover</strong> — you send your idea and requirements.</span></li><li><span><strong>Concept</strong> — we propose a direction and a written quote.</span></li><li><span><strong>Create</strong> — we produce the work once the quote is agreed.</span></li>
