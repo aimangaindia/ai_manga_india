@@ -24,6 +24,11 @@ def crumbs_ld(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + u} for i, (n, u) in enumerate(items)]}
 
+def trim(t, n=158):
+    t = " ".join(t.split())
+    return t if len(t) <= n else t[:n].rsplit(" ", 1)[0].rstrip(",;:-") + "…"
+
+
 def page(path, title, desc, view, slug, body, ld, og_img):
     url = SITE + path
     ldtags = "\n".join('<script type="application/ld+json">%s</script>' % json.dumps(x, ensure_ascii=False) for x in ld)
@@ -102,8 +107,8 @@ body = f'''<section class="page-hero"><div class="container">{crumbs_html([("Hom
 ld = [crumbs_ld([("Home", "/"), ("Services", "/services")]),
       {"@context": "https://schema.org", "@type": "ItemList", "name": "AI MANGA INDIA creative services", "itemListElement": [
           {"@type": "ListItem", "position": i + 1, "url": f"{SITE}/services/{s['slug']}", "name": s["title"]} for i, s in enumerate(S)]}]
-write("/services", page("/services", "Explore Our Creative Services | AI MANGA INDIA",
-      "Explore AI video production, video advertising, graphic design, digital art, manga and character design, and custom creative services from AI MANGA INDIA.",
+write("/services", page("/services", "AI Video, Manga & Design Services in India | AI MANGA INDIA",
+      "Hire AI MANGA INDIA for AI video production, video ads, graphic design, digital art, manga and character design. Custom projects, quoted in writing.",
       "services", "", body, ld, ""))
 urls.append("/services")
 
@@ -117,7 +122,7 @@ for s in S:
 <p><a class="btn btn-primary" href="contact.html?service={quote(s["value"])}">Request a Custom Project</a></p></div></section>'''
     ld = [crumbs_ld(cr), {"@context": "https://schema.org", "@type": "Service", "name": s["title"], "description": s["lead"], "url": SITE + p, "provider": ORG, "areaServed": "Worldwide",
           "hasOfferCatalog": {"@type": "OfferCatalog", "name": s["title"], "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": o["title"], "url": f"{SITE}/product/{o['slug']}"}} for o in s["offerings"]]}}]
-    write(p, page(p, f"{s['title']} Services | AI MANGA INDIA", desc[:300], "service", s["slug"], body, ld, ""))
+    write(p, page(p, f"{s['title']} in India | AI MANGA INDIA", trim(desc), "service", s["slug"], body, ld, ""))
     urls.append(p)
     for o in s["offerings"]:
         q = f"/product/{o['slug']}"
@@ -128,7 +133,7 @@ for s in S:
 <p><a class="btn btn-primary" href="contact.html?service={quote(s["value"])}&amp;topic={quote(o["title"])}">Request This Service</a></p></div></section>'''
         ld = [crumbs_ld(cr2), {"@context": "https://schema.org", "@type": "Service", "name": o["title"], "description": o["short"], "url": SITE + q, "provider": ORG,
               "serviceType": s["title"], "areaServed": "Worldwide"}]
-        write(q, page(q, f"{o['title']} | {s['title']} — AI MANGA INDIA", f"{o['short']} Part of {s['title']}. Request a quote from AI MANGA INDIA.", "product", o["slug"], body, ld, ""))
+        write(q, page(q, f"{o['title']} in India | AI MANGA INDIA", trim(f"{o['short']} Part of {s['title']}. Request a quote from AI MANGA INDIA."), "product", o["slug"], body, ld, ""))
         urls.append(q)
 
 # ---- sitemap: static pages + generated pages
