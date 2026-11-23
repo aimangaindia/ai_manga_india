@@ -347,3 +347,10 @@ details.acc .acc-body { padding: 0 24px 22px; } details.acc .acc-body p:last-chi
 
 .service-card li.more a { color: var(--cyan); font-size: .88rem; text-decoration: underline; text-underline-offset: 3px; }
 .full-list { columns: 2 240px; column-gap: 28px; margin: 6px 0 14px 18px; padding: 0; color: var(--text-2); font-size: .92rem; line-height: 1.8; }
+
+/* Contact: prominent email band */
+.email-band{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;padding:24px 28px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:#181B27}
+.email-band-addr{margin:6px 0 4px;font-family:"Space Grotesk",sans-serif;font-size:clamp(1.15rem,4.5vw,1.7rem);font-weight:600;overflow-wrap:anywhere}
+.email-band-addr a{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.email-band-note{margin:0;color:#A7ACBC;font-size:.9rem}
+@media (max-width:600px){.email-band{padding:20px 16px}.email-band .flex{width:100%}.email-band .btn{flex:1}}

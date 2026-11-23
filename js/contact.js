@@ -88,5 +88,10 @@
   AMI.onReady(() => {
     inquiry(); newsletter();
     AMI.$$("[data-email]").forEach(a => { a.href = `mailto:${cfg.contactEmail}`; a.textContent = cfg.contactEmail; });
+    AMI.$$("[data-email-btn]").forEach(a => { a.href = `mailto:${cfg.contactEmail}?subject=${encodeURIComponent("Project inquiry")}`; });
+    AMI.$$("[data-copy-email]").forEach(b => b.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(cfg.contactEmail); AMI.toast("Email copied", "success"); }
+      catch { AMI.toast(cfg.contactEmail, "info"); }
+    }));
   });
 })();
