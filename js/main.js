@@ -101,7 +101,7 @@
     document.body.classList.add("page-fade");
     addEventListener("pageshow", e => { if (e.persisted) document.body.style.opacity = ""; });
     document.addEventListener("click", e => {
-      const a = e.target.closest("a[href]"); if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.target || a.hasAttribute("download")) return;
+      const a = e.target.closest("a[href]"); if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.target || a.hasAttribute("download") || a.hasAttribute("data-order")) return;
       const u = new URL(a.href, location.href); if (u.origin !== location.origin || u.pathname === location.pathname || !/\.html?$|\/$/.test(u.pathname)) return;
       e.preventDefault(); document.body.style.transition = "opacity .22s"; document.body.style.opacity = 0; setTimeout(() => (location.href = a.href), 200);
     });

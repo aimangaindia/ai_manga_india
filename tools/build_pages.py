@@ -73,6 +73,7 @@ def page(path, title, desc, view, slug, body, ld, og_img):
 <script src="js/main.js" defer></script>
 <script src="js/filters.js" defer></script>
 <script src="js/navigation.js" defer></script>
+<script src="js/order.js" defer></script>
 <script src="js/cart.js" defer></script>
 <script src="js/contact.js" defer></script>
 <script src="js/catalog.js" defer></script>

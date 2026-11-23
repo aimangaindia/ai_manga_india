@@ -17,7 +17,7 @@
     grid.innerHTML = D.services.map(card).join("");
     AMI.$("#services-details").innerHTML = D.services.map(s => `<details class="acc" id="d-${s.id}"><summary>${AMI.esc(s.title)} — details &amp; customisation${ic("plus")}</summary>
       <div class="acc-body"><p><strong>Everything included</strong></p><ul class="full-list">${s.includes.map(i => `<li>${AMI.esc(i)}</li>`).join("")}</ul><p>${AMI.esc(s.custom)}</p><p style="font-size:.9rem">Sample visuals: see <a href="portfolio.html${(s.id === "custom" || s.id === "packages") ? "" : "#" + ({ animation: "manga" }[s.id] || s.id)}" style="text-decoration:underline">related portfolio work</a>. We don't promise unlimited revisions, fixed turnaround times or specific resolutions unless they're written into your quote.</p>
-      <a class="btn btn-ghost btn-sm" href="${quoteHref(s)}">Request a Quote</a></div></details>`).join("");
+      <a class="btn btn-ghost btn-sm" href="${quoteHref(s)}" data-order data-kind="service" data-item="${AMI.esc(s.title || s.name || "Custom project")}">Request a Quote</a></div></details>`).join("");
     const openDetails = () => { const t = location.hash && AMI.$(`#d-${location.hash.slice(1)}`); if (t) t.open = true; };
     openDetails(); window.addEventListener("hashchange", openDetails);
     AMI.observeReveal(grid);

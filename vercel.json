@@ -1,11 +1,39 @@
 {
   "trailingSlash": false,
   "redirects": [
-    { "source": "/services.html", "destination": "/services", "permanent": true }
+    {
+      "source": "/services.html",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/cart.html",
+      "destination": "/shop.html",
+      "permanent": false
+    },
+    {
+      "source": "/checkout.html",
+      "destination": "/shop.html",
+      "permanent": false
+    },
+    {
+      "source": "/account.html",
+      "destination": "/shop.html",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/services", "destination": "/services/index.html" },
-    { "source": "/services/:slug", "destination": "/services/:slug/index.html" },
-    { "source": "/product/:slug", "destination": "/product/:slug/index.html" }
+    {
+      "source": "/services",
+      "destination": "/services/index.html"
+    },
+    {
+      "source": "/services/:slug",
+      "destination": "/services/:slug/index.html"
+    },
+    {
+      "source": "/product/:slug",
+      "destination": "/product/:slug/index.html"
+    }
   ]
 }

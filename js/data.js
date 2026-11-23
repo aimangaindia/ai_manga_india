@@ -93,7 +93,7 @@ window.AMI_DATA = (() => {
   ];
   products.forEach(p => { p.faq = [
     { q: "Is this product available to buy right now?", a: p.available ? "Yes." : "Not yet. This is a sample listing that demonstrates the store design. Real products will be marked as available." },
-    { q: "How are downloads delivered?", a: "After payment is verified by the server, download links appear in your account and order confirmation. Links are personal and expire." },
+    { q: "How are downloads delivered?", a: "Orders are arranged in chat. Tap Buy Now, pick an app (or email), and we confirm details with you and send the files directly." },
     { q: "Can I use it commercially?", a: p.license }
   ]; });
 
@@ -133,7 +133,7 @@ window.AMI_DATA = (() => {
     { q: "How can I order a custom AI video?", a: "Use the Contact page to send a project inquiry with your idea, budget and any reference links. We review it and reply with questions or a proposal." },
     { q: "Can I request a custom advertisement?", a: "Yes. Choose “AI Video Advertisements” on the inquiry form and describe your product and audience." },
     { q: "What digital products are available?", a: "The shop is organised into video assets, graphic design assets, digital art assets and creative resources (prompt collections, templates, script packs and guides). Products currently shown are samples until marked available." },
-    { q: "How do digital downloads work?", a: "Once the store is live, downloads are unlocked after the server verifies your payment. You'll find them in your account and order confirmation. Links are personal and expire for security." },
+    { q: "How do digital downloads work?", a: "This website doesn't take payments. Tap Buy Now on a product, choose how to contact us, and we'll agree price, customisation and delivery with you directly, then send the files." },
     { q: "Which file formats are included?", a: "Each product page lists its exact formats (for example MP4, PNG, PSD, PDF) and software compatibility." },
     { q: "Can I use purchased assets commercially?", a: "Each product states its licence. Most allow use in your own projects, including commercial ones; none allow reselling or redistributing the files. See the License Policy." },
     { q: "Are refunds available for digital products?", a: "Because digital files can't be returned, refunds are limited — see the Refund Policy. If a file is faulty or not as described, contact us and we'll fix it or refund you." },

@@ -61,7 +61,7 @@
     };
     d.addEventListener("click", e => cartActions(e));
     document.addEventListener("ami:cart", draw); draw();
-    AMI.$("#open-cart").addEventListener("click", () => AMI.openLayer(d));
+    const oc = AMI.$("#open-cart"); oc && oc.addEventListener("click", () => AMI.openLayer(d));
     AMI.openCart = () => AMI.openLayer(d);
   }
 

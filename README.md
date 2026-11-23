@@ -155,3 +155,9 @@ Journey: **Home → /services → /services/<service> → /product/<offering> �
 * **No cart for services:** these are made-to-order, so buttons lead to the inquiry form. Ready-made downloads stay in the Digital Shop.
 * After editing `catalog.json`, run `python3 tools/build_pages.py` — it rewrites the static pages, their SEO tags and `sitemap.xml`.
 * Cover and gallery images are the site's illustrative placeholder art (labelled "Illustrative artwork"). Replace them with real work in `catalog.json` (`image`).
+
+## Ordering (no online payment)
+The site takes no payments. Every **Buy Now / Request Customization / Request This Service** button opens a popup (`js/order.js`)
+showing the app icons from `socialProfiles` in `js/config.js` (plus Email). Tapping one copies a ready-made message and opens that
+profile, so the visitor can pay and agree details with you in chat. Add or remove a social link in `config.js` and the popup updates.
+The cart, checkout and account pages are no longer linked and redirect to the shop (`vercel.json`).

@@ -25,7 +25,6 @@
       <nav aria-label="Primary"><ul class="nav-links">${LINKS.map(l => `<li><a href="${l[1]}"${current(l)}>${l[0]}</a></li>`).join("")}</ul></nav>
       <div class="nav-actions">
         <button class="icon-btn" id="open-search" type="button" aria-label="Search">${ic("search")}</button>
-        <button class="icon-btn" id="open-cart" type="button" aria-label="Open cart">${ic("cart")}<span class="badge-count" data-n="0" aria-live="polite">0</span></button>
         <a class="btn btn-primary btn-sm btn-start" href="contact.html">Start a Project</a>
         <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
       </div></div></header>
@@ -62,7 +61,7 @@
         <nav aria-label="Digital store"><h4>Digital Store</h4><ul>
           ${Object.entries(AMI.data.productCategories).map(([k, v]) => `<li><a href="shop.html?cat=${k}">${AMI.esc(v.label)}</a></li>`).join("")}</ul></nav>
         <nav aria-label="Customer support"><h4>Customer Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQs</a></li><li><a href="license.html">License Information</a></li><li><a href="refund.html">Refund Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="privacy.html">Privacy Policy</a></li></ul></nav>
-        <nav aria-label="Account"><h4>My Account</h4><ul><li><a href="account.html">Orders &amp; Downloads</a></li><li><a href="cart.html">Cart</a></li><li><a href="checkout.html">Checkout</a></li></ul></nav>
+        <nav aria-label="Account"><h4>Orders</h4><ul><li><a href="shop.html">Digital Shop</a></li><li><a href="contact.html">Contact to order</a></li><li><a href="faq.html">FAQ</a></li></ul></nav>
       </div>
       <div class="footer-bottom"><p>© 2026 AI MANGA INDIA. All Rights Reserved.</p><p>Imagine Beyond Limits. Create Beyond Reality.</p></div>
     </div></footer>`;

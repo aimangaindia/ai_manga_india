@@ -10,9 +10,9 @@
         <div class="pcard-badges">${p.demo ? '<span class="tag demo">Demo</span>' : ""}${p.sale ? '<span class="tag sale">Sale</span>' : ""}${p.isNew ? '<span class="tag">New</span>' : ""}</div>
         <button class="quick-btn" type="button" data-quick="${p.id}" aria-label="Quick view ${AMI.esc(p.name)}">${ic("eye")} Quick View</button></div>
       <div class="prod-body"><span class="cat">${AMI.esc(cat(p.category))}</span><h3><a href="product.html?id=${p.id}">${AMI.esc(p.name)}</a></h3><p>${AMI.esc(p.short)}</p>
-        <div class="meta-line"><span>${ic("file")} ${AMI.esc(p.format)}</span><span>${ic("download")} Instant download after payment</span></div>
+        <div class="meta-line"><span>${ic("file")} ${AMI.esc(p.format)}</span><span>${ic("download")} Delivered after you confirm in chat</span></div>
         <div class="price-row"><span class="price">${AMI.money(p.price)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</span></div>
-        <div class="prod-actions"><button class="btn btn-primary btn-sm" type="button" data-add="${p.id}">${ic("cart")} Add to Cart</button><a class="btn btn-ghost btn-sm" href="product.html?id=${p.id}">Details</a></div></div>
+        <div class="prod-actions"><button class="btn btn-primary btn-sm" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">${ic("chat")} Buy Now</button><a class="btn btn-ghost btn-sm" href="product.html?id=${p.id}">Details</a></div></div>
     </article>`;
 
   /** Global click handling for Add to Cart / Quick view (works for any card on any page). */
@@ -36,9 +36,9 @@
       <div class="modal-grid"><div class="modal-media"><img src="${p.image}" alt="${AMI.esc(p.name)} preview"></div>
       <div class="modal-body"><span class="tag${p.demo ? " demo" : ""}">${p.demo ? "Demo product" : AMI.esc(cat(p.category))}</span><h2 style="margin-top:14px">${AMI.esc(p.name)}</h2>
         <div class="detail-price" style="font-size:1.7rem;margin:8px 0">${AMI.money(p.price)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</div><p>${AMI.esc(p.short)}</p>
-        <table class="spec"><tr><th>Format</th><td>${AMI.esc(p.format)}</td></tr><tr><th>Works with</th><td>${AMI.esc(p.compat)}</td></tr><tr><th>Delivery</th><td>Download after verified payment</td></tr></table>
+        <table class="spec"><tr><th>Format</th><td>${AMI.esc(p.format)}</td></tr><tr><th>Works with</th><td>${AMI.esc(p.compat)}</td></tr><tr><th>Delivery</th><td>Confirmed with you in chat</td></tr></table>
         ${p.available ? "" : '<div class="notice" style="margin-bottom:16px"><p><strong>Sample listing.</strong> Not available to buy yet.</p></div>'}
-        <div class="flex"><button class="btn btn-primary" type="button" data-add="${p.id}" data-close>${ic("cart")} Add to Cart</button><a class="btn btn-ghost" href="product.html?id=${p.id}">Full details</a></div></div></div></div>`;
+        <div class="flex"><button class="btn btn-primary" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">${ic("chat")} Buy Now</button><a class="btn btn-ghost" href="product.html?id=${p.id}">Full details</a></div></div></div></div>`;
     AMI.openLayer(qv);
   }
 
@@ -86,8 +86,8 @@
         <h1>${AMI.esc(p.name)}</h1><p>${AMI.esc(p.short)}</p>
         <div class="detail-price">${AMI.money(p.price)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</div>
         ${p.available ? "" : '<div class="notice" style="margin-bottom:20px"><p><strong>Sample listing.</strong> This product demonstrates the store design and isn\'t available to buy yet. Contents and specs shown are placeholders.</p></div>'}
-        <div class="flex"><button class="btn btn-primary" type="button" data-add="${p.id}">${ic("cart")} Add to Cart</button><button class="btn btn-ghost" type="button" data-buy="${p.id}">Buy Now</button></div>
-        <ul class="include-list" style="margin-top:26px"><li>${ic("lock")} Secure checkout · download unlocked after verified payment</li><li>${ic("download")} Personal, expiring download links</li><li>${ic("shield")} <a href="license.html" style="text-decoration:underline">Licence information</a> · <a href="refund.html" style="text-decoration:underline">Refund policy</a></li></ul></div></div>
+        <div class="flex"><button class="btn btn-primary" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">${ic("chat")} Buy Now</button><button class="btn btn-ghost" type="button" data-order data-kind="custom" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">Request Customization</button></div>
+        <ul class="include-list" style="margin-top:26px"><li>${ic("chat")} No online payment — tap Buy Now and choose an app to contact us</li><li>${ic("download")} Files are delivered after we confirm details with you</li><li>${ic("shield")} <a href="license.html" style="text-decoration:underline">Licence information</a> · <a href="refund.html" style="text-decoration:underline">Refund policy</a></li></ul></div></div>
       <div class="grid grid-2 mt-3" style="gap:48px;margin-top:72px;align-items:start">
         <div><h2>Description</h2><p>${AMI.esc(p.long)}</p><h3 style="margin-top:28px">What's included</h3><ul class="include-list">${p.includes.map(i => `<li>${ic("check")} ${AMI.esc(i)}</li>`).join("")}</ul></div>
         <div><h2>Specifications</h2><table class="spec">${specs.map(([k, v]) => `<tr><th>${k}</th><td>${AMI.esc(v)}</td></tr>`).join("")}</table></div></div>
