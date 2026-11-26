@@ -70,7 +70,7 @@
 .pkg-card ul { list-style: none; padding: 0; margin: 6px 0 14px; display: grid; gap: 8px; flex: 1; } .pkg-card li { display: flex; gap: 10px; font-size: .92rem; color: var(--text-2); } .pkg-card li .icon { color: var(--cyan); width: 1em; height: 1em; margin-top: 4px; flex: none; }
 .mini-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 .mini-p { display: block; border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px solid var(--border); transition: transform .35s, border-color .35s; }
-.mini-p:hover { transform: translateY(-5px); border-color: rgba(0,217,255,.4); } .mini-p img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.mini-p:hover { transform: translateY(-5px); border-color: rgba(0,217,255,.4); } .mini-p img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
 .mini-p div { padding: 14px 16px 16px; } .mini-p h3 { font-size: 1rem; margin: 6px 0 0; }
 .req-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; } .req-list li { display: flex; gap: 12px; color: var(--text-2); } .req-list .icon { color: var(--cyan); margin-top: 4px; flex: none; width: 1.1em; height: 1.1em; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
