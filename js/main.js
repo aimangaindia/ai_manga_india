@@ -125,3 +125,13 @@
     addEventListener("scroll", hd, { passive: true }); setTimeout(hd, 50);
   });
 })();
+
+/* Portfolio artwork: view-only deterrents. Blocks right-click "Save image", dragging and long-press saving on portfolio/service artwork.
+   Note: this only stops casual saving — screenshots and developer tools can't be blocked by any website. */
+(() => {
+  const SEL = ".pcard-media img, .modal-media img, .fs-view img, .mini-p img";
+  const hit = e => e.target && e.target.matches && e.target.matches(SEL);
+  document.addEventListener("contextmenu", e => { if (hit(e)) e.preventDefault(); });
+  document.addEventListener("dragstart", e => { if (hit(e)) e.preventDefault(); });
+  new MutationObserver(() => document.querySelectorAll(SEL).forEach(i => i.draggable && (i.draggable = false))).observe(document.documentElement, { childList: true, subtree: true });
+})();

@@ -370,3 +370,7 @@ details.acc .acc-body { padding: 0 24px 22px; } details.acc .acc-body p:last-chi
 .order-msg { width: 100%; resize: none; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: #11131B; color: #A7ACBC; font: inherit; font-size: .85rem; margin-bottom: 14px; }
 
 .pdetails{list-style:disc;margin:14px 0;padding-left:20px;color:#A7ACBC;font-size:.92rem;line-height:1.6}.pdetails li{list-style:disc;margin-bottom:6px}
+
+/* view-only artwork */
+.pcard-media img, .modal-media img, .fs-view img, .mini-p img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.modal-media img, .fs-view img { pointer-events: none; }
