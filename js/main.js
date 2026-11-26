@@ -135,3 +135,18 @@
   document.addEventListener("dragstart", e => { if (hit(e)) e.preventDefault(); });
   new MutationObserver(() => document.querySelectorAll(SEL).forEach(i => i.draggable && (i.draggable = false))).observe(document.documentElement, { childList: true, subtree: true });
 })();
+
+/* Screenshot deterrents for portfolio artwork (browsers cannot truly block screenshots — this only stops the easy routes):
+   hides artwork while the tab/window is not focused (most snipping tools and screen-share pickers steal focus), when Print Screen is pressed,
+   and when printing. Phone hardware-button screenshots cannot be detected by any website. */
+(() => {
+  const root = document.documentElement;
+  const on = () => root.classList.add("art-shield"), off = () => root.classList.remove("art-shield");
+  document.addEventListener("visibilitychange", () => (document.hidden ? on() : off()));
+  addEventListener("blur", on); addEventListener("focus", off);
+  addEventListener("beforeprint", on); addEventListener("afterprint", off);
+  addEventListener("keyup", e => {
+    if (e.key === "PrintScreen" || e.code === "PrintScreen") { try { navigator.clipboard.writeText(" ").catch(() => {}); } catch { /* ignore */ } on(); setTimeout(() => document.hasFocus() && off(), 1500); }
+  });
+  addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && e.shiftKey && ["s", "S", "3", "4", "5"].includes(e.key)) on(); });
+})();

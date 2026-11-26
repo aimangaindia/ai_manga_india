@@ -374,3 +374,7 @@ details.acc .acc-body { padding: 0 24px 22px; } details.acc .acc-body p:last-chi
 /* view-only artwork */
 .pcard-media img, .modal-media img, .fs-view img, .mini-p img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .modal-media img, .fs-view img { pointer-events: none; }
+
+/* hide artwork while the page is unfocused / printing (screenshot deterrent) */
+.art-shield .pcard-media img, .art-shield .modal-media img, .art-shield .fs-view img, .art-shield .mini-p img { visibility: hidden; }
+@media print { .pcard-media img, .modal-media img, .fs-view img, .mini-p img { display: none !important; } }
