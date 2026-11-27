@@ -378,3 +378,6 @@ details.acc .acc-body { padding: 0 24px 22px; } details.acc .acc-body p:last-chi
 /* hide artwork while the page is unfocused / printing (screenshot deterrent) */
 .art-shield .pcard-media img, .art-shield .modal-media img, .art-shield .fs-view img, .art-shield .mini-p img { visibility: hidden; }
 @media print { .pcard-media img, .modal-media img, .fs-view img, .mini-p img { display: none !important; } }
+
+/* Portfolio popup: show the whole image (thumbnails are 16:9 with text near the edges) */
+.modal-media img { object-fit: contain; background: #08090D; }
