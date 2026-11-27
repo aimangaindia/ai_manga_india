@@ -174,3 +174,7 @@ Optional looping video behind the hero: set `heroVideo` in `js/config.js`.
 The hero's main visual is a 5-second looping 3D animation (muted, no audio, 1.5 MB), cut from the reference video so it contains no baked-in text.
 It loads only when allowed: skipped for reduced-motion and data-saver users; if it cannot play, the canvas scene is used instead.
 To swap it, replace `assets/video/hero-3d.mp4` (keep it muted, short and under ~2 MB).
+
+
+## 3D hero: desktop only
+The 3D scene (reference video, canvas and floating service panels) loads only on desktop/laptop screens (width ≥ 1025px with a mouse). Phones and tablets get a static grid of the same five service links and never download the video.

@@ -52,9 +52,9 @@
 /* layout (desktop) — five objects around the core */
 .h3-i1 { --w: 36%; --depth: 1.2; --ox: -34px; --oy: -26px; --fd: 7.5s; left: 0; top: 4%; }
 .h3-i2 { --w: 33%; --depth: .8; --ox: 38px; --oy: -30px; --fd: 6.5s; --fl: -2s; right: 0; top: 0; }
-.h3-i3 { --w: 31%; --depth: 1.5; --ox: -40px; --oy: 30px; --fd: 8s; --fl: -3s; left: 2%; bottom: 6%; }
-.h3-i4 { --w: 35%; --depth: 1; --ox: 40px; --oy: 34px; --fd: 7s; --fl: -1s; right: 1%; bottom: 2%; }
-.h3-i5 { --w: 28%; --depth: 1.8; --ox: 0px; --oy: 40px; --fd: 6s; --fl: -4s; left: 36%; bottom: -3%; }
+.h3-i3 { --w: 29%; --depth: 1.5; --ox: -40px; --oy: 30px; --fd: 8s; --fl: -3s; left: 2%; bottom: 6%; }
+.h3-i4 { --w: 31%; --depth: 1; --ox: 40px; --oy: 34px; --fd: 7s; --fl: -1s; right: 0; bottom: 4%; }
+.h3-i5 { --w: 25%; --depth: 1.8; --ox: 0px; --oy: 40px; --fd: 6s; --fl: -4s; left: 37.5%; bottom: -3%; }
 .hero-cta { gap: 14px; }
 .btn-glow { box-shadow: 0 0 0 rgba(57, 123, 255, 0); } .btn-glow:hover { box-shadow: 0 0 30px rgba(57, 123, 255, .65), 0 0 60px rgba(168, 85, 247, .3); }
 .btn-outline-glow { background: transparent; color: #fff; border: 1px solid rgba(110, 160, 255, .6); box-shadow: inset 0 0 14px rgba(57, 123, 255, .18), 0 0 14px rgba(57, 123, 255, .2); }
@@ -93,3 +93,23 @@
   .h3-i3 { --w: 34%; left: 1%; bottom: 8%; } .h3-i4 { --w: 38%; right: 0; bottom: 4%; } .h3-i5 { --w: 30%; left: 35%; bottom: -2%; }
 }
 @media (prefers-reduced-motion: reduce) { .h3-card { animation: none; transition: none; } .is-live .h3-card { filter: none; } }
+
+/* phones & tablets: no 3D scene, no video — a tidy static grid of the same five service links */
+@media not all and (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .hero-visual.h3-wrap { height: auto; margin-top: 12px; }
+  #hero3d { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; height: auto; transform: none !important; opacity: 1 !important; }
+  #hero3d::before, .h3-video, .h3-canvas { display: none !important; }
+  .h3-item { position: relative; inset: auto; width: auto; transform: none; }
+  .h3-card { animation: none; }
+  .h3-card:hover, .h3-card:focus-visible { scale: 1 !important; }
+  .h3-i5 { grid-column: 1 / -1; }
+  .h3-i5 .h3-media { aspect-ratio: 16 / 7; }
+  .h3-label { font-size: .72rem; }
+}
+
+/* desktop: keep headline + scene vertically centred and clear of the nav on short laptop screens */
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .hero { padding-top: calc(var(--header-h) + 28px); padding-bottom: 64px; }
+  .hero h1 { font-size: clamp(2.3rem, min(4.7vw, 8.4vh), 4.3rem); }
+  .hero-visual.h3-wrap { height: min(68vh, 600px); }
+}

@@ -6,13 +6,15 @@
    - mouse (fine pointers) / touch drag tilt the scene; panels move with depth-based parallax
    - scroll: the core moves back and the panels spread out (CSS variable --sp); CTA band has a portal that "approaches" (--q)
    - prefers-reduced-motion: a single static frame, no loop. Pauses when off-screen or the tab is hidden.
-   - a cinematic 3D video (assets/video/hero-3d.mp4) plays as the main visual when allowed (not reduced-motion / data-saver / failed autoplay);
+   - on desktop/laptop only, a cinematic 3D video (assets/video/hero-3d.mp4) plays as the main visual when allowed (not reduced-motion / data-saver / failed autoplay);
      otherwise the canvas scene above is used. If canvas is unavailable the static CSS glow + the linked service panels remain. */
 (() => {
   "use strict";
   const root = document.getElementById("hero3d");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const small = matchMedia("(max-width: 760px)");
+  /* the 3D scene (video + canvas + floating panels) is for desktop / laptop screens only; phones and tablets get the plain static layout */
+  const desk = matchMedia("(min-width: 1025px) and (hover: hover) and (pointer: fine)");
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const ease = t => 1 - Math.pow(1 - t, 3);
   let seed = 11; const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647; // deterministic scene
@@ -199,6 +201,8 @@
     if ("ResizeObserver" in window) new ResizeObserver(size).observe(band); size(); upd(); draw(reduced ? 3 : 0);
   }
 
-  const init = () => { if (root) hero(); portal(); };
+  let started = false;
+  const start = () => { if (root && desk.matches && !started) { started = true; hero(); } };
+  const init = () => { start(); portal(); if (desk.addEventListener) desk.addEventListener("change", start); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
