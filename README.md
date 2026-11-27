@@ -161,3 +161,11 @@ The site takes no payments. Every **Buy Now / Request Customization / Request Th
 showing the app icons from `socialProfiles` in `js/config.js` (plus Email). Tapping one copies a ready-made message and opens that
 profile, so the visitor can pay and agree details with you in chat. Add or remove a social link in `config.js` and the popup updates.
 The cart, checkout and account pages are no longer linked and redirect to the shop (`vercel.json`).
+
+## 3D homepage hero
+`js/hero3d.js` + `css/hero3d.css` (no libraries). A canvas-2D engine draws the energy core, holographic planet, orbit rings, particles and portal;
+the five floating service objects are real links to `/services/<slug>` (artwork from `assets/portfolio/`). Intro: particles gather → core forms →
+expands into the planet → rings, portal and panels appear → idle loop. Mouse/touch tilt the scene; scrolling moves the core back and spreads the panels;
+the CTA band has a portal that grows as it nears. Respects `prefers-reduced-motion` (one static frame), pauses off-screen/hidden, and the panels stay
+visible and clickable if canvas/JS is unavailable. To change a panel, edit the `.h3-item` blocks in `index.html`.
+Optional looping video behind the hero: set `heroVideo` in `js/config.js`.
