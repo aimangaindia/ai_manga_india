@@ -7,7 +7,12 @@
 /* static fallback "planet" glow, always painted under the canvas */
 #hero3d::before { content: ""; position: absolute; left: 50%; top: 50%; width: 50%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; z-index: -1;
   background: radial-gradient(circle at 38% 34%, rgba(255,255,255,.55), rgba(90,150,255,.5) 18%, rgba(110,70,230,.32) 46%, rgba(40,217,255,.08) 66%, transparent 72%); filter: blur(1px); }
-.h3-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.h3-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; transition: opacity .9s; }
+/* cinematic 3D reference video: blends into the hero with a soft elliptical mask (also keeps the generator mark in the corner out of view) */
+.h3-video { position: absolute; left: 50%; top: 50%; width: 150%; max-width: none; aspect-ratio: 16 / 9; translate: -50% -50%; object-fit: cover; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .9s;
+  -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 50%, transparent 100%); mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 50%, transparent 100%); }
+#hero3d.is-video .h3-video { opacity: 1; }
+#hero3d.is-video .h3-canvas, #hero3d.is-video::before { opacity: 0; }
 
 /* floating service objects */
 .h3-item { position: absolute; width: var(--w, 34%); z-index: 2;
@@ -78,6 +83,7 @@
 @media (max-width: 960px) { .hero-visual.h3-wrap { height: min(62vh, 520px); } }
 @media (max-width: 760px) {
   .hero-visual.h3-wrap { height: 400px; margin-top: 8px; }
+  .h3-video { width: 190%; }
   .h3-item { --ox: 0px !important; --oy: 0px !important; }
   .h3-card { border-radius: 12px; }
   .h3-label { padding: 16px 6px 5px; font-size: .56rem; }

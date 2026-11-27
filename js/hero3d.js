@@ -6,7 +6,8 @@
    - mouse (fine pointers) / touch drag tilt the scene; panels move with depth-based parallax
    - scroll: the core moves back and the panels spread out (CSS variable --sp); CTA band has a portal that "approaches" (--q)
    - prefers-reduced-motion: a single static frame, no loop. Pauses when off-screen or the tab is hidden.
-   - if canvas is unavailable the static CSS glow + the linked service panels remain. */
+   - a cinematic 3D video (assets/video/hero-3d.mp4) plays as the main visual when allowed (not reduced-motion / data-saver / failed autoplay);
+     otherwise the canvas scene above is used. If canvas is unavailable the static CSS glow + the linked service panels remain. */
 (() => {
   "use strict";
   const root = document.getElementById("hero3d");
@@ -26,7 +27,8 @@
     root.classList.add("is-live");
     const items = [...root.querySelectorAll(".h3-item")];
     let W = 0, H = 0, dpr = 1, U = 100, cx = 0, cy = 0, pts = [], dust = [], D = 4.4;
-    let mx = 0, my = 0, tx = 0, ty = 0, sp = 0, ay = 0, ax = 0, t = 0, run = false, raf = 0, last = 0, shown = 0;
+    let mx = 0, my = 0, tx = 0, ty = 0, sp = 0, ay = 0, ax = 0, t = 0, run = false, raf = 0, last = 0, shown = 0, vidOn = false;
+    const vid = root.querySelector(".h3-video");
     let speed = 1; try { if (sessionStorage.getItem("ami_h3")) speed = 2.4; sessionStorage.setItem("ami_h3", "1"); } catch (e) {}
 
     function build() {
@@ -135,9 +137,9 @@
       root.style.setProperty("--mx", mx.toFixed(3)); root.style.setProperty("--my", my.toFixed(3));
       draw(t); raf = requestAnimationFrame(frame);
     }
-    function start() { if (run || reduced) return; run = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+    function start() { if (run || reduced || vidOn) return; run = true; last = performance.now(); raf = requestAnimationFrame(frame); }
     function stop() { run = false; cancelAnimationFrame(raf); }
-    let vis = true; const ctl = () => (vis && !document.hidden ? start() : stop());
+    let vis = true; const ctl = () => { if (vidOn) { stop(); (vis && !document.hidden ? vid.play().catch(() => {}) : vid.pause()); } else (vis && !document.hidden ? start() : stop()); };
     new IntersectionObserver(([e]) => { vis = e.isIntersecting; ctl(); }).observe(root);
     document.addEventListener("visibilitychange", ctl);
 
@@ -157,8 +159,20 @@
     document.addEventListener("mouseover", e => hl(e, true)); document.addEventListener("mouseout", e => hl(e, false));
 
     if ("ResizeObserver" in window) new ResizeObserver(resize).observe(root); else addEventListener("resize", resize);
+    /* 3D video as the main visual; the canvas scene stays as the fallback */
+    function useVideo() {
+      if (!vid || reduced) return; const c = navigator.connection || {}; if (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return;
+      const drop = () => vid.remove();
+      vid.addEventListener("error", drop, { once: true });
+      vid.addEventListener("playing", () => {
+        vidOn = true; root.classList.add("is-video"); stop();
+        const wait = shown ? 0 : 2200; for (let i = shown; i < items.length; i++) setTimeout(() => items[i].classList.add("in"), wait + (i - shown) * 220); shown = items.length;
+      }, { once: true });
+      vid.muted = true; vid.src = vid.dataset.src; vid.preload = small.matches ? "metadata" : "auto";
+      const p = vid.play(); if (p && p.catch) p.catch(drop);
+    }
     resize(); build();
-    if (reduced) { items.forEach(i => i.classList.add("in")); draw(99); } else { draw(0); ctl(); }
+    if (reduced) { items.forEach(i => i.classList.add("in")); draw(99); } else { draw(0); ctl(); useVideo(); }
   }
 
   /* =============================== CTA PORTAL =============================== */

@@ -169,3 +169,8 @@ expands into the planet → rings, portal and panels appear → idle loop. Mouse
 the CTA band has a portal that grows as it nears. Respects `prefers-reduced-motion` (one static frame), pauses off-screen/hidden, and the panels stay
 visible and clickable if canvas/JS is unavailable. To change a panel, edit the `.h3-item` blocks in `index.html`.
 Optional looping video behind the hero: set `heroVideo` in `js/config.js`.
+
+### Hero video (`assets/video/hero-3d.mp4`)
+The hero's main visual is a 5-second looping 3D animation (muted, no audio, 1.5 MB), cut from the reference video so it contains no baked-in text.
+It loads only when allowed: skipped for reduced-motion and data-saver users; if it cannot play, the canvas scene is used instead.
+To swap it, replace `assets/video/hero-3d.mp4` (keep it muted, short and under ~2 MB).
