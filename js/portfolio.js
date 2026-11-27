@@ -43,8 +43,8 @@
   function portfolioPage() {
     const grid = AMI.$("#portfolio-grid"); if (!grid) return;
     const chips = AMI.$("#pf-chips"), search = AMI.$("#pf-search"), count = AMI.$("#pf-count");
-    chips.innerHTML = `<button class="chip" type="button" data-value="all">All Work</button>` + Object.entries(D.portfolioCategories).map(([k, v]) => `<button class="chip" type="button" data-value="${k}">${AMI.esc(v)}</button>`).join("");
-    const st = { cat: (location.hash || "").slice(1) in D.portfolioCategories ? location.hash.slice(1) : "all", q: "" };
+    chips.innerHTML = `<button class="chip" type="button" data-value="all">All Work</button>` + Object.entries(D.portfolioCategories).filter(([k]) => D.projects.some(p => p.category === k)).map(([k, v]) => `<button class="chip" type="button" data-value="${k}">${AMI.esc(v)}</button>`).join("");
+    const st = { cat: D.projects.some(p => p.category === (location.hash || "").slice(1)) ? location.hash.slice(1) : "all", q: "" };
     const apply = () => {
       const l = D.projects.filter(p => (st.cat === "all" || p.category === st.cat) && (!st.q || AMI.matches(st.q, p.title, p.description, p.projectType, D.portfolioCategories[p.category])));
       grid.innerHTML = l.map(AMI.projectCard).join(""); AMI.observeReveal(grid); count.textContent = `${l.length} project${l.length === 1 ? "" : "s"}`; AMI.$("#pf-empty").hidden = l.length > 0;
@@ -56,7 +56,7 @@
 
   AMI.onReady(() => {
     portfolioPage();
-    const home = AMI.$("#home-portfolio"); if (home) { home.innerHTML = ["neon-city-sequence", "orbit-product-ad", "portal-tale", "spirit-gate", "cyber-poster", "manga-burst-panel"].map(id => AMI.projectCard(D.projects.find(p => p.id === id))).join(""); AMI.observeReveal(home); }
+    const home = AMI.$("#home-portfolio"); if (home) { home.innerHTML = ["phoenix-rising", "rainy-neon-city", "the-last-chosen", "floating-islands", "future-of-wealth", "god-mode"].map(id => D.projects.find(p => p.id === id)).filter(Boolean).map(AMI.projectCard).join(""); AMI.observeReveal(home); }
     // video preview controls: pause any playing video when its modal closes
     document.addEventListener("click", e => { if (e.target.closest("[data-close]")) AMI.$$("video", modal || document.body).forEach(v => v.pause()); });
   });

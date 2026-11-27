@@ -34,8 +34,7 @@
   function testimonials() {
     const box = AMI.$("#testimonials"); if (!box) return;
     if (!D.testimonials.length) { // honest empty state: sample layout is clearly labelled, no invented people or ratings
-      box.innerHTML = `<div class="testimonial-ph reveal"><span class="tag demo">Layout preview — not a real review</span><div class="avatar-ph" style="margin-top:18px"></div>
-        <div class="stars" aria-hidden="true">☆ ☆ ☆ ☆ ☆</div><p style="margin:12px 0 0">Client feedback coming soon. Verified reviews from real customers will appear here.</p></div>
+      box.innerHTML = `<div class="testimonial-ph reveal"><h3>Client feedback coming soon</h3><p style="margin:12px 0 0">Verified reviews from real customers will appear here.</p></div>
         <div class="testimonial-ph reveal"><h3>Worked with us?</h3><p>We only publish genuine feedback shared with permission.</p><a class="btn btn-ghost btn-sm" href="contact.html">Share your feedback</a></div>`;
     } else box.innerHTML = D.testimonials.map(t => `<figure class="card reveal"><div class="stars" role="img" aria-label="${t.rating} out of 5">${"★".repeat(t.rating)}${"☆".repeat(5 - t.rating)}</div><blockquote style="margin:14px 0;color:var(--text-2)">“${AMI.esc(t.text)}”</blockquote><figcaption><strong>${AMI.esc(t.name)}</strong><br><small style="color:var(--text-3)">${AMI.esc(t.role || "")}${t.product ? " · " + AMI.esc(t.product) : ""}</small></figcaption></figure>`).join("");
     AMI.observeReveal(box);
