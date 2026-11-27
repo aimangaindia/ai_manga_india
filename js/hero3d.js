@@ -6,7 +6,7 @@
    - mouse (fine pointers) / touch drag tilt the scene; panels move with depth-based parallax
    - scroll: the core moves back and the panels spread out (CSS variable --sp); CTA band has a portal that "approaches" (--q)
    - prefers-reduced-motion: a single static frame, no loop. Pauses when off-screen or the tab is hidden.
-   - on desktop/laptop only, a cinematic 3D video (assets/video/hero-3d.mp4) plays as the main visual when allowed (not reduced-motion / data-saver / failed autoplay);
+   - on desktop/laptop, a cinematic 3D video (assets/video/hero-3d.mp4) plays as the main visual when allowed (not reduced-motion / data-saver / failed autoplay);
      otherwise the canvas scene above is used. If canvas is unavailable the static CSS glow + the linked service panels remain. */
 (() => {
   "use strict";
@@ -201,8 +201,19 @@
     if ("ResizeObserver" in window) new ResizeObserver(size).observe(band); size(); upd(); draw(reduced ? 3 : 0);
   }
 
+  /* phones / tablets / portrait layouts: the portrait 3D video (poster first; plays when allowed, only while on screen) */
+  let pStarted = false;
+  function portraitVideo() {
+    const v = root && root.querySelector(".h3-video-p"); if (!v || pStarted) return; pStarted = true;
+    if (reduced) return; const c = navigator.connection || {}; if (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return;
+    const drop = () => { v.removeAttribute("src"); v.load(); }; v.addEventListener("error", drop, { once: true });
+    v.muted = true; v.src = v.dataset.src; v.preload = "auto";
+    const go = () => { const p = v.play(); if (p && p.catch) p.catch(drop); };
+    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { if (e.isIntersecting && !document.hidden) go(); else v.pause(); }).observe(v); else go();
+    document.addEventListener("visibilitychange", () => { if (document.hidden) v.pause(); });
+  }
   let started = false;
-  const start = () => { if (root && desk.matches && !started) { started = true; hero(); } };
+  const start = () => { if (!root) return; if (desk.matches) { if (!started) { started = true; hero(); } } else portraitVideo(); };
   const init = () => { start(); portal(); if (desk.addEventListener) desk.addEventListener("change", start); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

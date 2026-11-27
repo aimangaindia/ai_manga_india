@@ -177,4 +177,4 @@ To swap it, replace `assets/video/hero-3d.mp4` (keep it muted, short and under ~
 
 
 ## 3D hero: desktop only
-The 3D scene (reference video, canvas and floating service panels) loads only on desktop/laptop screens (width ≥ 1025px with a mouse). Phones and tablets get a static grid of the same five service links and never download the video.
+The 3D scene (reference video, canvas and floating service panels) loads only on desktop/laptop screens (width ≥ 1025px with a mouse). Phones and tablets get a static grid of the same five service links and never download the desktop video. Instead they play a separate portrait video (`assets/video/hero-3d-portrait.mp4`, 720x900, ~0.9 MB, cut from the first clean 2.4 s of the supplied clip and ping-ponged into a loop; the part of the source with baked-in text is not used). It shows its poster first, plays only while on screen, and stays a still image for reduced-motion or data-saver users.
