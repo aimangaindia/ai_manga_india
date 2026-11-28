@@ -190,3 +190,23 @@ Five 8-second 3D action clips (`assets/video/portfolio/*.mp4`, 640x360 re-encode
 
 ## Illustration package (Digital Shop)
 `AI Illustration Package` is the first real (non-demo) shop listing: the 10 portfolio illustrations, cover at `assets/products/illustration-package.webp`. It has `price: null`, which the shop shows as "Price on request" (the price is confirmed in chat). To set a price, change `null` in the `P("illustration-package", …)` line of `js/data.js` to a number in INR; "Price on request" then becomes a normal price. Real products can set `image`, `gallery` and `faq`; otherwise sample defaults are used.
+
+
+## Python backend (forms) — `api/`
+A small standard-library Python backend runs as Vercel serverless functions in `api/`. No website file depends on it, and it needs no database or packages.
+
+| Endpoint | What it does |
+|---|---|
+| `POST /api/inquiry` | Validates the project inquiry form on the server, then emails it to you (Reply-To is the visitor). |
+| `POST /api/subscribe` | Validates a newsletter address and emails it to you (no database; add one later if you want a list). |
+| `GET /api/health` | Shows `{"ok":true,"mail_configured":true|false}`. Never shows secrets. |
+
+Safety: server-side validation, honeypot field, same-site origin check, 20 KB body limit, 5 requests per 10 minutes per visitor (best effort), header-injection protection, no details leaked on errors. It only answers success when the mail server accepted the message; with no mail settings it answers `503 not_configured`.
+
+**Turn it on (about 5 minutes)**
+1. Gmail: turn on 2-Step Verification, then create an **App Password** (Google Account → Security → App passwords).
+2. Vercel → your project → Settings → Environment Variables, add: `SMTP_USER` (the Gmail address), `SMTP_PASS` (the App Password), and optionally `MAIL_TO` (where inquiries go; default = `SMTP_USER`). Other options are listed at the top of `api/_common.py`. Never put these in the repo or in `js/config.js`.
+3. Redeploy, then open `/api/health` and check `mail_configured` is `true`.
+4. Connect the forms by setting, in `js/config.js`: `contactFormEndpoint: "/api/inquiry"` and `newsletterEndpoint: "/api/subscribe"`. Until you do this the site keeps its current honest "not connected, use email" behaviour.
+
+Test locally without sending email: `python3 tools/test_api.py`. Payments, orders and downloads are still not built; see the roadmap above.
