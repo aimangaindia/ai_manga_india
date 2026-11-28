@@ -185,4 +185,4 @@ Ten square (1:1) Instagram post template designs are listed in the portfolio und
 
 
 ## Portfolio videos (AI Video & 3D Animation)
-Five 8-second 3D action clips (`assets/video/portfolio/*.mp4`, 640x360 re-encoded to under 1.1 MB each, with sound) are in the portfolio category "AI Video & 3D Animation" (`video` in `js/data.js`). Each has a poster image in `assets/portfolio/` and plays in the project window. They are labelled personal concepts. Higher-resolution originals would look sharper if available.
+Five 8-second 3D action clips (`assets/video/portfolio/*.mp4`, 640x360 re-encoded to under 1.1 MB each, with sound) are in the portfolio category "AI Video & 3D Animation" (`video` in `js/data.js`). Each has a poster image in `assets/portfolio/` and plays in the project window. They are labelled "Fan-made series" (scenes from the fan-made series on the AI MANGA INDIA YouTube channel), with a Watch the series on YouTube button. Higher-resolution originals would look sharper if available.

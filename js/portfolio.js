@@ -3,7 +3,7 @@
 (() => {
   const AMI = (window.AMI = window.AMI || {});
   const ic = AMI.icon, D = AMI.data;
-  const TYPE = { personal: ["Personal concept", "personal"], experimental: ["Experimental AI artwork", "personal"], client: ["Client project", "client"] };
+  const TYPE = { personal: ["Personal concept", "personal"], experimental: ["Experimental AI artwork", "personal"], fan: ["Fan-made series", "fan"], client: ["Client project", "client"] };
 
   AMI.projectCard = p => `
     <button class="pcard reveal${p.square ? " sq" : ""}" type="button" data-project="${p.id}" data-cat="${p.category}" aria-label="Open project: ${AMI.esc(p.title)}">
@@ -29,7 +29,7 @@
       <div class="modal-body"><div class="flex" style="margin-bottom:14px"><span class="tag ${TYPE[p.type][1]}">${TYPE[p.type][0]}</span>${p.demo ? '<span class="tag demo">Demo project</span>' : ""}</div>
         <span class="eyebrow">${AMI.esc(D.portfolioCategories[p.category])}</span><h2>${AMI.esc(p.title)}</h2><p>${AMI.esc(p.description)}</p>${p.details ? `<ul class="pdetails">${p.details.map(d => `<li>${AMI.esc(d)}</li>`).join("")}</ul>` : ""}
         <table class="spec"><tr><th>Project type</th><td>${AMI.esc(p.projectType)}</td></tr><tr><th>Status</th><td>${TYPE[p.type][0]}${p.demo ? " (demonstration entry)" : ""}</td></tr><tr><th>Tools &amp; workflow</th><td>${AMI.esc(p.workflow)}</td></tr></table>
-        <div class="flex"><a class="btn btn-primary" href="contact.html?service=${encodeURIComponent(serviceFor(p.category))}&ref=${p.id}">Request a Similar Project</a><button class="btn btn-ghost" type="button" data-close>Close</button></div></div></div></div>`;
+        <div class="flex"><a class="btn btn-primary" href="contact.html?service=${encodeURIComponent(serviceFor(p.category))}&ref=${p.id}">Request a Similar Project</a>${p.type === "fan" ? `<a class="btn btn-ghost" href="${((AMI.cfg.socialProfiles || []).find(x => x.id === "youtube") || {}).url || "#"}" target="_blank" rel="noopener">Watch the series on YouTube</a>` : ""}<button class="btn btn-ghost" type="button" data-close>Close</button></div></div></div></div>`;
     AMI.openLayer(modal); if (push) history.replaceState(null, "", `?project=${id}`);
     const set = i => { gi = (i + p.gallery.length) % p.gallery.length; AMI.$("#pm-img").src = p.gallery[gi]; };
     AMI.$("#pm-prev") && AMI.$("#pm-prev").addEventListener("click", () => set(gi - 1)); AMI.$("#pm-next") && AMI.$("#pm-next").addEventListener("click", () => set(gi + 1));
