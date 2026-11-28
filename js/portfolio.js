@@ -6,7 +6,7 @@
   const TYPE = { personal: ["Personal concept", "personal"], experimental: ["Experimental AI artwork", "personal"], client: ["Client project", "client"] };
 
   AMI.projectCard = p => `
-    <button class="pcard reveal" type="button" data-project="${p.id}" data-cat="${p.category}" aria-label="Open project: ${AMI.esc(p.title)}">
+    <button class="pcard reveal${p.square ? " sq" : ""}" type="button" data-project="${p.id}" data-cat="${p.category}" aria-label="Open project: ${AMI.esc(p.title)}">
       <span class="pcard-media"><img src="${p.image}" alt="${AMI.esc(p.title)} — ${AMI.esc(p.projectType)}" width="800" height="600" loading="lazy">
         <span class="pcard-badges"><span class="tag ${TYPE[p.type][1]}">${TYPE[p.type][0]}</span>${p.demo ? '<span class="tag demo">Demo</span>' : ""}</span>
         <span class="play-chip" aria-hidden="true">${ic(p.video ? "play" : "eye")}</span></span>

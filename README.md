@@ -178,3 +178,7 @@ To swap it, replace `assets/video/hero-3d.mp4` (keep it muted, short and under ~
 
 ## 3D hero: desktop only
 The 3D scene (reference video, canvas and floating service panels) loads only on landscape desktop/laptop screens (width ≥ 1025px with a mouse). Phones, tablets and portrait windows get a separate portrait 3D video stage (`assets/video/hero-3d-portrait.mp4`, 720x1280, ~1.2 MB, 4.8 s seamless loop cut from the supplied portrait clip; the part with baked-in text is not used) above a static grid of the five service links. It shows its poster first, plays only while on screen and the tab is visible, and stays a still image for reduced-motion or data-saver users. Layout: single column on phones, video beside the cards on portrait tablets, 4:3 stage above a 2-column grid on landscape touch tablets.
+
+
+## Instagram post templates (Graphic Design)
+Ten square (1:1) Instagram post template designs are listed in the portfolio under AI Graphic Design (`assets/portfolio/ig-*.webp`, entries in `js/data.js` with `square: true`). They are labelled personal template concepts; the brand names, prices, dates and contact details inside the images are sample text. The Instagram Post Design offer page (`/product/instagram-post-design`) shows them first, and the same rule shows matching portfolio samples first on other offer pages (e.g. YouTube Thumbnail Design).
