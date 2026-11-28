@@ -13,8 +13,8 @@
   const root = document.getElementById("hero3d");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const small = matchMedia("(max-width: 760px)");
-  /* the 3D scene (video + canvas + floating panels) is for desktop / laptop screens only; phones and tablets get the plain static layout */
-  const desk = matchMedia("(min-width: 1025px) and (hover: hover) and (pointer: fine)");
+  /* the 3D scene (video + canvas + floating panels) is for desktop / laptop screens only; phones, tablets and portrait windows get a portrait 3D video stage (hero-3d-portrait.mp4) plus a static grid of service links */
+  const desk = matchMedia("(min-width: 1025px) and (hover: hover) and (pointer: fine) and (orientation: landscape)");
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const ease = t => 1 - Math.pow(1 - t, 3);
   let seed = 11; const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647; // deterministic scene
@@ -177,6 +177,23 @@
     if (reduced) { items.forEach(i => i.classList.add("in")); draw(99); } else { draw(0); ctl(); useVideo(); }
   }
 
+  /* =============================== PORTRAIT 3D VIDEO (phones, tablets, portrait windows) =============================== */
+  function portrait() {
+    const box = document.querySelector(".h3-portrait"), v = box && box.querySelector("video"); if (!v) return;
+    let loaded = false, vis = true;
+    const c = navigator.connection || {}, lite = reduced || c.saveData || /(^|-)2g$/.test(c.effectiveType || "");
+    const go = () => { if (lite || desk.matches || document.hidden || !vis) { v.pause(); return; } const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    const load = () => {
+      if (loaded || lite || desk.matches) return; loaded = true;
+      v.addEventListener("error", () => v.remove(), { once: true });
+      v.addEventListener("playing", () => box.classList.add("is-playing"), { once: true });
+      v.muted = true; v.src = v.dataset.src; v.preload = "auto"; go();
+    };
+    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis) load(); go(); }, { threshold: .15 }).observe(box); else load();
+    document.addEventListener("visibilitychange", go);
+    if (desk.addEventListener) desk.addEventListener("change", () => { if (desk.matches) v.pause(); else { load(); go(); } });
+  }
+
   /* =============================== CTA PORTAL =============================== */
   function portal() {
     const cv = document.getElementById("portal3d"); if (!cv) return; const ctx = cv.getContext("2d"); if (!ctx) return;
@@ -201,19 +218,8 @@
     if ("ResizeObserver" in window) new ResizeObserver(size).observe(band); size(); upd(); draw(reduced ? 3 : 0);
   }
 
-  /* phones / tablets / portrait layouts: the portrait 3D video (poster first; plays when allowed, only while on screen) */
-  let pStarted = false;
-  function portraitVideo() {
-    const v = root && root.querySelector(".h3-video-p"); if (!v || pStarted) return; pStarted = true;
-    if (reduced) return; const c = navigator.connection || {}; if (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return;
-    const drop = () => { v.removeAttribute("src"); v.load(); }; v.addEventListener("error", drop, { once: true });
-    v.muted = true; v.src = v.dataset.src; v.preload = "auto";
-    const go = () => { const p = v.play(); if (p && p.catch) p.catch(drop); };
-    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { if (e.isIntersecting && !document.hidden) go(); else v.pause(); }).observe(v); else go();
-    document.addEventListener("visibilitychange", () => { if (document.hidden) v.pause(); });
-  }
   let started = false;
-  const start = () => { if (!root) return; if (desk.matches) { if (!started) { started = true; hero(); } } else portraitVideo(); };
-  const init = () => { start(); portal(); if (desk.addEventListener) desk.addEventListener("change", start); };
+  const start = () => { if (!root) return; if (desk.matches && !started) { started = true; hero(); } };
+  const init = () => { start(); portrait(); portal(); if (desk.addEventListener) desk.addEventListener("change", start); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
