@@ -21,12 +21,12 @@ class SMTP(socketserver.StreamRequestHandler):
             elif u.startswith("QUIT"): w("221 bye"); break
             else: w("250 ok")
 socketserver.ThreadingTCPServer.allow_reuse_address = True
-smtp=socketserver.ThreadingTCPServer(("127.0.0.1",2611),SMTP); threading.Thread(target=smtp.serve_forever,daemon=True).start()
+smtp=socketserver.ThreadingTCPServer(("127.0.0.1",0),SMTP); threading.Thread(target=smtp.serve_forever,daemon=True).start()
 def load(n):
     sp=importlib.util.spec_from_file_location(n,f"{API}/{n}.py"); m=importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m.handler
 ports={}
 for i,n in enumerate(["health","inquiry","subscribe"]):
-    s=HTTPServer(("127.0.0.1",8170+i),load(n)); threading.Thread(target=s.serve_forever,daemon=True).start(); ports[n]=8170+i
+    s=HTTPServer(("127.0.0.1",0),load(n)); threading.Thread(target=s.serve_forever,daemon=True).start(); ports[n]=s.server_address[1]
 import _common
 def call(n,body=None,method="POST",headers=None,raw=None,reset=True):
     if reset: _common._hits.clear()
@@ -39,7 +39,7 @@ good=dict(name="Test User",email="t@example.com",service="AI Digital Art & Illus
 for k in ["SMTP_USER","SMTP_PASS"]: os.environ.pop(k,None)
 print("health unconfigured",call("health",method="GET"))
 print("inquiry unconfigured",call("inquiry",good))
-os.environ.update(SMTP_HOST="127.0.0.1",SMTP_PORT="2611",SMTP_SECURITY="none",SMTP_USER="owner@example.com",SMTP_PASS="x",MAIL_TO="owner@example.com")
+os.environ.update(SMTP_HOST="127.0.0.1",SMTP_PORT=str(smtp.server_address[1]),SMTP_SECURITY="none",SMTP_USER="owner@example.com",SMTP_PASS="x",MAIL_TO="owner@example.com")
 print("health configured",call("health",method="GET"))
 print("inquiry ok",call("inquiry",good)); 
 bad=dict(good,name="Evil\r\nBcc: victim@x.com"); print("inj",call("inquiry",bad))
@@ -49,7 +49,7 @@ print("bad email",call("inquiry",dict(good,email="nope")))
 print("bad link",call("inquiry",dict(good,links="javascript:alert(1)")))
 print("honeypot",call("inquiry",dict(good,company_website="spam.com")),"mails so far",len(captured))
 print("origin bad",call("inquiry",good,headers={"Origin":"https://evil.com"}))
-print("origin same",call("inquiry",good,headers={"Origin":"http://127.0.0.1:8171"}))
+print("origin same",call("inquiry",good,headers={"Origin":f"http://127.0.0.1:{ports['inquiry']}"}))
 print("big",call("inquiry",raw=b"{"+b'"a":"'+b"x"*30000+b'"}'))
 print("not json ct",call("inquiry",raw=b"a=b",headers={"Content-Type":"text/plain"}))
 print("GET",call("inquiry",method="GET"))
