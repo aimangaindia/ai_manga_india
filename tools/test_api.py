@@ -20,6 +20,7 @@ class SMTP(socketserver.StreamRequestHandler):
             elif u.startswith("DATA"): data=True; w("354 go")
             elif u.startswith("QUIT"): w("221 bye"); break
             else: w("250 ok")
+socketserver.ThreadingTCPServer.allow_reuse_address = True
 smtp=socketserver.ThreadingTCPServer(("127.0.0.1",2611),SMTP); threading.Thread(target=smtp.serve_forever,daemon=True).start()
 def load(n):
     sp=importlib.util.spec_from_file_location(n,f"{API}/{n}.py"); m=importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m.handler
