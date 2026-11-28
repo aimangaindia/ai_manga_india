@@ -182,3 +182,7 @@ The 3D scene (reference video, canvas and floating service panels) loads only on
 
 ## Instagram post templates (Graphic Design)
 Ten square (1:1) Instagram post template designs are listed in the portfolio under AI Graphic Design (`assets/portfolio/ig-*.webp`, entries in `js/data.js` with `square: true`). They are labelled personal template concepts; the brand names, prices, dates and contact details inside the images are sample text. The Instagram Post Design offer page (`/product/instagram-post-design`) shows them first, and the same rule shows matching portfolio samples first on other offer pages (e.g. YouTube Thumbnail Design).
+
+
+## Portfolio videos (AI Video & 3D Animation)
+Five 8-second 3D action clips (`assets/video/portfolio/*.mp4`, 640x360 re-encoded to under 1.1 MB each, with sound) are in the portfolio category "AI Video & 3D Animation" (`video` in `js/data.js`). Each has a poster image in `assets/portfolio/` and plays in the project window. They are labelled personal concepts. Higher-resolution originals would look sharper if available.
