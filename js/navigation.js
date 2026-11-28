@@ -73,7 +73,7 @@
     const run = () => {
       const q = input.value.trim(); if (q.length < 2) { out.innerHTML = q ? '<p style="padding:10px">Keep typing…</p>' : ""; return; }
       const d = AMI.data, hits = [
-        ...d.products.filter(p => AMI.matches(q, p.name, p.short, d.productCategories[p.category].label)).map(p => ({ t: p.name, s: "Product · " + AMI.money(p.price), img: p.image, href: `product.html?id=${p.id}` })),
+        ...d.products.filter(p => AMI.matches(q, p.name, p.short, d.productCategories[p.category].label)).map(p => ({ t: p.name, s: "Product · " + (AMI.priceText ? AMI.priceText(p) : AMI.money(p.price)), img: p.image, href: `product.html?id=${p.id}` })),
         ...d.projects.filter(p => AMI.matches(q, p.title, p.description, d.portfolioCategories[p.category])).map(p => ({ t: p.title, s: "Portfolio · " + d.portfolioCategories[p.category], img: p.image, href: `portfolio.html?project=${p.id}` })),
         ...(AMI.catalog ? AMI.catalog.services.flatMap(s => [{ t: s.title, s: "Service", href: `/services/${s.slug}`, m: [s.title, s.short, s.highlights.join(" ")] },
           ...s.offerings.map(o => ({ t: o.title, s: "Service · " + s.title, href: `/product/${o.slug}`, m: [o.title, o.short] }))]).filter(h => AMI.matches(q, ...h.m)).map(h => ({ ...h, img: "assets/logos/logo-mark.svg" }))

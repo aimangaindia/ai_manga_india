@@ -101,11 +101,16 @@ window.AMI_DATA = (() => {
   const P = (id, name, category, price, o) => ({
     id, name, category, price, original: null, sale: false, featured: false, isNew: false, bundle: false, demo: true, available: false,
     format: "ZIP", compat: "Any editor", files: null, size: "—", resolution: "", created: "2026-01-01", gallery: null, faq: [], ...o,
-    image: `assets/products/${id}.svg`
+    image: o.image || `assets/products/${id}.svg`
   });
   const LIC = "Personal and commercial use in your own projects. No resale or redistribution of the files themselves. Full terms: License Policy.";
 
   const products = [
+    P("illustration-package", "AI Illustration Package", "art", null, { short: "Ten AI-generated fantasy, sci-fi and cyberpunk illustrations in one package.", format: "Image files (format confirmed on order)", compat: "Any image viewer or editor",
+      files: 10, size: "Confirmed on order", resolution: "Confirmed on order", featured: true, bundle: true, isNew: true, created: "2026-11-28", demo: false, available: true, image: "assets/products/illustration-package.webp", gallery: ["assets/products/illustration-package.webp", "assets/portfolio/ancient-tree-of-light.webp", "assets/portfolio/phoenix-rising.webp", "assets/portfolio/desert-portal-explorer.webp", "assets/portfolio/dragon-library.webp", "assets/portfolio/crystal-planet-explorer.webp", "assets/portfolio/moonlit-lake-sanctuary.webp", "assets/portfolio/floating-islands.webp", "assets/portfolio/mountain-dragon.webp", "assets/portfolio/rainy-neon-city.webp", "assets/portfolio/glowing-forest-tree.webp"],
+      long: "A package of ten original AI-generated illustrations by AI MANGA INDIA: fantasy landscapes, mythical creatures, sci-fi explorers and a cyberpunk city. Use them as wallpapers, story and concept references, backgrounds, posters or social content. Price, file format and resolution are confirmed with you in chat before delivery. No payment is taken on this website.",
+      includes: ["Ancient Tree of Light", "Phoenix Rising", "Desert Portal Explorer", "Sleeping Dragon in the Library", "Crystal Planet Explorer", "Moonlit Lake Sanctuary", "Floating Islands", "Dragon on the Cliff", "Rainy Neon City", "Glowing Forest Tree"], license: "Usage rights are set out in the License Policy and confirmed with you when you order.",
+      faq: [{"q": "What exactly is in the package?", "a": "Ten AI-generated fantasy, sci-fi and cyberpunk illustrations, the same artworks shown in the portfolio under AI Graphics & Digital Art. The list is on this page."}, {"q": "What is the price?", "a": "The price is confirmed in chat when you tap Buy Now and message us. No payment is taken on this website."}, {"q": "Which file format and size will I get?", "a": "We confirm the file format and resolution with you in chat before sending, so you get files that suit your use."}, {"q": "Can I use the illustrations commercially?", "a": "Usage rights are explained in our License Policy and confirmed with you when you order. If you plan to resell or print at scale, tell us first."}, {"q": "Can I ask for custom illustrations instead?", "a": "Yes. Tap Request Custom and describe your idea; we'll reply with options and a quote."}] }),
     P("cinematic-broll", "Cinematic B-Roll Pack", "video", 799, { short: "Atmospheric AI-generated B-roll clips for edits and intros.", format: "MP4", compat: "Premiere, DaVinci, CapCut, Final Cut",
       files: 20, size: "≈ 1.2 GB (sample)", resolution: "1920×1080 (sample)", featured: true, bundle: true, created: "2026-03-10",
       long: "A sample listing showing how a video-asset bundle is presented. Replace this text and the specs with the real contents of your pack before selling.",
@@ -137,7 +142,7 @@ window.AMI_DATA = (() => {
     P("ad-script-pack", "AI Ad Script Pack", "resources", 399, { short: "Short-form ad script frameworks and shot lists for product videos.", format: "PDF + DOCX", compat: "Any text editor",
       files: 2, size: "< 5 MB (sample)", created: "2026-09-30", long: "Sample listing. Replace with real content.", includes: ["Script frameworks (PDF)", "Editable DOCX"], license: LIC })
   ];
-  products.forEach(p => { p.faq = [
+  products.forEach(p => { if (p.faq && p.faq.length) return; p.faq = [
     { q: "Is this product available to buy right now?", a: p.available ? "Yes." : "Not yet. This is a sample listing that demonstrates the store design. Real products will be marked as available." },
     { q: "How are downloads delivered?", a: "Orders are arranged in chat. Tap Buy Now, pick an app (or email), and we confirm details with you and send the files directly." },
     { q: "Can I use it commercially?", a: p.license }

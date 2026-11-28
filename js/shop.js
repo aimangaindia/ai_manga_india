@@ -3,6 +3,9 @@
   const AMI = (window.AMI = window.AMI || {});
   const ic = AMI.icon, D = AMI.data, cfg = AMI.cfg, cat = k => D.productCategories[k].label;
 
+  /** Price label; a product with price:null is shown as "Price on request" (confirmed in chat). */
+  AMI.priceText = p => (typeof p.price === "number" ? AMI.money(p.price) : "Price on request");
+
   /** Reusable product card (home, shop, related products). */
   AMI.productCard = p => `
     <article class="prod reveal" data-id="${p.id}">
@@ -11,8 +14,8 @@
         <button class="quick-btn" type="button" data-quick="${p.id}" aria-label="Quick view ${AMI.esc(p.name)}">${ic("eye")} Quick View</button></div>
       <div class="prod-body"><span class="cat">${AMI.esc(cat(p.category))}</span><h3><a href="product.html?id=${p.id}">${AMI.esc(p.name)}</a></h3><p>${AMI.esc(p.short)}</p>
         <div class="meta-line"><span>${ic("file")} ${AMI.esc(p.format)}</span><span>${ic("download")} Delivered after you confirm in chat</span></div>
-        <div class="price-row"><span class="price">${AMI.money(p.price)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</span></div>
-        <div class="prod-actions"><button class="btn btn-primary btn-sm" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">${ic("chat")} Buy Now</button><a class="btn btn-ghost btn-sm" href="product.html?id=${p.id}">Details</a></div></div>
+        <div class="price-row"><span class="price">${AMI.priceText(p)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</span></div>
+        <div class="prod-actions"><button class="btn btn-primary btn-sm" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.priceText(p)}">${ic("chat")} Buy Now</button><a class="btn btn-ghost btn-sm" href="product.html?id=${p.id}">Details</a></div></div>
     </article>`;
 
   /** Global click handling for Add to Cart / Quick view (works for any card on any page). */
@@ -35,10 +38,10 @@
     qv.innerHTML = `<div class="modal-backdrop" data-close></div><div class="modal-dialog"><button class="icon-btn modal-close" type="button" data-close aria-label="Close">${ic("x")}</button>
       <div class="modal-grid"><div class="modal-media"><img src="${p.image}" alt="${AMI.esc(p.name)} preview"></div>
       <div class="modal-body"><span class="tag${p.demo ? " demo" : ""}">${p.demo ? "Demo product" : AMI.esc(cat(p.category))}</span><h2 style="margin-top:14px">${AMI.esc(p.name)}</h2>
-        <div class="detail-price" style="font-size:1.7rem;margin:8px 0">${AMI.money(p.price)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</div><p>${AMI.esc(p.short)}</p>
+        <div class="detail-price" style="font-size:1.7rem;margin:8px 0">${AMI.priceText(p)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</div><p>${AMI.esc(p.short)}</p>
         <table class="spec"><tr><th>Format</th><td>${AMI.esc(p.format)}</td></tr><tr><th>Works with</th><td>${AMI.esc(p.compat)}</td></tr><tr><th>Delivery</th><td>Confirmed with you in chat</td></tr></table>
         ${p.available ? "" : '<div class="notice" style="margin-bottom:16px"><p><strong>Sample listing.</strong> Not available to buy yet.</p></div>'}
-        <div class="flex"><button class="btn btn-primary" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">${ic("chat")} Buy Now</button><a class="btn btn-ghost" href="product.html?id=${p.id}">Full details</a></div></div></div></div>`;
+        <div class="flex"><button class="btn btn-primary" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.priceText(p)}">${ic("chat")} Buy Now</button><a class="btn btn-ghost" href="product.html?id=${p.id}">Full details</a></div></div></div></div>`;
     AMI.openLayer(qv);
   }
 
@@ -56,7 +59,7 @@
       let l = D.products.filter(p => (st.cat === "all" || p.category === st.cat) && (!st.q || AMI.matches(st.q, p.name, p.short, cat(p.category), p.format, p.compat))
         && (st.flt === "all" || (st.flt === "featured" && p.featured) || (st.flt === "new" && p.isNew) || (st.flt === "sale" && p.sale) || (st.flt === "best" && cfg.salesData[p.id] > 0)));
       const s = sort.value;
-      l.sort((a, b) => s === "low" ? a.price - b.price : s === "high" ? b.price - a.price : s === "new" ? b.created.localeCompare(a.created) : s === "name" ? a.name.localeCompare(b.name) : (b.featured - a.featured) || b.created.localeCompare(a.created));
+      l.sort((a, b) => s === "low" ? (a.price ?? 1e9) - (b.price ?? 1e9) : s === "high" ? (b.price ?? -1) - (a.price ?? -1) : s === "new" ? b.created.localeCompare(a.created) : s === "name" ? a.name.localeCompare(b.name) : (b.featured - a.featured) || b.created.localeCompare(a.created));
       count.textContent = `${l.length} product${l.length === 1 ? "" : "s"}`;
       AMI.$("#shop-empty").hidden = l.length > 0; pager.set(l);
     };
@@ -70,10 +73,10 @@
     const root = AMI.$("#product-root"); if (!root) return;
     const p = D.products.find(x => x.id === AMI.param("id"));
     if (!p) { root.innerHTML = `<div class="empty-state">${ic("package")}<h2>Product not found</h2><p>That product doesn't exist or was removed.</p><a class="btn btn-primary" href="shop.html">Back to the shop</a></div>`; document.title = "Product not found | AI MANGA INDIA"; return; }
-    const gallery = [p.image, `assets/products/${p.id}-2.svg`, `assets/products/${p.id}-3.svg`];
+    const gallery = p.gallery || [p.image, `assets/products/${p.id}-2.svg`, `assets/products/${p.id}-3.svg`];
     document.title = `${p.name} | AI MANGA INDIA Digital Shop`;
     const setMeta = (sel, v) => { const m = AMI.$(sel); m && m.setAttribute("content", v); };
-    setMeta('meta[name="description"]', `${p.short} ${p.format} · ${AMI.money(p.price)} · Digital download from AI MANGA INDIA.`);
+    setMeta('meta[name="description"]', `${p.short} ${p.format} · ${AMI.priceText(p)} · Digital download from AI MANGA INDIA.`);
     setMeta('meta[property="og:title"]', document.title); setMeta('meta[property="og:image"]', new URL(p.image, location.href).href);
     const canon = AMI.$('link[rel="canonical"]'); canon && (canon.href = `${cfg.siteUrl}/product.html?id=${p.id}`);
     AMI.$("#crumb-cat").textContent = cat(p.category); AMI.$("#crumb-cat").href = `shop.html?cat=${p.category}`; AMI.$("#crumb-name").textContent = p.name;
@@ -84,9 +87,9 @@
         ${p.demo ? '<p style="font-size:.82rem;margin-top:10px;color:var(--text-3)">Previews are generated sample artwork for demonstration.</p>' : ""}</div>
       <div class="detail-info"><div class="flex" style="margin-bottom:14px"><a class="tag" href="shop.html?cat=${p.category}">${AMI.esc(cat(p.category))}</a>${p.demo ? '<span class="tag demo">Demo product</span>' : ""}${p.sale ? '<span class="tag sale">Sale</span>' : ""}${p.isNew ? '<span class="tag">New</span>' : ""}</div>
         <h1>${AMI.esc(p.name)}</h1><p>${AMI.esc(p.short)}</p>
-        <div class="detail-price">${AMI.money(p.price)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</div>
+        <div class="detail-price">${AMI.priceText(p)}${p.original ? `<s>${AMI.money(p.original)}</s>` : ""}</div>
         ${p.available ? "" : '<div class="notice" style="margin-bottom:20px"><p><strong>Sample listing.</strong> This product demonstrates the store design and isn\'t available to buy yet. Contents and specs shown are placeholders.</p></div>'}
-        <div class="flex"><button class="btn btn-primary" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">${ic("chat")} Buy Now</button><button class="btn btn-ghost" type="button" data-order data-kind="custom" data-item="${AMI.esc(p.name)}" data-price="${AMI.money(p.price)}">Request Customization</button></div>
+        <div class="flex"><button class="btn btn-primary" type="button" data-order data-kind="buy" data-item="${AMI.esc(p.name)}" data-price="${AMI.priceText(p)}">${ic("chat")} Buy Now</button><button class="btn btn-ghost" type="button" data-order data-kind="custom" data-item="${AMI.esc(p.name)}" data-price="${AMI.priceText(p)}">Request Customization</button></div>
         <ul class="include-list" style="margin-top:26px"><li>${ic("chat")} No online payment — tap Buy Now and choose an app to contact us</li><li>${ic("download")} Files are delivered after we confirm details with you</li><li>${ic("shield")} <a href="license.html" style="text-decoration:underline">Licence information</a> · <a href="refund.html" style="text-decoration:underline">Refund policy</a></li></ul></div></div>
       <div class="grid grid-2 mt-3" style="gap:48px;margin-top:72px;align-items:start">
         <div><h2>Description</h2><p>${AMI.esc(p.long)}</p><h3 style="margin-top:28px">What's included</h3><ul class="include-list">${p.includes.map(i => `<li>${ic("check")} ${AMI.esc(i)}</li>`).join("")}</ul></div>
@@ -97,7 +100,7 @@
     AMI.$("#related").innerHTML = rel.map(AMI.productCard).join(""); AMI.observeReveal(); AMI.lazy();
     // structured data: breadcrumb always; Product/Offer ONLY for real, purchasable products
     const ld = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [["Home", "index.html"], ["Digital Shop", "shop.html"], [p.name, `product.html?id=${p.id}`]].map(([n, u], i) => ({ "@type": "ListItem", position: i + 1, name: n, item: `${cfg.siteUrl}/${u}` })) }];
-    if (p.available && !p.demo) ld.push({ "@context": "https://schema.org", "@type": "Product", name: p.name, description: p.short, image: new URL(p.image, location.href).href, brand: { "@type": "Brand", name: cfg.siteName }, offers: { "@type": "Offer", price: p.price, priceCurrency: cfg.currency, availability: "https://schema.org/InStock", url: `${cfg.siteUrl}/product.html?id=${p.id}` } });
+    if (p.available && !p.demo && typeof p.price === "number") ld.push({ "@context": "https://schema.org", "@type": "Product", name: p.name, description: p.short, image: new URL(p.image, location.href).href, brand: { "@type": "Brand", name: cfg.siteName }, offers: typeof p.price !== "number" ? undefined : { "@type": "Offer", price: p.price, priceCurrency: cfg.currency, availability: "https://schema.org/InStock", url: `${cfg.siteUrl}/product.html?id=${p.id}` } });
     const s = document.createElement("script"); s.type = "application/ld+json"; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
   }
 
